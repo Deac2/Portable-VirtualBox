@@ -1591,8 +1591,8 @@ Func UseSettings ()
 
   If FileExists (@ScriptDir&"\Extension") Then
     If FileExists (@ScriptDir&"\Extension") Then
-      RunWait (@ScriptDir & "\data\tools\7za.exe x -o"& @ScriptDir &"\temp\ "& @ScriptDir &"\Extension", @ScriptDir, @SW_HIDE)
-      RunWait (@ScriptDir & "\data\tools\7za.exe x -o"& @ScriptDir &"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\ "& @ScriptDir &"\temp\Extension~", @ScriptDir, @SW_HIDE)
+      RunWait ('"'&@ScriptDir&'\data\tools\7za.exe"'&" x -o"&'"'&@ScriptDir&'\temp\"'&" "&'"'&@ScriptDir&'\Extension"', @ScriptDir, @SW_HIDE)
+      RunWait ('"'&@ScriptDir&'\data\tools\7za.exe"'&" x -o"&'"'&@ScriptDir&'\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\"'&" "&'"'&@ScriptDir&'\temp\Extension~"', @ScriptDir, @SW_HIDE)
     EndIf
   EndIf
 
@@ -1601,6 +1601,7 @@ Func UseSettings ()
     RunWait ("cmd /c ren ""%CD%\temp\*.msi"" x86.msi", @ScriptDir, @SW_HIDE)
     RunWait ("cmd /c msiexec.exe /quiet /a ""%CD%\temp\x86.msi"" TARGETDIR=""%CD%\temp\x86""", @ScriptDir, @SW_HIDE)
     DirCopy (@ScriptDir&"\temp\x86\PFiles\Oracle\VirtualBox", @ScriptDir&"\app32", 1)
+    DirCopy (@ScriptDir&"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack", @ScriptDir&"\app32\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack", 1)
     FileCopy (@ScriptDir&"\temp\x86\PFiles\Oracle\VirtualBox\*", @ScriptDir&"\app32", 9)
     DirRemove (@ScriptDir&"\app32\accessible", 1)
     DirRemove (@ScriptDir&"\app32\sdk", 1)
@@ -1611,6 +1612,7 @@ Func UseSettings ()
     RunWait ("cmd /c ren ""%CD%\temp\*.msi"" amd64.msi", @ScriptDir, @SW_HIDE)
     RunWait ("cmd /c msiexec.exe /quiet /a ""%CD%\temp\amd64.msi"" TARGETDIR=""%CD%\temp\x64""", @ScriptDir, @SW_HIDE)
     DirCopy (@ScriptDir&"\temp\x64\PFiles\Oracle\VirtualBox", @ScriptDir&"\app64", 1)
+    DirCopy (@ScriptDir&"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack", @ScriptDir&"\app64\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack", 1)
     FileCopy (@ScriptDir&"\temp\x64\PFiles\Oracle\VirtualBox\*", @ScriptDir&"\app64", 9)
     DirRemove (@ScriptDir&"\app64\accessible", 1)
     DirRemove (@ScriptDir&"\app64\sdk", 1)
