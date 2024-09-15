@@ -22,6 +22,7 @@
 #include <String.au3>
 #include <WinAPIError.au3>
 #include <SingleTon.au3>
+#include <RecFileListToArray.au3>
 
 _SingleTon(@ScriptName)
 #NoTrayIcon
@@ -449,30 +450,19 @@ If (FileExists (@ScriptDir&"\app32\virtualbox.exe") OR FileExists (@ScriptDir&"\
         $values11 = _StringBetween ($values10[0], '<SystemProperties', '/>')
       EndIf
 
-      For $i = 0 To UBound ($values1) - 1
-	Global $Result = StringSplit(StringReplace($values1[$i], ".vbox", ""), "\")
-	Global $ResultName = $Result[$Result[0]-2]
-	Global $ResultName2 = $Result[$Result[0]]
-	Global $Patch = StringReplace($values1[$i], "\"&$ResultName&"\"&$ResultName2&"\"&$ResultName2&".vbox", "")
-        If FileExists ($UserHome &"\"& $ResultName &"\"& $ResultName2 &"\"& $ResultName2 &".vbox") Then
-        $values6 = _StringBetween ($values1[$i], $ResultName, '.vbox')
-        If $values6 <> 0 Then
-          $content = FileRead (FileOpen (@ScriptDir&"\"&$UserHome&"\VirtualBox.xml", 128))
-          $file    = FileOpen (@ScriptDir&"\"&$UserHome&"\VirtualBox.xml", 2)
-          FileWrite ($file, StringReplace ($content, $values1[$i], $ResultName & $values6[0] & ".vbox"))
-          FileClose ($file)
-        EndIf
-        EndIf
-        If FileExists ($Patch &"\"& $ResultName &"\"& $ResultName2 &"\"& $ResultName2 &".vbox") Then
-        $values6 = _StringBetween ($values1[$i], $ResultName, '.vbox')
-        If $values6 <> 0 Then
-          $content = FileRead (FileOpen (@ScriptDir&"\"&$UserHome&"\VirtualBox.xml", 128))
-          $file    = FileOpen (@ScriptDir&"\"&$UserHome&"\VirtualBox.xml", 2)
-          FileWrite ($file, StringReplace ($content, $values1[$i], $Patch &"\"&$ResultName & $values6[0] & ".vbox"))
-          FileClose ($file)
-        EndIf
-        EndIf
+      $var = DriveGetDrive("all")
+      If NOT @error Then
+      For $i = 1 to $var[0]
+      $drive = StringUpper($var[$i])
+      PathSearch($drive)
       Next
+      EndIf
+
+      $content = FileRead (FileOpen (@ScriptDir&"\"&$UserHome&"\VirtualBox.xml", 128))
+      $values6 = _StringBetween ($content, "</ExtraData>", "<NetserviceRegistry>")
+      $file    = FileOpen (@ScriptDir&"\"&$UserHome&"\VirtualBox.xml", 2)
+      FileWrite ($file, StringReplace ($content, $values6[0], "<MachineRegistry>"&$values18&"</MachineRegistry>"))
+      FileClose ($file)
 
       For $m = 0 To UBound ($values11) - 1
         $values12 = _StringBetween ($values11[$m], 'defaultMachineFolder="', '"')
@@ -953,6 +943,30 @@ EndIf
 
 Break (1)
 Exit
+
+Func PathSearch($SearchFold)
+Global $values18
+Global $values19
+Global $values20
+$drive = DriveGetDrive("all")
+$aArray = _RecFileListToArray($SearchFold, "*.vbox", 1, 1, 0, 2)
+If IsArray($aArray) Then
+For $i = 1 To $aArray[0]
+If Not StringRegExp($aArray[$i], ".bin") Then
+$line = FileRead (FileOpen ($aArray[$i], 128))
+If StringRegExp($line, "VirtualBox") and StringRegExp($line, "Machine") and StringRegExp($line, "HardDisks") and StringRegExp($line, "Hardware") Then
+      $values19 = _StringBetween ($line, '<HardDisks>', '</HardDisks>')
+      If $values19 = 0 Then
+        $values20 = 0
+      Else
+        $values20 = _StringBetween ($line, 'uuid="', '"')
+      EndIf
+      $values18 &= "<MachineEntry uuid="""&$values20[0]&""" src="""&$aArray[$i]&"""/>" & @CR
+EndIf
+EndIf
+Next
+EndIf
+EndFunc
 
 Func ShowWindows_VM ()
   Opt ("WinTitleMatchMode", 2)
