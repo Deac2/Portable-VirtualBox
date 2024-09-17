@@ -1301,7 +1301,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "language-settings", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "language-settings", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "language-settings", "02", "NotFound"), 16, 40, 546, 105)
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "language-settings", "03", "NotFound"), 26, 185, 180, 21)
 
@@ -1669,12 +1669,11 @@ Func DownloadFile ()
     GUICtrlSetData ($Input200, IniRead ($var2 & $lng &".ini", "status", "01", "NotFound") &" "& $download2 & @LF & DisplayDownloadStatus($bytes,$total_bytes) )
 	;GUICtrlSetData($ProgressBar1,Round(100*$bytes/$total_bytes)) ; <<<TODO: Ticket 3509714
   Until InetGetInfo ($download1, 2)
-    If @error Then
-        FileDelete($pwd&"\VirtualBox.exe")
-    EndIf
+msgbox(0,$nSize1,FileGetSize($pwd&"\VirtualBox.exe"))
   InetClose ($download1)
   Local $download3 = InetGet (IniRead (@ScriptDir&"\data\settings\vboxinstall.ini", "download", "key2", "NotFound"), $pwd&"\Extension", 1, 1)
   Local $download4 = IniRead (@ScriptDir&"\data\settings\vboxinstall.ini", "download", "key2", "NotFound")
+  Local $nSize2 = InetGetSize(IniRead (@ScriptDir&"\data\settings\vboxinstall.ini", "download", "key2", "NotFound"))
   $total_bytes = InetGetInfo($download3, 1)
   Do
     Sleep (250)
@@ -1683,9 +1682,6 @@ Func DownloadFile ()
 	$total_bytes = InetGetInfo($download3, 1)
     GUICtrlSetData ($Input200, $download4 & @LF & DisplayDownloadStatus($bytes,$total_bytes))
   Until InetGetInfo ($download3, 2)
-    If @error Then
-        FileDelete($pwd&"\Extension")
-    EndIf
   InetClose ($download3)
   If FileExists (@ScriptDir&"\virtualbox.exe") Then
     GUICtrlSetData ($Input100, @ScriptDir&"\virtualbox.exe")
@@ -1725,11 +1721,6 @@ Func UseSettings ()
     Local $SourceFile = @ScriptDir&"\forgetit"
   Else
     Local $SourceFile = GUICtrlRead ($Input100)
-  EndIf
-
-  If NOT (GUICtrlRead ($Checkbox100) = $GUI_CHECKED OR GUICtrlRead ($Checkbox110) = $GUI_CHECKED) Then
-    Break (1)
-    Exit
   EndIf
 
   If NOT (FileExists (@ScriptDir&"\virtualbox.exe") OR FileExists ($SourceFile) AND (GUICtrlRead ($Checkbox100) = $GUI_CHECKED OR GUICtrlRead ($Checkbox110) = $GUI_CHECKED)) Then
