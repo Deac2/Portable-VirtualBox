@@ -1042,13 +1042,13 @@ Func Settings ()
 
   Local $WS_POPUP
 
-  GUICreate (IniRead ($var2 & $lng &".ini", "settings-label", "01", "NotFound"), 580, 318, 193, 125, $WS_POPUP)
-  GUISetFont (9, 400, 0, "Arial")
-  GUISetBkColor (0xFFFFFF)
-  GUICtrlSetFont (-1, 10, 800, 0, "Arial")
-  GUICtrlCreateTab (0, 0, 577, 296)
+    GUICreate (IniRead ($var2 & $lng &".ini", "settings-label", "01", "NotFound"), 580, 318, 193, 125, $WS_POPUP)
+    GUISetFont (9, 400, 0, "Arial")
+    GUISetBkColor (0xFFFFFF)
+    GUICtrlSetFont (-1, 10, 800, 0, "Arial")
+    GUICtrlCreateTab (0, 0, 577, 296)
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "homeroot-settings", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "homeroot-settings", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "homeroot-settings", "02", "NotFound"), 16, 40, 546, 105)
 
     $Radio1 = GUICtrlCreateRadio ("Radio01", 20, 153, 17, 17)
@@ -1078,7 +1078,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "startvm-settings", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "startvm-settings", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "startvm-settings", "02", "NotFound"), 16, 40, 546, 105)
 
     $Radio3 = GUICtrlCreateRadio ("Radio3", 20, 153, 17, 17)
@@ -1108,7 +1108,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "hotkeys", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "hotkeys", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "hotkeys", "02", "NotFound"), 16, 40, 546, 105)
 
     $Radio5 = GUICtrlCreateRadio ("Radio5", 20, 153, 17, 17)
@@ -1129,7 +1129,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "hotkey-settings", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "hotkey-settings", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "hotkey-settings", "02", "NotFound"), 16, 40, 546, 60)
 
     $Radio7 = GUICtrlCreateRadio ("Radio7", 20, 112, 17, 17)
@@ -1259,7 +1259,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "usb", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "usb", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "usb", "02", "NotFound"), 16, 40, 546, 105)
 
     $Radio9 = GUICtrlCreateRadio ("$Radio9", 20, 153, 17, 17)
@@ -1280,7 +1280,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "net", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "net", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "net", "02", "NotFound"), 16, 40, 546, 105)
 
     $Radio11 = GUICtrlCreateRadio ("$Radio11", 20, 153, 17, 17)
@@ -1325,7 +1325,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "update", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "update", "01", "NotFound"))
     GUICtrlCreateLabel (IniRead ($var2 & $lng &".ini", "update", "02", "NotFound"), 16, 40, 546, 105)
 
     $Radio13 = GUICtrlCreateRadio ("$Radio13", 20, 153, 17, 17)
@@ -1346,7 +1346,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 336, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "about", "01", "NotFound"))
+    GUICtrlCreateTabItem (IniRead ($var2 & $lng &".ini", "about", "01", "NotFound"))
     GUICtrlCreateLabel (". : Portable-VirtualBox Launcher v"& $version &" : .", 100, 40, 448, 26)
     GUICtrlSetFont (-1, 14, 800, 4, "Arial")
     GUICtrlCreateLabel("Download and Support: https://github.com/Deac2/Portable-VirtualBox", 40, 70, 500, 20)
@@ -1363,7 +1363,7 @@ Func Settings ()
     GUICtrlCreateButton (IniRead ($var2 & $lng &".ini", "messages", "03", "NotFound"), 236, 240, 129, 25, 0)
     GUICtrlSetOnEvent (-1, "ExitGUI")
 
-  GUISetState ()
+    GUISetState ()
 EndFunc
 
 Func SRCUserHome ()
