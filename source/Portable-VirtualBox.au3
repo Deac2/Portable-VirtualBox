@@ -1391,6 +1391,7 @@ Func OKUserHome ()
 EndFunc
 
 Func SRCStartVM ()
+#cs
   Local $PathVM, $VM_String, $String, $VDI, $VM_Start
   Local $Start_VM = IniRead ($var1, "startvm", "key", "NotFound")
   If IniRead ($var1, "startvm", "key", "NotFound") Then
@@ -1412,6 +1413,8 @@ Func SRCStartVM ()
     GUICtrlSetState ($Radio4, $GUI_CHECKED)
     GUICtrlSetData ($VMStart, $VM_Start[1])
   EndIf
+#ce
+GUICtrlSetState ($Radio4, $GUI_CHECKED)
 EndFunc
 
 Func OKStartVM ()
