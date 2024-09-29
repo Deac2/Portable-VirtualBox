@@ -1716,6 +1716,7 @@ Func SearchFile ()
   Local $FilePath = FileOpenDialog (IniRead ($var2 & $lng &".ini", "status", "03", "NotFound"), @ScriptDir, "(*.exe)", 1+2)
   If NOT @error Then
     GUICtrlSetData ($Input100, $FilePath)
+    GUICtrlSetState ($Button200,$GUI_ENABLE)
   EndIf
 EndFunc
 
@@ -1749,6 +1750,12 @@ Func UseSettings ()
       WinClose ("VirtualBox Installer", "")
     EndIf
   EndIf
+
+    $PatchFolder = StringRegExpReplace($SourceFile, "\\[^\\]+$", "")
+    If FileExists ($PatchFolder&"\Extension") Then
+      RunWait ('"'&@ScriptDir&'\data\tools\7za.exe"'&" x -o"&'"'&@ScriptDir&'\temp\"'&" "&'"'&$PatchFolder&'\Extension"', @ScriptDir, @SW_HIDE)
+      RunWait ('"'&@ScriptDir&'\data\tools\7za.exe"'&" x -o"&'"'&@ScriptDir&'\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\"'&" "&'"'&@ScriptDir&'\temp\Extension~"', @ScriptDir, @SW_HIDE)
+    EndIf
 
     If FileExists (@ScriptDir&"\Extension") Then
       RunWait ('"'&@ScriptDir&'\data\tools\7za.exe"'&" x -o"&'"'&@ScriptDir&'\temp\"'&" "&'"'&@ScriptDir&'\Extension"', @ScriptDir, @SW_HIDE)
