@@ -96,8 +96,8 @@ EndIf
 If NOT FileExists($var3) Then
 DirCreate(@ScriptDir&"\data\settings")
 FileInstall("i_data\settings\SplashScreen.jpg", "data\settings\SplashScreen.jpg")
-IniWrite($var3, "download", "key1", "http://download.virtualbox.org/virtualbox/7.0.20/VirtualBox-7.0.20-163906-Win.exe")
-IniWrite($var3, "download", "key2", "http://download.virtualbox.org/virtualbox/7.0.20/Oracle_VM_VirtualBox_Extension_Pack-7.0.20.vbox-extpack")
+IniWrite($var3, "download", "key1", "http://download.virtualbox.org/virtualbox/7.0.22/VirtualBox-7.0.22-165102-Win.exe")
+IniWrite($var3, "download", "key2", "http://download.virtualbox.org/virtualbox/7.0.22/Oracle_VM_VirtualBox_Extension_Pack-7.0.22.vbox-extpack")
 IniWrite($var3, "download", "update", "http://www.vbox.me/update/")
 IniWrite($var3, "startvbox", "key", "1")
 EndIf
@@ -484,7 +484,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         $values11 = _StringBetween($values10[0], '<SystemProperties', '/>')
       EndIf
 
-      $var = DriveGetDrive("all")
+      $var = DriveGetDrive("fixed")
       If NOT @error Then
       For $i = 1 to $var[0]
       $drive = StringUpper($var[$i])
@@ -523,9 +523,11 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 
       $content = FileRead(FileOpen($UserHome&"\VirtualBox.xml", 128))
       $values6 = _StringBetween($content, "</ExtraData>", "<NetserviceRegistry>")
-      Local $xmlfile    = FileOpen($UserHome&"\VirtualBox.xml", 2)
+	  if $values6<>0 Then
+      Local $xmlfile = FileOpen($UserHome&"\VirtualBox.xml", 2)
       FileWrite($xmlfile, StringReplace($content, $values6[0], @LF &"<MachineRegistry>"&$values4&"</MachineRegistry>"& @LF))
       FileClose($xmlfile)
+	  EndIf
 
       For $m = 0 To UBound($values11) - 1
         $values12 = _StringBetween($values11[$m], 'defaultMachineFolder="', '"')
@@ -848,8 +850,8 @@ EndIf
 		Next
       EndIf
 
-      If Not FileExists($UserHome&"\VirtualBox.xml") Then
-	  Run('cmd /c ""'&@ScriptDir&'\'&$arch&'\VBoxManage.exe" setproperty machinefolder "'&$UserHome&'\Machines""', @ScriptDir, @SW_HIDE)
+      If NOT FileExists($UserHome&"\VirtualBox.xml") Then
+      Run('cmd /c ""'&@ScriptDir&'\'&$arch&'\VBoxManage.exe" setproperty machinefolder "'&$UserHome&'\Machines""', @ScriptDir, @SW_HIDE)
       EndIf
 
       If $CmdLine[0] = 1 Then
@@ -1018,7 +1020,6 @@ Break(1)
 Exit
 
 Func PathSearch($SearchFold)
-$drive = DriveGetDrive("REMOVABLE")
 $aArray = _RecFileListToArray($SearchFold, "*.vbox", 1, 1, 0, 2)
 If IsArray($aArray) Then
 For $i = 1 To $aArray[0]
