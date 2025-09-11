@@ -84,7 +84,7 @@ If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x64.exe") T
 #ce
 
 	Global $UserHome = IniRead($var1, "userhome", "key", "NotFound")
-	ValidateAndSavePath("userhome", "key", $UserHome)
+	IniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome))
 
 If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   Global $cl = 1, $StartLng
@@ -848,20 +848,35 @@ Func HideWindows()
   WinSetState(""&$VMTitle&" "&$Manager&"", "", @SW_HIDE)
 EndFunc
 
-Func ValidateAndSavePath($iniSection, $iniKey, $Path)
+Func ValidatePath($Path, $DefaultPath)
+    ; Check disk and create folder
     If FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
+
+    ; Check that the path exists and is a folder
     If FileExists($Path) And StringInStr(FileGetAttrib($Path), "D") And Not StringInStr(FileGetAttrib($Path), "R") Then
 			$Path = StringReplace($Path, "/", "\")
 			$Path = StringRegExpReplace($Path, "\\{2,}", "\\")
-            IniWrite($var1, $iniSection, $iniKey, $Path)
+			If StringRight($path, 1) = "\" Then
+			; Remove the last character "\"
+			$path = StringLeft($path, StringLen($path) - 1)
+			EndIf
+			return $Path
     Else
+        ; If the path does not exist or is not a folder, set the default value
         If FileExists(StringRegExp(StringLeft($Path, 2), ":")) Then
-            IniWrite($var1, $iniSection, $iniKey, $DefaultUserHome)
+			$Path = StringReplace($Path, "/", "\")
+			$Path = StringRegExpReplace($Path, "\\{2,}", "\\")
+			return $DefaultPath
         Else
-            IniWrite($var1, $iniSection, $iniKey, $DefaultUserHome)
+			$Path = StringReplace($Path, "/", "\")
+			$Path = StringRegExpReplace($Path, "\\{2,}", "\\")
+			return $DefaultPath
         EndIf
+        ; Checking for path existence
         If Not FileExists($Path) Then
-            IniWrite($var1, $iniSection, $iniKey, $DefaultUserHome)
+			$Path = StringReplace($Path, "/", "\")
+			$Path = StringRegExpReplace($Path, "\\{2,}", "\\")
+            return $DefaultPath
         EndIf
     EndIf
 EndFunc
@@ -930,7 +945,6 @@ Func _FileListToArray($sFilePath, $sFilter = "*", $iFlag = $FLTA_FILESFOLDERS, $
 EndFunc
 
 Func _StringBetween($s_String, $s_Start, $s_End, $v_Case = -1)
-
 	; Set case type
 	Local $s_case = ""
 	If $v_Case = Default Or $v_Case = -1 Then $s_case = "(?i)"
@@ -1275,7 +1289,7 @@ Func OKUserHome()
     MsgBox(0, IniRead($Dir_Lang & $lng &".ini", "messages", "04", "NotFound"), IniRead($Dir_Lang & $lng &".ini", "messages", "05", "NotFound"))
   Else
     If FileExists(GUICtrlRead($HomeRoot)) Then
-      ValidateAndSavePath("userhome", "key", GUICtrlRead($HomeRoot))
+	  IniWrite($var1, "userhome", "key", ValidatePath(GUICtrlRead($HomeRoot), $DefaultUserHome))
       MsgBox(0, IniRead($Dir_Lang & $lng &".ini", "messages", "04", "NotFound"), IniRead($Dir_Lang & $lng &".ini", "messages", "05", "NotFound"))
     Else
 	  MsgBox(0, IniRead($Dir_Lang & $lng &".ini", "messages", "01", "NotFound"), IniRead($Dir_Lang & $lng &".ini", "okuserhome", "01", "NotFound"))
@@ -1800,5 +1814,4 @@ Func HybridMode()
 		; Does not need to wait since it's a regular version of VirtualBox
 		Exit
 	EndIf
-
 EndFunc
