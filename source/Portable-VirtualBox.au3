@@ -131,8 +131,6 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   IniWrite($var1, "lang", "key", "1")
 EndIf
 
-UpdateSettings()
-
 EnvSet("VBOX_USER_HOME", $UserHome)
 ; Thibaut : use Hybrid Mode if available
 If $CmdLine[0] = 1 AND $CmdLine[1]="noportable" Then
