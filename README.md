@@ -1,5 +1,6 @@
 <img width="576" height="378" alt="image" src="https://github.com/user-attachments/assets/842e4e72-5b98-4c27-b5a4-e3d0afed0acd"/><br>
 This version with a new settings window, delete the folder data\language if you copy to the old folder with virtualbox the language has differences and most of the unnecessary is removed.<br>
+If you change the folder for machines on the same disk, make sure that the machine names are not repeated.<br>
 
 22.10.2024 If you have an old language folder, Delete the data\language folder as the languages ​​have been partially changed.<br>
 Disable message center notifications and screen capture messages VirtualBoxVM.exe default settings directory:<br>
