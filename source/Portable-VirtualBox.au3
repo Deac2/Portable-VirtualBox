@@ -340,20 +340,16 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 			$b += 1
 			$values4 = StringReplace($values4, $a[$i], "")
 			if $i>=$b Then
-            $file    = FileOpen(@ScriptDir&"\Portable-VirtualBox.error.txt", 1)
-            FileWrite($file, "List of duplicate machines with the same uuid:" &@LF)
+			_LogDuplicate($a[$x] &@LF&"----------------------------------------"&@LF&"Downloaded: "&$a[$i])
 			EndIf
-            $file    = FileOpen(@ScriptDir&"\Portable-VirtualBox.error.txt", 1)
-			FileWrite($file, $a[$x] &@LF& $a[$i] &@LF&@LF)
 			if $i<=1 Then
-			$file    = FileOpen(@ScriptDir&"\Portable-VirtualBox.error.txt", 1)
-			FileWrite($file, "To eliminate errors, only one of the duplicates was added to VirtualBox.xml"&@LF& $values4 &@LF&@LF)
-			FileClose($file)
+			_LogDuplicate(StringTrimRight($values4, 2))
 			EndIf
 			$x = 0
 			EndIf
 		Next
     Next
+    FileClose($file)
 
       $content = FileRead(FileOpen($UserHome&"\VirtualBox.xml", 128))
       $values6 = _StringBetween($content, "</ExtraData>", "<NetserviceRegistry>")
@@ -640,7 +636,7 @@ EndIf
       EndIf
 
       RunWait($arch&"\VBoxSVC.exe /reregserver", @ScriptDir, @SW_HIDE)
-	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
+	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxcStub.dll", @ScriptDir, @SW_HIDE)
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
       DllCall($arch&"\VBoxRT.dll", "hwnd", "RTR3Init")
 
@@ -849,6 +845,19 @@ EndFunc
 Func HideWindows()
   Opt("WinTitleMatchMode", 3)
   WinSetState(""&$VMTitle&" "&$Manager&"", "", @SW_HIDE)
+EndFunc
+
+Func _LogDuplicate($lineDuplicate)
+    Local $filePath = @ScriptDir&"\Portable-VirtualBox.error.txt"
+    Local $hFile = FileOpen($filePath, 1)
+    If $hFile = -1 Then
+        Return
+    EndIf
+    Local $uuid = _StringBetween($lineDuplicate, 'uuid="', '"')
+    FileWrite($hFile, "Duplicate found with UUID: " & $uuid[0] & @LF)
+    FileWrite($hFile, "Duplicate line: " & $lineDuplicate & @LF)
+    FileWrite($hFile, "----------------------------------------" & @LF)
+    FileClose($hFile)
 EndFunc
 
 Func ValidatePath($Path, $DefaultPath)
