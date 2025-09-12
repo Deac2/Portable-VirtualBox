@@ -976,7 +976,7 @@ Func _StringBetween($s_String, $s_Start, $s_End, $v_Case = -1)
 	Return $a_ret
 EndFunc   ;==>_StringBetween
 
-Func Wm_List()
+Func VM_List_Load()
      $values5 = ""
 	 $aArray = _RecFileListToArray($MachineFolder, "*.vbox", 1, 1, $iSort, 2)
      If IsArray($aArray) Then
@@ -1000,8 +1000,8 @@ Func Wm_List()
 	 Return $values5
 EndFunc
 
-Func Wm_List_Update()
-    Local $sList = Wm_List()
+Func VM_List_Update()
+    Local $sList = VM_List_Load()
     Local $aList = StringSplit($sList, "|", 1)
     
     ; Read the saved name from ini
@@ -1064,7 +1064,7 @@ Func Settings()
 	If NOT $Settings Then
 	Global $prevList = ""
     Opt("GUIOnEventMode", 1)
-	AdlibRegister("Wm_List_Update", 1000)
+	AdlibRegister("VM_List_Update", 1000)
     
 	Local $WS_SYSMENU = 0x80000
     
@@ -1136,10 +1136,10 @@ Func Settings()
 	GUICtrlSetOnEvent(-1, "CheckboxSettings")
 	If IniRead($var1, "startvm", "key", "NotFound") = false Then
 	$VMStart = GUICtrlCreateCombo("", 33, 268, 417, 21, $CBS_DROPDOWNLIST)
-	Wm_List_Update()
+	VM_List_Update()
 	Else
 	$VMStart = GUICtrlCreateCombo("", 33, 268, 417, 21, $CBS_DROPDOWNLIST)
-	Wm_List_Update()
+	VM_List_Update()
 	Endif
     If IniRead($var1, "startvm", "key", "NotFound") = false Then
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
@@ -1399,7 +1399,7 @@ EndIf
 	If FileExists($Patch) Then
       IniWrite($var1, "startvm", "key", $VMStartName)
 	Else
-	  Wm_List_Update()
+	  VM_List_Update()
 	EndIf
 	EndIf
   EndIf
@@ -1610,7 +1610,7 @@ Func OKLanguage()
 EndFunc
 
 Func ExitGUI()
-  AdlibUnRegister("Wm_List_Update")
+  AdlibUnRegister("VM_List_Update")
   GUIDelete()
   $cl = 0
   $Settings = 0
