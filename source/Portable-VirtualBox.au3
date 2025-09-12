@@ -93,7 +93,6 @@ If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x64.exe") T
 	UpdateSettings()
 	IniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome))
 	IniWrite($var1, "MachineFolder", "key", ValidatePath($MachineFolder, $DefaultMachineFolder))
-	UpdateSettings()
 
 If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   Global $cl = 1, $StartLng
@@ -109,7 +108,7 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   $FileList = _FileListToArray($Dir_Lang, "*", 1)
   Local $sfilelist
   For $i = 1 to $FileList[0]
-  $sfilelist &= StringReplace($FileList[$i], ".ini", "")&"|"
+  $sfilelist &= FirstLetterUpper(StringReplace($FileList[$i], ".ini", "")&"|")
   Next
   $sfilelist = StringTrimRight($sfilelist, 1)
   
@@ -132,6 +131,7 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   IniWrite($var1, "lang", "key", "1")
 EndIf
 
+UpdateSettings()
 EnvSet("VBOX_USER_HOME", $UserHome)
 ; Thibaut : use Hybrid Mode if available
 If $CmdLine[0] = 1 AND $CmdLine[1]="noportable" Then
@@ -978,6 +978,11 @@ Func _StringBetween($s_String, $s_Start, $s_End, $v_Case = -1)
 	Return $a_ret
 EndFunc   ;==>_StringBetween
 
+Func FirstLetterUpper($sText)
+    If StringLen($sText) = 0 Then Return $sText
+    Return StringUpper(StringLeft($sText, 1)) & StringMid($sText, 2)
+EndFunc
+
 Func VM_List_Load()
      $values5 = ""
 	 $aArray = _RecFileListToArray($MachineFolder, "*.vbox", 1, 1, $iSort, 2)
@@ -1091,7 +1096,7 @@ Func Settings()
     $FileList = _FileListToArray($Dir_Lang, "*", 1)
     Local $sfilelist
     For $i = 1 to $FileList[0]
-    $sfilelist &= StringReplace($FileList[$i], ".ini", "")&"|"
+    $sfilelist &= FirstLetterUpper(StringReplace($FileList[$i], ".ini", "")&"|")
     Next
     $sfilelist = StringTrimRight($sfilelist, 1)
     $StartLng = GUICtrlCreateCombo("", 142, 100, 100, 0, $CBS_DROPDOWNLIST)
