@@ -8,7 +8,7 @@ set "aut2exe=source\Aut2Exe\Aut2exe.exe"
 
 rem Setting up the different folders used for building. %~dp0 is the folder of the build script itself (may not be the same as the working directory).
 set "input_folder=%~dp0"
-set "build_folder=%input_folder%build"
+set "build_folder=%input_folder%build\x64"
 
 rem Find path for aut2exe
 rem If the user supplied a aut2exe path use it
@@ -41,8 +41,8 @@ echo aut2exe path: %aut2exe%
 rem Create build and release folders if needed.
 
 rem Make a copy of the file for easy compression later.
-rem xcopy /d /c /e /i "%input_folder%source\i_data" "%build_folder%\data\"
 Mkdir "%build_folder%" 2>nul
+xcopy /d /c /e /i "%input_folder%source\data" "%build_folder%\data\" > nul 2>&1
 
 rem Compile Portable-VirtualBox.
 "%aut2exe%" /in "%input_folder%source\Portable-VirtualBox.au3" /out "%build_folder%\Portable-VirtualBox_x64.exe" /icon "%input_folder%source\VirtualBox.ico" /x64
