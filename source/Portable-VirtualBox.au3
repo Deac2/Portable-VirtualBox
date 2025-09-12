@@ -93,6 +93,7 @@ If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x64.exe") T
 	UpdateSettings()
 	IniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome))
 	IniWrite($var1, "MachineFolder", "key", ValidatePath($MachineFolder, $DefaultMachineFolder))
+	UpdateSettings()
 
 If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   Global $cl = 1, $StartLng
