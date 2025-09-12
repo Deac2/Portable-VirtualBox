@@ -1,6 +1,16 @@
+; Language       : multilanguage
+; Author         : Michael Meyer (michaelm_007) et al.
+; Modified       : Deac2 Copyright (c) 2024
+; e-Mail         : email.address@gmx.de
+; License        : http://creativecommons.org/licenses/by-nc-sa/3.0/
+; Version        : 6.4.9.1
+; Download       : http://www.vbox.me
+; Support        : https://github.com/Deac2
+
 If NOT @Compiled Then Opt("TrayIconDebug", 1)
 #pragma compile(Icon, VirtualBox.ico)
 #pragma compile(UPX, false)
+#pragma compile(LegalCopyright, https://github.com/Deac2/Portable-VirtualBox)
 #pragma compile(FileDescription, Oracle VM VirtualBox)
 #pragma compile(ProductName, Portable VirtualBox)
 #pragma compile(ProductVersion, 6.4.9.1)
