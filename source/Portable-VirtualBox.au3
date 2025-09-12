@@ -260,20 +260,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
     EndIf
   EndIf
 
-  Global $Manager = IniRead($Dir_Lang & $lng &".ini", "tray", "08", "NotFound")
-  if $Manager<>"NotFound" then
-	$Manager = $Manager
-	Else
-	$Manager = "Manager"
-  EndIf
-
-    Local $sFileVer = StringRegExpReplace(FileGetVersion(@ScriptDir&"\"&$arch&"\VirtualBox.exe"), "^(\d+\.\d+.\d+)?.*", "$1")
-  If $sFileVer>="7.1.0" Then
-    Global $VMTitle = "Oracle VirtualBox"
-  Else
-    Global $VMTitle = "Oracle VM VirtualBox"
-  EndIf
-
   If FileExists($UserHome&"\VirtualBox.xml-prev") Then
     FileDelete($UserHome&"\VirtualBox.xml-prev")
   EndIf
@@ -814,8 +800,8 @@ EndIf
       RunWait("sc delete VBoxSDS", @ScriptDir, @SW_HIDE)
       SplashOff()
     Else
-      WinSetState(""&$VMTitle&" "&$Manager&"", "", BitAND(@SW_SHOW, @SW_RESTORE))
-      WinSetState("] - "&$VMTitle&"", "", BitAND(@SW_SHOW, @SW_RESTORE))
+      _WinSetState("VirtualBox.exe", BitAND(@SW_SHOW, @SW_RESTORE))
+      _WinSetState("VirtualBoxVM.exe", BitAND(@SW_SHOW, @SW_RESTORE))
     EndIf
   Else
     SplashOff()
@@ -827,23 +813,56 @@ Break(1)
 Exit
 
 Func ShowWindows_VM()
-  Opt("WinTitleMatchMode", 2)
-  WinSetState("] - "&$VMTitle&"", "", BitAND(@SW_SHOW, @SW_RESTORE))
+_WinSetState("VirtualBoxVM.exe", BitAND(@SW_SHOW, @SW_RESTORE))
 EndFunc
 
 Func HideWindows_VM()
-  Opt("WinTitleMatchMode", 2)
-  WinSetState("] - "&$VMTitle&"", "", @SW_HIDE)
+_WinSetState("VirtualBoxVM.exe", @SW_HIDE)
 EndFunc
 
 Func ShowWindows()
-  Opt("WinTitleMatchMode", 3)
-  WinSetState(""&$VMTitle&" "&$Manager&"", "", BitAND(@SW_SHOW, @SW_RESTORE))
+_WinSetState("VirtualBox.exe", BitAND(@SW_SHOW, @SW_RESTORE))
 EndFunc
 
 Func HideWindows()
-  Opt("WinTitleMatchMode", 3)
-  WinSetState(""&$VMTitle&" "&$Manager&"", "", @SW_HIDE)
+_WinSetState("VirtualBox.exe", @SW_HIDE)
+EndFunc
+
+Func _WinSetState($ProcessName, $Command)
+Local $titles = GetWindowTitlesByProcessName($ProcessName)
+If @error Then Return
+For $i = 1 To $titles[0]
+WinSetState(""&$titles[$i]&"", "", $Command)
+Next
+EndFunc
+
+Func GetWindowTitlesByProcessName($ProcessName)
+    Local $pid = 0
+    Local $processList = ProcessList()
+    For $i = 1 To $processList[0][0]
+        If StringLower($processList[$i][0]) = StringLower($ProcessName) Then
+            $pid = $processList[$i][1]
+        EndIf
+    Next
+    If $pid = 0 Then Return SetError(1,0,0)
+
+    Local $winList = WinList()
+    Local $titles[1] = [0]
+
+    For $i = 1 To $winList[0][0]
+        If $winList[$i][0] <> "" Then
+            Local $wPID = WinGetProcess($winList[$i][1])
+            If $wPID = $pid Then
+                Local $title = WinGetTitle($winList[$i][1])
+				If StringInStr($title, "VirtualBox") <> 0 Then
+                    $titles[0] += 1
+                    ReDim $titles[$titles[0] + 1]
+                    $titles[$titles[0]] = $title
+                EndIf
+            EndIf
+        EndIf
+    Next
+    Return $titles
 EndFunc
 
 Func _LogDuplicate($lineDuplicate)
@@ -1626,9 +1645,9 @@ Func ExitScript()
   Opt("WinTitleMatchMode", 2)
   WinClose("VirtualBoxVM", "")
   WinWaitClose("VirtualBoxVM", "")
-  WinClose("] - "&$VMTitle&"")
-  WinWaitClose("] - "&$VMTitle&"")
-  WinClose($VMTitle, "")
+  WinClose("] - Oracle")
+  WinWaitClose("] - Oracle")
+  WinClose("Oracle", "")
   ProcessNameClose("VirtualBox.exe")
   ProcessNameClose("VBoxManage.exe")
   ProcessNameClose("VirtualBoxVM.exe")
