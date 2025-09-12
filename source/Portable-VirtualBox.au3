@@ -717,15 +717,8 @@ EndIf
 
       RunWait($arch&"\VBoxSVC.exe /unregserver", @ScriptDir, @SW_HIDE)
       RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
-
-	While 1
-	Local $VBoxProxyStub = RegRead("HKLM\SOFTWARE\Classes\CLSID\{0BB3B78C-1807-4249-5BA5-EA42D66AF0BF}\InProcServer32", "")
-    If StringRegExp($VBoxProxyStub, "VBoxProxyStub") Then
-		RunWait($arch&"\VBoxSDS.exe /UnregService", @ScriptDir, @SW_SHOW)
-		RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
-	EndIf
-	If NOT $VBoxProxyStub Then ExitLoop
-	WEnd
+      RunWait($arch&"\VBoxSDS.exe /UnregService", @ScriptDir, @SW_SHOW)
+      RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
 
       If $DRV = 1 Then
         RunWait("sc stop VBoxDRV", @ScriptDir, @SW_HIDE)
