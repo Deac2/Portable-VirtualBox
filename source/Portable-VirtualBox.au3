@@ -1665,8 +1665,8 @@ Func ExitScript()
   ProcessNameClose("VBoxSDS.exe")
 EndFunc
 
-Func ProcessNameClose($Process)
-	Local $ListArray = ProcessList($Process)
+Func ProcessNameClose($ProcessName)
+	Local $ListArray = ProcessList($ProcessName)
 	For $i = 0 To $ListArray[0][0]
 	If ProcessExists($ListArray[$i][1]) Then
 	ProcessClose($ListArray[$i][1])
