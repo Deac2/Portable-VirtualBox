@@ -839,14 +839,14 @@ _WinSetState("VirtualBox.exe", @SW_HIDE)
 EndFunc
 
 Func _WinSetState($ProcessName, $Command)
-Local $titles = GetWindowTitlesByProcessName($ProcessName)
+Local $titles = GetWindowTitle($ProcessName)
 If @error Then Return
 For $i = 1 To $titles[0]
 WinSetState(""&$titles[$i]&"", "", $Command)
 Next
 EndFunc
 
-Func GetWindowTitlesByProcessName($ProcessName)
+Func GetWindowTitle($ProcessName)
     Local $pid = 0
     Local $processList = ProcessList()
     For $i = 1 To $processList[0][0]
