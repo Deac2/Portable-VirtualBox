@@ -2,6 +2,11 @@
 This version with a new settings window, delete the folder data\language if you copy to the old folder with virtualbox the language has differences and most of the unnecessary is removed.<br>
 <a href="https://github.com/Deac2/Portable-VirtualBox_old_menu-Settings" target="_blank">Old version of Virtualbox settings</a><br>
 If something doesn't work, open issues in the thread you downloaded from (it's better to create in my repositories).<br>
+The download and installation window has been redesigned<br>
+data\settings\settings.ini<br>
+[lang]<br>
+key=2 Writes the currently selected language to the ini file. If needed, use the number 2.<br>
+key=1 The language is taken directly from the array; language files are not created.<br>
 
 22.10.2024 If you have an old language folder, Delete the data\language folder as the languages ​​have been partially changed.<br>
 Disable message center notifications and screen capture messages VirtualBoxVM.exe default settings directory:<br>
