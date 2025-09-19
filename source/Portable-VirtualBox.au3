@@ -163,12 +163,12 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   GUICtrlCreateLabel(GetTranslation($Lang, "download", "02"), 152, 8, 476, 60)
 
   GUISetFont(9, 400, 0, "Arial")
-  Local $Download100 = GUICtrlCreateList("", 15, 11, 121, 290, BitOR(0xB00000, 0x800000), 0x06)
+  Local $Download_listbox = GUICtrlCreateList("", 15, 11, 121, 290, BitOR(0xB00000, 0x800000), 0x06)
   
   GUISetFont(10, 400, 0, "Arial")
   $Button100 = GUICtrlCreateButton(GetTranslation($Lang, "download", "03"), 11, 308, 185, 33)
   GUICtrlSetOnEvent($Button100, "DownloadFile")
-  Load_CreateList()
+  Load_ListBox()
 
   $Input100 = GUICtrlCreateInput(GetTranslation($Lang, "download", "04"), 152, 70, 373, 23)
   GUICtrlCreateButton(GetTranslation($Lang, "download", "05"), 532, 69, 93, 25)
@@ -178,7 +178,8 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 330, 26)
   $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 330, 26)
 
-  GUICtrlCreateLabel(GetTranslation($Lang, "download", "09"), 152, 173, 300, 26)
+  $LabelDownload = GUICtrlCreateLabel(GetTranslation($Lang, "download", "09"), 152, 173, 300, 26)
+  GUICtrlSetState($LabelDownload, $GUI_HIDE)
   $Input200 = GUICtrlCreateEdit("", 149, 190, 476, 65, "", 0x06)
 
   $Button200 = GUICtrlCreateButton(GetTranslation($Lang, "download", "10"), 209, 308, 129, 33)
@@ -797,14 +798,14 @@ Func HideWindows()
 _WinSetState("VirtualBox.exe", @SW_HIDE)
 EndFunc
 
-Func Load_CreateList()
+Func Load_ListBox()
 Const $TH_MAJOR = 6, $TH_MINOR = 0, $TH_PATCH = 24
-Local $maxMaj070 = 7, $maxMin070 = 0, $maxNode070 = 0
+Local $MAX_MAJOR070 = 7, $MAX_MIN070 = 0, $MaxNode070 = 0
 
 Local $url = "https://download.virtualbox.org/virtualbox/"
 Local $binData = InetRead($url)
 If @error Or @extended = 0 Then
-GUICtrlSetState($download100, $GUI_DISABLE)
+GUICtrlSetState($Download_listbox, $GUI_DISABLE)
 GUICtrlSetState($Button100, $GUI_DISABLE)
 EndIf
 
@@ -820,18 +821,18 @@ For $i = 0 To UBound($aMatches) - 1
 
     Local $maj = Number($aP[1]), $min = Number($aP[2]), $pat = Number($aP[3])
 	If ($maj > $TH_MAJOR) Or ($maj = $TH_MAJOR And $min > $TH_MINOR) Or ($maj = $TH_MAJOR And $min = $TH_MINOR And $pat >= $TH_PATCH) Then
-            GUICtrlSetData($download100, "VirtualBox "&$ver)
+            GUICtrlSetData($Download_listbox, "VirtualBox "&$ver)
 
-            If $maj = $maxMaj070 And $min = $maxMin070 Then
-                    $maxNode070 = $ver
+            If $maj = $MAX_MAJOR070 And $min = $MAX_MIN070 Then
+                    $MaxNode070 = $ver
             EndIf
     EndIf
 Next
 
-	If $maxNode070 <> 0 Then
-	GUICtrlSetData($download100, "VirtualBox "&$maxNode070)
+	If $MaxNode070 <> 0 Then
+	GUICtrlSetData($Download_listbox, "VirtualBox "&$MaxNode070)
 	Else
-	GUICtrlSetData($download100, "VirtualBox "&$ver)
+	GUICtrlSetData($Download_listbox, "VirtualBox "&$ver)
 	EndIf
 EndFunc
 
@@ -1483,7 +1484,7 @@ EndIf
 	EndIf
   EndIf
 	UpdateSettings()
-	MsgBox(0, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
+	MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
 EndFunc
 
 Func CheckboxSettings()
@@ -1557,7 +1558,7 @@ Func OKHotKeysSet()
     IniWrite($var1, "hotkeys", "22", "4")
     IniWrite($var1, "hotkeys", "23", "5")
     IniWrite($var1, "hotkeys", "24", "6")
-    MsgBox(0, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
+    MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
   Else
     If GUICtrlRead($Input1) = false OR GUICtrlRead($Input2) = false OR GUICtrlRead($Input3) = false OR GUICtrlRead($Input4) = false OR GUICtrlRead($Input5) = false OR GUICtrlRead($Input6) = false Then
       MsgBox(0, GetTranslation($Lang, "messages", "01"), GetTranslation($Lang, "okhotkeysset", "01"))
@@ -1662,7 +1663,7 @@ Func OKHotKeysSet()
       IniWrite($var1, "hotkeys", "22", GUICtrlRead($Input4))
       IniWrite($var1, "hotkeys", "23", GUICtrlRead($Input5))
       IniWrite($var1, "hotkeys", "24", GUICtrlRead($Input6))
-      MsgBox(0, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
+      MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
     EndIf
   EndIf
 EndFunc
@@ -1716,7 +1717,8 @@ EndFunc
 Func DownloadFile()
     GUICtrlSetState($Button100, $GUI_DISABLE)
     GUICtrlSetState($Button200, $GUI_DISABLE)
-	Local $version = GUICtrlRead($download100)
+	GUICtrlSetState($LabelDownload, $GUI_SHOW)
+	Local $version = GUICtrlRead($Download_listbox)
 	$version = StringRegExpReplace($version, ".*?(\d+\.\d+\.\d+).*", "$1")
     Local $baseUrl = "https://download.virtualbox.org/virtualbox/" & $version & "/"
 	Local $save1 = @ScriptDir&"\VirtualBox.exe"
