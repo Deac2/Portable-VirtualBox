@@ -242,6 +242,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 
   If NOT FileExists($UserHome&"\VirtualBox.xml") Then
 	DirCreate($UserHome)
+	DirCreate($MachineFolder)
 	$file = FileOpen($UserHome&"\VirtualBox.xml", 2)
 	FileWrite($file, "<?xml version=""1.0""?>"&@LF&"<VirtualBox xmlns=""http://www.virtualbox.org/"" version=""1.12-windows"">"&@LF&"<Global>"&@LF&"<ExtraData>"&@LF&"</ExtraData>"&@LF&"<MachineRegistry/>"&@LF&"<NetserviceRegistry>"&@LF&"</NetserviceRegistry>"&@LF&"</Global>"&@LF&"</VirtualBox>")
 	FileClose($file)
@@ -888,7 +889,7 @@ EndFunc
 
 Func ValidatePath($Path, $DefaultPath)
     ; Check disk and create folder
-    If $Path=$UserHome AND FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
+    If FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
 
     ; Check that the path exists and is a folder
     If FileExists($Path) And StringInStr(FileGetAttrib($Path), "D") And Not StringInStr(FileGetAttrib($Path), "R") Then
@@ -1722,7 +1723,7 @@ Func DownloadFile()
 	$version = StringRegExpReplace($version, ".*?(\d+\.\d+\.\d+).*", "$1")
     Local $baseUrl = "https://download.virtualbox.org/virtualbox/" & $version & "/"
 	Local $save1 = @ScriptDir&"\VirtualBox.exe"
-	Local $save2 = @ScriptDir&"\Extension"
+	Local $save2 = @ScriptDir&"\Extension.vbox-extpack"
 
     Local $htmlContent = BinaryToString(InetRead($baseUrl))
 
@@ -1830,6 +1831,7 @@ Func UseSettings()
   EndIf
 
   If (FileExists(@ScriptDir&"\virtualbox.exe") OR FileExists($SourceFile)) AND (GUICtrlRead($Checkbox100) = $GUI_CHECKED OR GUICtrlRead($Checkbox110) = $GUI_CHECKED) Then
+    GUICtrlSetState($LabelDownload, $GUI_SHOW)
     GUICtrlSetData($Input200, @LF & GetTranslation($Lang, "status", "04"))
 
     If FileExists(@ScriptDir&"\virtualbox.exe") Then
@@ -1864,6 +1866,7 @@ Func UseSettings()
 	Endif
 	If FileExists($PatchExtension) Then
 	  RunWait(@ScriptDir&"\data\tools\7za.exe x -o"&@ScriptDir&"\temp\ "&$PatchExtension&"", @ScriptDir, @SW_HIDE)
+	  RunWait(@ScriptDir&"\data\tools\7za.exe x -o"&@ScriptDir&"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\ "&@ScriptDir&"\temp\Extension", @ScriptDir, @SW_HIDE)
 	  RunWait(@ScriptDir&"\data\tools\7za.exe x -o"&@ScriptDir&"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\ "&@ScriptDir&"\temp\Extension~", @ScriptDir, @SW_HIDE)
 	Endif
 
@@ -1926,7 +1929,8 @@ Func UseSettings()
   If FileExists(@ScriptDir&"\temp") Then
     DirRemove(@ScriptDir&"\temp", 1)
     FileDelete(@ScriptDir&"\virtualbox.exe")
-    FileDelete(@ScriptDir&"\extension")
+	FileDelete(@ScriptDir&"\extension")
+    FileDelete(@ScriptDir&"\extension.vbox-extpack")
     RunWait("cmd /c taskkill /im msiexec.exe /f", @ScriptDir, @SW_HIDE)
   EndIf
 
