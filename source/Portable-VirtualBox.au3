@@ -239,6 +239,14 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 	Run('cmd /c ""'&@ScriptDir&'\'&$arch&'\VBoxManage.exe" setproperty machinefolder "'&$MachineFolder&'""', @ScriptDir, @SW_HIDE)
   EndIf
 
+  If NOT FileExists($UserHome&"\VirtualBox.xml") Then
+	DirCreate($UserHome)
+	$file = FileOpen($UserHome&"\VirtualBox.xml", 2)
+	FileWrite($file, "<?xml version=""1.0""?>"&@LF&"<VirtualBox xmlns=""http://www.virtualbox.org/"" version=""1.12-windows"">"&@LF&"<Global>"&@LF&"<ExtraData>"&@LF&"</ExtraData>"&@LF&"<MachineRegistry/>"&@LF&"<NetserviceRegistry>"&@LF&"</NetserviceRegistry>"&@LF&"</Global>"&@LF&"</VirtualBox>")
+	FileClose($file)
+	Run('cmd /c ""'&@ScriptDir&'\'&$arch&'\VBoxManage.exe" setproperty machinefolder "'&$MachineFolder&'""', @ScriptDir, @SW_HIDE)
+  EndIf
+
   If FileExists($UserHome&"\VirtualBox.xml") Then
     Local $values0, $values1, $values2, $values3, $values4, $values5, $values6, $values7, $values8, $values9, $values10, $values11, $values12, $values13
     Local $line, $content, $i, $j, $k, $l, $m, $n
@@ -345,7 +353,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
     EndIf
   Else
     MsgBox(0+262144, GetTranslation($Lang, "download", "13"), GetTranslation($Lang, "download", "14"))
-EndIf
+  EndIf
 
   If FileExists(@ScriptDir&"\"&$arch&"\VirtualBox.exe") AND FileExists(@ScriptDir&"\"&$arch&"\VBoxSVC.exe") AND FileExists(@ScriptDir&"\"&$arch&"\VBoxC.dll") Then
     If NOT ProcessExists("VirtualBox.exe") OR NOT ProcessExists("VBoxManage.exe") Then
@@ -879,7 +887,7 @@ EndFunc
 
 Func ValidatePath($Path, $DefaultPath)
     ; Check disk and create folder
-    If (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) And FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
+    If $Path=$UserHome AND FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
 
     ; Check that the path exists and is a folder
     If FileExists($Path) And StringInStr(FileGetAttrib($Path), "D") And Not StringInStr(FileGetAttrib($Path), "R") Then
@@ -1386,7 +1394,6 @@ IniDelete($var1, "language", "date")
 Endif
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT IsLangValid(IniRead($var1, "language", "key", "False")) Then
-MsgBox(0, "", "LangDef")
 IniWrite($var1, "language", "key", "English")
 EndIf
 
