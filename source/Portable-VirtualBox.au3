@@ -35,7 +35,6 @@ TraySetState()
 TraySetToolTip("Portable-VirtualBox")
 
 Global $var1 = @ScriptDir&"\data\settings\settings.ini"
-Global $var2 = @ScriptDir&"\data\settings\vboxinstall.ini"
 Global $Lang = IniRead($var1, "language", "key", "NotFound")
 Global $DefaultUserHome = @ScriptDir&"\.VirtualBox"
 Global $DefaultMachineFolder = @ScriptDir&"\.VirtualBox\Machines"
@@ -201,14 +200,10 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   While 1
     If $install = 0 Then ExitLoop
   WEnd
-
-  Global $startvbox = 0
-Else
-  Global $startvbox = 1
 EndIf
 
-If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND ($startvbox = 1 OR IniRead(@ScriptDir&"\data\settings\vboxinstall.ini", "startvbox", "key", "NotFound") = 1) Then
-  IniDelete(@ScriptDir&"\data\settings\vboxinstall.ini", "startvbox")
+If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND IniRead($var1, "startvbox", "key", "NotFound") = 1 Then
+  IniDelete($var1, "startvbox")
   If FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
     If @OSArch = "x86" Then
       Global $arch = "app32"
@@ -298,7 +293,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 			EndIf
 		Next
     Next
-    FileClose($file)
+    ;FileClose($file)
 
       $content = FileRead(FileOpen($UserHome&"\VirtualBox.xml", 128))
       $values6 = _StringBetween($content, "</ExtraData>", "<NetserviceRegistry>")
@@ -319,8 +314,31 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
           EndIf
         EndIf
       Next
-
       FileClose($file)
+
+      #clear log
+      If FileExists($UserHome) Then
+      FileDelete($UserHome&"\*.log")
+      FileDelete($UserHome&"\*.log.*")
+      EndIf
+
+      #clear log Machines
+      If FileExists($UserHome&"\VirtualBox.xml") Then
+		For $i = 0 To UBound($values1) - 1
+		Local $Result = StringSplit(StringReplace($values1[$i], ".vbox", ""), "\")
+		Local $ResultName = $Result[$Result[0]]
+		$aArray = _RecFileListToArray($UserHome, "*"&$ResultName&".vbox", 1, 1, 0, 2)
+		If IsArray($aArray) Then
+		For $j = 1 To $aArray[0]
+		If FileExists($aArray[$j]) Then
+		Local $Patch = StringRegExpReplace($aArray[$j], "[^\\]+$", "")
+		FileDelete($Patch&"Logs\*.log")
+		FileDelete($Patch&"Logs\*.log.*")
+		EndIf
+		Next
+		EndIf
+		Next
+      EndIf
     EndIf
   Else
     MsgBox(0+262144, GetTranslation($Lang, "download", "13"), GetTranslation($Lang, "download", "14"))
@@ -588,30 +606,6 @@ EndIf
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxcStub.dll", @ScriptDir, @SW_HIDE)
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
       DllCall($arch&"\VBoxRT.dll", "hwnd", "RTR3Init")
-
-      #clear log
-      If FileExists($UserHome) Then
-      FileDelete($UserHome&"\*.log")
-      FileDelete($UserHome&"\*.log.*")
-      EndIf
-
-      #clear log Machines
-      If FileExists($UserHome&"\VirtualBox.xml") Then
-		For $i = 0 To UBound($values1) - 1
-		Local $Result = StringSplit(StringReplace($values1[$i], ".vbox", ""), "\")
-		Local $ResultName = $Result[$Result[0]]
-		$aArray = _RecFileListToArray($UserHome, "*"&$ResultName&".vbox", 1, 1, 0, 2)
-		If IsArray($aArray) Then
-		For $j = 1 To $aArray[0]
-		If FileExists($aArray[$j]) Then
-		Local $Patch = StringRegExpReplace($aArray[$j], "[^\\]+$", "")
-		FileDelete($Patch&"Logs\*.log")
-		FileDelete($Patch&"Logs\*.log.*")
-		EndIf
-		Next
-		EndIf
-		Next
-      EndIf
 
       If $CmdLine[0] = 1 Then
         If FileExists($UserHome) Then
@@ -1925,9 +1919,7 @@ Func UseSettings()
   EndIf
 
   If GUICtrlRead($Checkbox120) = $GUI_CHECKED Then
-    IniWrite(@ScriptDir&"\data\settings\vboxinstall.ini", "startvbox", "key", "1")
-  Else
-    IniWrite(@ScriptDir&"\data\settings\vboxinstall.ini", "startvbox", "key", "0")
+    IniWrite($var1, "startvbox", "key", "1")
   EndIf
 
   if (FileExists(@ScriptDir&"\virtualbox.exe") OR FileExists($SourceFile)) AND (GUICtrlRead($Checkbox100) = $GUI_CHECKED OR GUICtrlRead($Checkbox110) = $GUI_CHECKED) Then
