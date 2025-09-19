@@ -10,9 +10,9 @@ Global $catalan = [ _
     ["messages", "02", "Desa"], _
     ["messages", "03", "Tancar"], _
     ["messages", "04", "Desat"], _
-    ["messages", "05", "Si us plau, recordeu reiniciar el Portable-VirtualBox per tal que les noves opcions tinguin efecte."], _
-    ["messages", "06", "Inicia el Portable-VirtualBox"], _
-    ["messages", "07", "Surt del Portable-VirtualBox"], _
+    ["messages", "05", "Si us plau, recordeu reiniciar el Portable VirtualBox per tal que les noves opcions tinguin efecte."], _
+    ["messages", "06", "Inicia el Portable VirtualBox"], _
+    ["messages", "07", "Surt del Portable VirtualBox"], _
     ["start", "01", "Copia els fitxer del VirtualBox a la carpeta corresponent."], _
     ["settings", "01", "Configuració"], _
     ["settings", "02", "Executar VirtualBox amb suport de xarxa"], _
@@ -32,7 +32,7 @@ Global $catalan = [ _
     ["about", "01", "Sobre el programa..."], _
     ["okhotkeysset", "01", "Estableix la clau per al camp d'entrada."], _
     ["download", "01", "VirtualBox Portable"], _
-    ["download", "02", "Aquí podeu trobar fitxers d'instal·lació de VirtualBox que es poden descarregar automàticament i fer alguns canvis, només cal que aneu a la configuració i feu clic a ""D'acord""."], _
+    ["download", "02", "Aquí podeu trobar els fitxers d'instal·lació de VirtualBox, que es poden descarregar automàticament i fer alguns canvis, només cal descarregar Virtualbox, configurar-los i fer clic a ""Desempaquetar""."], _
     ["download", "03", "Puja fitxers"], _
     ["download", "04", "El camí del fitxer d'instal·lació del VirtualBox és..."], _
     ["download", "05", "Revisió"], _
@@ -40,7 +40,7 @@ Global $catalan = [ _
     ["download", "07", "Extreure els fitxers per un sistema de 64 bits"], _
     ["download", "08", "Inicieu VirtualBox Portable després de desempaquetar"], _
     ["download", "09", "Informació d'estat:"], _
-    ["download", "10", "D'acord"], _
+    ["download", "10", "Desempaquetar"], _
     ["download", "11", "Llicència de VirtualBox"], _
     ["download", "12", "Sortida"], _
     ["download", "13", "Info"], _
@@ -92,16 +92,16 @@ Global $chinese = [ _
     ["hotkey-settings", "04", "为输入字段定义一个键"], _
     ["about", "01", "关于该计划..."], _
     ["okhotkeysset", "01", "为输入字段定义一个键。"], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "在这里你可以设置是下载 VirtralBox 安装文件还是手动指定程序所在位置（如果你使用本程序下载 VirtualBox，只需要选择版本，然后单击""确定""）。"], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "在这里您可以找到VirtualBox安装文件，它可以自动下载并进行一些更改，只需下载Virtualbox，进行设置并单击""解包""即可。"], _
     ["download", "03", "上传文件"], _
     ["download", "04", "VirtualBox 安装文件的路径..."], _
     ["download", "05", "审查"], _
     ["download", "06", "提取 32 位系统的文件"], _
     ["download", "07", "提取 64 位系统的文件"], _
-    ["download", "08", "解压后启动Portable-VirtualBox"], _
+    ["download", "08", "解压后启动Portable VirtualBox"], _
     ["download", "09", "状态信息："], _
-    ["download", "10", "确定"], _
+    ["download", "10", "解包"], _
     ["download", "11", "许可证 VirtualBox"], _
     ["download", "12", "出口"], _
     ["download", "13", "信息"], _
@@ -154,7 +154,7 @@ Global $english = [ _
     ["about", "01", "About the program..."], _
     ["okhotkeysset", "01", "Define a key for the input-field."], _
     ["download", "01", "VirtualBox Portable"], _
-    ["download", "02", "Here you can find the VirtualBox installation files, which can be automatically downloaded and make some changes, just make the settings and click ""Apply""."], _
+    ["download", "02", "Here you can find the VirtualBox installation files, which can be downloaded automatically and make some changes, just download Virtualbox, make the settings and click ""Unpack""."], _
     ["download", "03", "Upload files"], _
     ["download", "04", "Path to VirtualBox installation file..."], _
     ["download", "05", "Overview"], _
@@ -162,7 +162,7 @@ Global $english = [ _
     ["download", "07", "Unzip files for 64-bit systems"], _
     ["download", "08", "Run VirtualBox Portable after unpack"], _
     ["download", "09", "Status:"], _
-    ["download", "10", "Apply"], _
+    ["download", "10", "Unpack"], _
     ["download", "11", "VirtualBox License"], _
     ["download", "12", "Exit"], _
     ["download", "13", "Info"], _
@@ -194,8 +194,8 @@ Global $french = [ _
     ["messages", "03", "Fermer"], _
     ["messages", "04", "Enregistré"], _
     ["messages", "05", "Redémarrez VirtualBox pour prendre en compte les nouveaux paramètres."], _
-    ["messages", "06", "Démarrer Portable-VirtualBox"], _
-    ["messages", "07", "Quitter Portable-VirtualBox"], _
+    ["messages", "06", "Démarrer Portable VirtualBox"], _
+    ["messages", "07", "Quitter Portable VirtualBox"], _
     ["start", "01", "Copiez les fichiers depuis VirtualBox dans le dossier de l'application."], _
     ["settings", "01", "Paramètres"], _
     ["settings", "02", "Exécution de VirtualBox avec prise en charge réseau"], _
@@ -214,20 +214,20 @@ Global $french = [ _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "A propos de..."], _
     ["okhotkeysset", "01", "Enregistrez une clef pour le champ de saisie."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "Ici vous pouvez trouver les fichiers d'installation de VirtualBox qui peuvent être téléchargés automatiquement et apporter quelques modifications, il suffit de définir les paramètres et de cliquer sur ""OK""."], _
-    ["download", "03", "Télécharger"], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "Vous trouverez ici les fichiers d'installation de VirtualBox, qui peuvent être téléchargés automatiquement et apporter quelques modifications, téléchargez simplement Virtualbox, effectuez les réglages et cliquez sur ""Décompresser""."], _
+    ["download", "03", "Télécharger des fichiers"], _
     ["download", "04", "Le chemin vers les fichiers d'installation de VirtualBox est..."], _
-    ["download", "05", "recherche"], _
+    ["download", "05", "Aperçu"], _
     ["download", "06", "Extraire les fichiers pour un système 32-Bit"], _
     ["download", "07", "Extraire les fichiers pour un système 64-Bit"], _
-    ["download", "08", "Démarrer Portable-VirtualBox après l'extraction et / ou la compression"], _
+    ["download", "08", "Démarrer Portable VirtualBox après l'extraction et / ou la compression"], _
     ["download", "09", "Informations:"], _
-    ["download", "10", "OK"], _
+    ["download", "10", "Décompresser"], _
     ["download", "11", "Licence de VirtualBox"], _
     ["download", "12", "Sortie"], _
     ["download", "13", "Info"], _
-    ["download", "14", "Veuillez redémarrer Portable-Virtualbox afin de mettre à jour les chemins!"], _
+    ["download", "14", "Veuillez redémarrer Portable VirtualBox afin de mettre à jour les chemins!"], _
     ["status", "01", "Téléchargement en cours:"], _
     ["status", "02", "Téléchargement terminé ! Les fichiers sont enregistrés dans le dossier Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Fichier d'installation"], _
@@ -255,8 +255,8 @@ Global $german = [ _
     ["messages", "03", "Beenden"], _
     ["messages", "04", "Gespeichert"], _
     ["messages", "05", "VirtualBox neustarten, um die Einstellungen zu übernehmen."], _
-    ["messages", "06", "Starte Portable-VirtualBox"], _
-    ["messages", "07", "Beende Portable-VirtualBox"], _
+    ["messages", "06", "Starte Portable VirtualBox"], _
+    ["messages", "07", "Beende Portable VirtualBox"], _
     ["start", "01", "Die Dateien von VirtualBox in den (jeweiligen) APP-ORDNER kopieren."], _
     ["settings", "01", "Einstellungen"], _
     ["settings", "02", "Ausführen von VirtualBox mit Netzwerkunterstützung"], _
@@ -275,8 +275,8 @@ Global $german = [ _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "Über das Programm..."], _
     ["okhotkeysset", "01", "Definieren Sie einen Schlüssel für das Eingabefeld."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "Hier kannst du die Installationsdateien von VirtualBox automatisch herunterladen lassen und einige Einstellungen vornehmen (Wenn du VirtualBox mit diesem Skript herunterlädst, nur noch die Einstellungen vornehmen und auf ""OK"" klicken)."], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "Hier finden Sie die Installationsdateien von VirtualBox, die Sie automatisch herunterladen und anpassen können. Laden Sie einfach VirtualBox herunter, konfigurieren Sie die Einstellungen und klicken Sie auf ""Entpacken""."], _
     ["download", "03", "Dateien hochladen"], _
     ["download", "04", "Pfad zu der Installationsdatei von VirtualBox ist..."], _
     ["download", "05", "Rezension"], _
@@ -284,7 +284,7 @@ Global $german = [ _
     ["download", "07", "Extrahieren Sie die Dateien für ein 64-Bit-Syste"], _
     ["download", "08", "Starten VirtualBox Portable nach dem Entpacken"], _
     ["download", "09", "Status-Info:"], _
-    ["download", "10", "OK"], _
+    ["download", "10", "Entpacken"], _
     ["download", "11", "Lizenz VirtualBox"], _
     ["download", "12", "Ausfahrt"], _
     ["download", "13", "Info"], _
@@ -336,8 +336,8 @@ Global $italian = [ _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "A proposito del programma..."], _
     ["okhotkeysset", "01", "Definire una chiave per il campo di input."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "Qui potete trovare i file di installazione di VirtualBox può scaricare automaticamente ed effettuare alcune regolazioni (Se si utilizza questo script scaricare VirtualBox, solo effettuare le impostazioni e fare clic su ""OK"")."], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "Per scaricare e apportare modifiche, è sufficiente scaricare Virtualbox, configurare le impostazioni e fare clic su ""Decomprimi""."], _
     ["download", "03", "Caricare file"], _
     ["download", "04", "Percorso del file di installazione di VirtualBox è..."], _
     ["download", "05", "Seleziona"], _
@@ -345,7 +345,7 @@ Global $italian = [ _
     ["download", "07", "Estrarre i file da un sistema a 64-Bit"], _
     ["download", "08", "Avvia VirtualBox Portable dopo aver decompresso"], _
     ["download", "09", "Informazione-stato:"], _
-    ["download", "10", "OK"], _
+    ["download", "10", "Decomprimi"], _
     ["download", "11", "Licenza di VirtualBox"], _
     ["download", "12", "Uscita"], _
     ["download", "13", "Info"], _
@@ -377,8 +377,8 @@ Global $japanese = [ _
     ["messages", "03", "近い"], _
     ["messages", "04", "保存されました"], _
     ["messages", "05", "設定を変更するには、VirtualBox を再起動します。"], _
-    ["messages", "06", "Portable-VirtualBox を起動します"], _
-    ["messages", "07", "Portable-VirtualBox を終了します"], _
+    ["messages", "06", "Portable VirtualBox を起動します"], _
+    ["messages", "07", "Portable VirtualBox を終了します"], _
     ["start", "01", "VirtualBox からファイルをそれぞれの APP-Folder にコピーします。"], _
     ["settings", "01", "設定"], _
     ["settings", "02", "ネットワークサポート付きのVirtualBoxの実行"], _
@@ -397,16 +397,16 @@ Global $japanese = [ _
     ["hotkey-settings", "04", "入力フィールドのキーを定義する"], _
     ["about", "01", "プログラムについて..."], _
     ["okhotkeysset", "01", "入力フィールドのキーを定義します。"], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "VirtualBox のインストールファイルを自動でダウンロードしていくつかの調整を行います。(このスクリプトを使用して VirtualBox をダウンロードする場合、設定では ""OK"" をクリックするだけにします)"], _
-    ["download", "03", "ダウンロード"], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "ここでは、VirtualBox のインストール ファイルが見つかります。このファイルは自動的にダウンロードされ、いくつかの変更を加えることができます。Virtualbox をダウンロードし、設定を行って ""開梱"" をクリックするだけです。"], _
+    ["download", "03", "ファイルをアップロードする"], _
     ["download", "04", "VirtualBox インストールファイルのパス..."], _
-    ["download", "05", "検索"], _
+    ["download", "05", "レビュー"], _
     ["download", "06", "32 ビットシステム用のファイルを展開します"], _
     ["download", "07", "64 ビットシステム用のファイルを展開します"], _
-    ["download", "08", "展開 および / または 圧縮の後、Portable-VirtualBox を起動"], _
+    ["download", "08", "展開 および / または 圧縮の後、Portable VirtualBox を起動"], _
     ["download", "09", "ステータス情報:"], _
-    ["download", "10", "OK"], _
+    ["download", "10", "開梱"], _
     ["download", "11", "ライセンス VirtualBox"], _
     ["download", "12", "出口"], _
     ["download", "13", "情報"], _
@@ -438,8 +438,8 @@ Global $korean = [ _
     ["messages", "03", "닫다"], _
     ["messages", "04", "저장됨"], _
     ["messages", "05", "설정을 변경하려면 VirtualBox를 다시 시작하세요."], _
-    ["messages", "06", "Portable-VirtualBox 시작"], _
-    ["messages", "07", "Portable-VirtualBox 나가기"], _
+    ["messages", "06", "Portable VirtualBox 시작"], _
+    ["messages", "07", "Portable VirtualBox 나가기"], _
     ["start", "01", "VirtualBox의 파일을 APP 디렉터리의 해당 폴더에 복사합니다."], _
     ["settings", "01", "설정"], _
     ["settings", "02", "네트워크 지원을 통한 VirtualBox 실행"], _
@@ -458,16 +458,16 @@ Global $korean = [ _
     ["hotkey-settings", "04", "입력 필드에 대한 키를 정의합니다"], _
     ["about", "01", "프로그램에 대해..."], _
     ["okhotkeysset", "01", "입력-필드에 키를 정의하세요."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "여기서 자동으로 다운로드하여 약간 조정할 수 있도록 할 수 있는 VirtualBox의 설치 파일을 찾을 수 있습니다 (이 스크립트를 사용하여 VirtualBox를 다운로드하는 경우, 오직 설정을 만들고 ""확인""을 클릭하세요)."], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "여기에서 VirtualBox 설치 파일을 찾을 수 있습니다. 이 파일은 자동으로 다운로드되어 일부 변경이 가능합니다. Virtualbox를 다운로드하고 설정을 한 후 ""압축 풀기""를 클릭하기만 하면 됩니다."], _
     ["download", "03", "파일 업로드"], _
     ["download", "04", "VirtualBox의 설치 파일의 경로는..."], _
     ["download", "05", "검색"], _
     ["download", "06", "32-비트 시스템을 위한 파일의 압축 풀기"], _
     ["download", "07", "64-비트 시스템을 위한 파일의 압축 풀기"], _
-    ["download", "08", "압축 풀기 및/또는 압축하고 나서 Portable-VirtualBox 시작"], _
+    ["download", "08", "압축 풀기 및/또는 압축하고 나서 Portable VirtualBox 시작"], _
     ["download", "09", "상태-정보:"], _
-    ["download", "10", "확인"], _
+    ["download", "10", "압축 풀기"], _
     ["download", "11", "라이센스 VirtualBox"], _
     ["download", "12", "나가기"], _
     ["download", "13", "정보"], _
@@ -499,7 +499,7 @@ Global $polish = [ _
     ["messages", "03", "Zamknąć"], _
     ["messages", "04", "Zapisane"], _
     ["messages", "05", "Restartuj VirtualBox by zmienić ustawienia."], _
-    ["messages", "06", "Uruchamiam Portable-VirtualBox"], _
+    ["messages", "06", "Uruchamiam Portable VirtualBox"], _
     ["messages", "07", "Zamykanie VirtualBoxa"], _
     ["start", "01", "Kopiuj pliki z VirtualBox do folederu APP-Folder."], _
     ["settings", "01", "Ustawienia"], _
@@ -519,16 +519,16 @@ Global $polish = [ _
     ["hotkey-settings", "04", "Zdefiniuj klucz dla pola wejściowego"], _
     ["about", "01", "O programie..."], _
     ["okhotkeysset", "01", "Zdefiniuj przycisk dla polki wejscia."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "Tutaj można znaleźć pliki instalacyjne z VirtualBox może automatycznie pobierać i dokonać pewnych korekt (Jeżeli używasz tego skryptu pobierania VirtualBox, zaznacz te ustawienia i kliknij przycisk ""OK"")."], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "Tutaj znajdziesz pliki instalacyjne VirtualBox, które można pobrać automatycznie i wprowadzić w nich zmiany. Wystarczy pobrać VirtualBox, dokonać ustawień i kliknąć ""Rozpakuj""."], _
     ["download", "03", "Prześlij pliki"], _
     ["download", "04", "Ścieżka pliku instalacyjnego VirtualBox..."], _
     ["download", "05", "Szukaj"], _
     ["download", "06", "Wypakuj pliki dla 32-bit systemu"], _
     ["download", "07", "Wypakuj pliki dla 64-bit systemu"], _
-    ["download", "08", "Uruchom Portable-VirtualBox po wypakowaniu"], _
+    ["download", "08", "Uruchom Portable VirtualBox po wypakowaniu"], _
     ["download", "09", "Status-Info:"], _
-    ["download", "10", "OK"], _
+    ["download", "10", "Rozpakuj"], _
     ["download", "11", "Licencja VirtualBox"], _
     ["download", "12", "Wyjście"], _
     ["download", "13", "Info"], _
@@ -581,7 +581,7 @@ Global $portuguese = [ _
     ["about", "01", "Sobre o programa..."], _
     ["okhotkeysset", "01", "Registe uma chave no entrada-campo."], _
     ["download", "01", "VirtualBox Portable"], _
-    ["download", "02", "Aqui pode encontrar os arquivos de instalação do VirtualBox pode automaticamente fazer o download e fazer alguns ajustes (Se você usar este script baixar o VirtualBox, só fazer as configurações e clique em ""OK"")."], _
+    ["download", "02", "Aqui você encontra os arquivos de instalação do VirtualBox, que podem ser baixados automaticamente e fazer algumas alterações, basta baixar o Virtualbox, fazer as configurações e clicar em ""Descompactar""."], _
     ["download", "03", "Carregar arquivos"], _
     ["download", "04", "Caminho para o arquivo de instalação do VirtualBox é..."], _
     ["download", "05", "Pesquisa"], _
@@ -589,7 +589,7 @@ Global $portuguese = [ _
     ["download", "07", "Extraia os arquivos para um sistema de 64 bits"], _
     ["download", "08", "Inicie o VirtualBox Portable após descompactar"], _
     ["download", "09", "Status-Info:"], _
-    ["download", "10", "OK"], _
+    ["download", "10", "Descompactar"], _
     ["download", "11", "Licença VirtualBox"], _
     ["download", "12", "Saída"], _
     ["download", "13", "Info"], _
@@ -642,7 +642,7 @@ Global $russian = [ _
     ["about", "01", "О программе..."], _
     ["okhotkeysset", "01", "Определите ключ для поля ввода."], _
     ["download", "01", "VirtualBox Portable"], _
-    ["download", "02", "Здесь вы можете найти установочные файлы VirtualBox, которые можно автоматически загрузить и внести некоторые изменения просто выполните настройки и нажмите ""Применить""."], _
+    ["download", "02", "Здесь вы можете найти установочные файлы VirtualBox, которые можно автоматически загрузить и внести некоторые изменения просто загрузите Virtualbox выполните настройки и нажмите ""Распаковать""."], _
     ["download", "03", "Загрузить файлы"], _
     ["download", "04", "Путь к установочному файлу VirtualBox..."], _
     ["download", "05", "Обзор"], _
@@ -650,7 +650,7 @@ Global $russian = [ _
     ["download", "07", "Распаковать файлы для 64-битных систем"], _
     ["download", "08", "Запустить VirtualBox Portable после распаковки"], _
     ["download", "09", "Статус:"], _
-    ["download", "10", "Применить"], _
+    ["download", "10", "Распаковать"], _
     ["download", "11", "Лицензия VirtualBox"], _
     ["download", "12", "Выход"], _
     ["download", "13", "Инфо"], _
@@ -681,8 +681,8 @@ Global $spanish = [ _
     ["messages", "02", "Ahorrar"], _
     ["messages", "03", "Cerrar"], _
     ["messages", "04", "Guardado"], _
-    ["messages", "05", "Por favor, recuerde reiniciar Portable-VirtualBox para que los nuevos ajustes tengan efecto."], _
-    ["messages", "06", "Iniciar Portable-VirtualBox"], _
+    ["messages", "05", "Por favor, recuerde reiniciar Portable VirtualBox para que los nuevos ajustes tengan efecto."], _
+    ["messages", "06", "Iniciar Portable VirtualBox"], _
     ["messages", "07", "Cerrar VirtualBox"], _
     ["start", "01", "Copiar los archivos de VirtualBox en la carpeta correspondiente."], _
     ["settings", "01", "Ajustes"], _
@@ -702,16 +702,16 @@ Global $spanish = [ _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "Sobre el programa..."], _
     ["okhotkeysset", "01", "Pulse una tecla en el campo de entrada."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "Aquí puede descargar automáticamente los archivos de instalación de VirtualBox y hacer algunos ajustes (Si utiliza este script para descargar VirtualBox, sólo hay que realizar los ajustes y hacer clic en ""Aceptar"")."], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "Aquí puedes encontrar los archivos de instalación de VirtualBox, los cuales se pueden descargar automáticamente y realizar algunos cambios, solo descarga Virtualbox, realiza las configuraciones y haz clic en ""Descomprimir""."], _
     ["download", "03", "Subir archivos"], _
     ["download", "04", "La ruta del archivo de instalación de VirtualBox es..."], _
     ["download", "05", "Revisar"], _
     ["download", "06", "Desempaquetar archivos para sistemas de 32 bits"], _
     ["download", "07", "Desempaquetar archivos para sistemas de 64 bits"], _
-    ["download", "08", "Iniciar Portable-VirtualBox después de la extracción"], _
+    ["download", "08", "Iniciar Portable VirtualBox después de la extracción"], _
     ["download", "09", "Información de estado:"], _
-    ["download", "10", "Aceptar"], _
+    ["download", "10", "Descomprimir"], _
     ["download", "11", "Licencia de VirtualBox"], _
     ["download", "12", "Salida"], _
     ["download", "13", "Info"], _
@@ -743,7 +743,7 @@ Global $turkish = [ _
     ["messages", "03", "Çık"], _
     ["messages", "04", "Kaydedildi"], _
     ["messages", "05", "Değişikliklerin geçerli olabilmesi için VirtualBox yeniden başlatın."], _
-    ["messages", "06", "Başlatma Portable-VirtualBox"], _
+    ["messages", "06", "Başlatma Portable VirtualBox"], _
     ["messages", "07", "VirtualBox'ı Kapatma"], _
     ["start", "01", "Dosyaları VirtualBox'un ilgili uygulama klasörüne kopyalayın."], _
     ["settings", "01", "Ayarlar"], _
@@ -763,16 +763,16 @@ Global $turkish = [ _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "Program hakkında..."], _
     ["okhotkeysset", "01", "Giriş alanı için bir anahtar tanımlayın."], _
-    ["download", "01", "Portable-VirtualBox"], _
-    ["download", "02", "Burada VirtualBox'un kurulum dosyalarını otomatik olarak indirebilir ve bazı ayarlamalar yapabilirsiniz. (VirtualBox'u indiren bu scripti kullanırsanız, sadece ayarları yapın ve ""Tamam""ı tıklayın)."], _
+    ["download", "01", "Portable VirtualBox"], _
+    ["download", "02", "Burada otomatik olarak indirilebilen ve üzerinde bazı değişiklikler yapılabilen VirtualBox kurulum dosyalarını bulabilirsiniz, sadece Virtualbox'ı indirin, ayarları yapın ve ""Paketi açmak"" tıklayın."], _
     ["download", "03", "Dosyaları yükleyin"], _
     ["download", "04", "VirtualBox kurulum dosyaları yolu..."], _
     ["download", "05", "inceleme"], _
     ["download", "06", "32-Bit sistemler için dosyaları ayıkla"], _
     ["download", "07", "64-Bit sistemler için dosyaları ayıkla"], _
-    ["download", "08", "Ayıklama ve/veya sıkıştırma sonrası Portable-VirtualBox'u çalıştır"], _
+    ["download", "08", "Ayıklama ve/veya sıkıştırma sonrası Portable VirtualBox'u çalıştır"], _
     ["download", "09", "Durum Bilgisi:"], _
-    ["download", "10", "Tamam"], _
+    ["download", "10", "Paketi açmak"], _
     ["download", "11", "Lisansı VirtualBox"], _
     ["download", "12", "Çıkış"], _
     ["download", "13", "Bilgi"], _
@@ -825,7 +825,7 @@ Global $ukrainian = [ _
     ["about", "01", "Про програму..."], _
     ["okhotkeysset", "01", "Визначте клавішу для області введеня."], _
     ["download", "01", "Портативний-VirtualBo"], _
-    ["download", "02", "Тут ви можете знайти інсталяційні файли VirtualBox, які можна автоматично завантажити та внести деякі зміни просто виконайте налаштування та натисніть ""Гаразд""."], _
+    ["download", "02", "Тут ви можете знайти інсталяційні файли VirtualBox, які можна автоматично завантажити і внести деякі зміни просто завантажте Virtualbox виконайте налаштування та натисніть ""Розпакувати""."], _
     ["download", "03", "Завантажити файли"], _
     ["download", "04", "Шлях до файлу інсталяції VirtualBox..."], _
     ["download", "05", "Огляд"], _
@@ -833,7 +833,7 @@ Global $ukrainian = [ _
     ["download", "07", "Видобути файли для 64-бітної системиm"], _
     ["download", "08", "Запустити VirtualBox Portable після розпакування"], _
     ["download", "09", "Статус-інформ.:"], _
-    ["download", "10", "Гаразд"], _
+    ["download", "10", "Розпакувати"], _
     ["download", "11", "Ліцензія VirtualBox"], _
     ["download", "12", "Вихід"], _
     ["download", "13", "Інформ."], _

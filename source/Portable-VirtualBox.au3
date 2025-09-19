@@ -167,7 +167,7 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   Local $Download100 = GUICtrlCreateList("", 15, 11, 121, 290, BitOR(0xB00000, 0x800000), 0x06)
   
   GUISetFont(10, 400, 0, "Arial")
-  $Button100 = GUICtrlCreateButton(GetTranslation($Lang, "download", "03"), 11, 308, 129, 33)
+  $Button100 = GUICtrlCreateButton(GetTranslation($Lang, "download", "03"), 11, 308, 185, 33)
   GUICtrlSetOnEvent($Button100, "DownloadFile")
   Load_CreateList()
 
@@ -182,12 +182,12 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   GUICtrlCreateLabel(GetTranslation($Lang, "download", "09"), 152, 173, 300, 26)
   $Input200 = GUICtrlCreateEdit("", 149, 190, 476, 65, "", 0x06)
 
-  $Button200 = GUICtrlCreateButton(GetTranslation($Lang, "download", "10"), 153, 308, 129, 33)
+  $Button200 = GUICtrlCreateButton(GetTranslation($Lang, "download", "10"), 209, 308, 129, 33)
   GUICtrlSetState($Button200, $GUI_DISABLE)
   GUICtrlSetOnEvent(-1, "UseSettings")
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "11"), 295, 308, 149, 33)
+  GUICtrlCreateButton(GetTranslation($Lang, "download", "11"), 351, 308, 149, 33)
   GUICtrlSetOnEvent(-1, "Licence")
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "12"), 457, 308, 129, 33)
+  GUICtrlCreateButton(GetTranslation($Lang, "download", "12"), 513, 308, 129, 33)
   GUICtrlSetOnEvent(-1, "ExitGUI")
 
   If FileExists(@ScriptDir&"\virtualbox.exe") Then
@@ -882,7 +882,7 @@ EndFunc
 
 Func ValidatePath($Path, $DefaultPath)
     ; Check disk and create folder
-    If FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
+    If (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) And FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
 
     ; Check that the path exists and is a folder
     If FileExists($Path) And StringInStr(FileGetAttrib($Path), "D") And Not StringInStr(FileGetAttrib($Path), "R") Then
