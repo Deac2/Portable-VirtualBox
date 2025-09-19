@@ -200,9 +200,13 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   While 1
     If $install = 0 Then ExitLoop
   WEnd
+
+  Global $startvbox = 0
+Else
+  Global $startvbox = 1
 EndIf
 
-If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND IniRead($var1, "startvbox", "key", "NotFound") = 1 Then
+If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND ($startvbox = 1 OR IniRead($var1, "startvbox", "key", "NotFound") = 1) Then
   IniDelete($var1, "startvbox")
   If FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
     If @OSArch = "x86" Then
@@ -293,7 +297,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 			EndIf
 		Next
     Next
-    ;FileClose($file)
+    FileClose($file)
 
       $content = FileRead(FileOpen($UserHome&"\VirtualBox.xml", 128))
       $values6 = _StringBetween($content, "</ExtraData>", "<NetserviceRegistry>")
@@ -315,7 +319,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         EndIf
       Next
       FileClose($file)
-
       #clear log
       If FileExists($UserHome) Then
       FileDelete($UserHome&"\*.log")
