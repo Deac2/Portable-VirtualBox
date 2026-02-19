@@ -809,7 +809,7 @@ Local $binData = InetRead($url)
 If @error Or @extended = 0 Then
 GUICtrlSetState($Download_listbox, $GUI_DISABLE)
 GUICtrlSetState($Button100, $GUI_DISABLE)
-GUICtrlSetData($Download_listbox, "virtualbox.org offline")
+GUICtrlSetData($Download_listbox, "virtualbox.org|Not Load")
 Return
 EndIf
 
