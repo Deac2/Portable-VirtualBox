@@ -801,13 +801,16 @@ EndFunc
 
 Func Load_ListBox()
 Const $TH_MAJOR = 6, $TH_MINOR = 0, $TH_PATCH = 24
-Local $MAX_MAJOR070 = 7, $MAX_MIN070 = 0, $MaxNode070 = 0
+Local $MAX_MAJOR070 = 7, $MAX_MIN070 = 0, $MaxNode070 = 0, $ver = ""
 
 Local $url = "https://download.virtualbox.org/virtualbox/"
+
 Local $binData = InetRead($url)
 If @error Or @extended = 0 Then
 GUICtrlSetState($Download_listbox, $GUI_DISABLE)
 GUICtrlSetState($Button100, $GUI_DISABLE)
+GUICtrlSetData($Download_listbox, "virtualbox.org offline")
+Return
 EndIf
 
 Local $html = BinaryToString($binData, 4)
@@ -823,7 +826,6 @@ For $i = 0 To UBound($aMatches) - 1
     Local $maj = Number($aP[1]), $min = Number($aP[2]), $pat = Number($aP[3])
 	If ($maj > $TH_MAJOR) Or ($maj = $TH_MAJOR And $min > $TH_MINOR) Or ($maj = $TH_MAJOR And $min = $TH_MINOR And $pat >= $TH_PATCH) Then
             GUICtrlSetData($Download_listbox, "VirtualBox "&$ver)
-
             If $maj = $MAX_MAJOR070 And $min = $MAX_MIN070 Then
                     $MaxNode070 = $ver
             EndIf
