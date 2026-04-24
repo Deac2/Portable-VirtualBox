@@ -79,6 +79,7 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
 
   GUICtrlSetData($StartLng, GetLangList(), "English")
   $CheckboxLang = GUICtrlCreateCheckbox("", 31, 65, 14, 14)
+  GUICtrlSetState($CheckboxLang, $GUI_CHECKED)
   GUICtrlCreateLabel("Save language to ini file", 49, 64, 260, 16)
 
   GUICtrlCreateButton("Save", 30, 86, 100, 28, 0)
