@@ -33,7 +33,7 @@ Global $catalan = [ _
     ["okhotkeysset", "01", "Estableix la clau per al camp d'entrada."], _
     ["download", "01", "VirtualBox Portable"], _
     ["download", "02", "Aquí podeu trobar els fitxers d'instal·lació de VirtualBox, que es poden descarregar automàticament i fer alguns canvis, només cal descarregar Virtualbox, configurar-los i fer clic a ""Desempaquetar""."], _
-    ["download", "03", "Puja fitxers"], _
+    ["download", "03", "Descarregar fitxers"], _
     ["download", "04", "El camí del fitxer d'instal·lació del VirtualBox és..."], _
     ["download", "05", "Revisió"], _
     ["download", "06", "Extreure els fitxers per un sistema de 32 bits"], _
@@ -94,7 +94,7 @@ Global $chinese = [ _
     ["okhotkeysset", "01", "为输入字段定义一个键。"], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "在这里您可以找到VirtualBox安装文件，它可以自动下载并进行一些更改，只需下载Virtualbox，进行设置并单击""解包""即可。"], _
-    ["download", "03", "上传文件"], _
+    ["download", "03", "下载文件"], _
     ["download", "04", "VirtualBox 安装文件的路径..."], _
     ["download", "05", "审查"], _
     ["download", "06", "提取 32 位系统的文件"], _
@@ -155,7 +155,7 @@ Global $english = [ _
     ["okhotkeysset", "01", "Define a key for the input-field."], _
     ["download", "01", "VirtualBox Portable"], _
     ["download", "02", "Here you can find the VirtualBox installation files, which can be downloaded automatically and make some changes, just download Virtualbox, make the settings and click ""Unpack""."], _
-    ["download", "03", "Upload files"], _
+    ["download", "03", "Download files"], _
     ["download", "04", "Path to VirtualBox installation file..."], _
     ["download", "05", "Overview"], _
     ["download", "06", "Unzip files for 32-bit systems"], _
@@ -277,7 +277,7 @@ Global $german = [ _
     ["okhotkeysset", "01", "Definieren Sie einen Schlüssel für das Eingabefeld."], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "Hier finden Sie die Installationsdateien von VirtualBox, die Sie automatisch herunterladen und anpassen können. Laden Sie einfach VirtualBox herunter, konfigurieren Sie die Einstellungen und klicken Sie auf ""Entpacken""."], _
-    ["download", "03", "Dateien hochladen"], _
+    ["download", "03", "Dateien herunterladen"], _
     ["download", "04", "Pfad zu der Installationsdatei von VirtualBox ist..."], _
     ["download", "05", "Rezension"], _
     ["download", "06", "Extrahieren Sie die Dateien für ein 32-Bit-Syste"], _
@@ -338,7 +338,7 @@ Global $italian = [ _
     ["okhotkeysset", "01", "Definire una chiave per il campo di input."], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "Per scaricare e apportare modifiche, è sufficiente scaricare Virtualbox, configurare le impostazioni e fare clic su ""Decomprimi""."], _
-    ["download", "03", "Caricare file"], _
+    ["download", "03", "Scarica i file"], _
     ["download", "04", "Percorso del file di installazione di VirtualBox è..."], _
     ["download", "05", "Seleziona"], _
     ["download", "06", "Estrarre i file da un sistema a 32-Bit"], _
@@ -399,7 +399,7 @@ Global $japanese = [ _
     ["okhotkeysset", "01", "入力フィールドのキーを定義します。"], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "ここでは、VirtualBox のインストール ファイルが見つかります。このファイルは自動的にダウンロードされ、いくつかの変更を加えることができます。Virtualbox をダウンロードし、設定を行って ""開梱"" をクリックするだけです。"], _
-    ["download", "03", "ファイルをアップロードする"], _
+    ["download", "03", "ファイルをダウンロード"], _
     ["download", "04", "VirtualBox インストールファイルのパス..."], _
     ["download", "05", "レビュー"], _
     ["download", "06", "32 ビットシステム用のファイルを展開します"], _
@@ -460,7 +460,7 @@ Global $korean = [ _
     ["okhotkeysset", "01", "입력-필드에 키를 정의하세요."], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "여기에서 VirtualBox 설치 파일을 찾을 수 있습니다. 이 파일은 자동으로 다운로드되어 일부 변경이 가능합니다. Virtualbox를 다운로드하고 설정을 한 후 ""압축 풀기""를 클릭하기만 하면 됩니다."], _
-    ["download", "03", "파일 업로드"], _
+    ["download", "03", "파일 다운로드"], _
     ["download", "04", "VirtualBox의 설치 파일의 경로는..."], _
     ["download", "05", "검색"], _
     ["download", "06", "32-비트 시스템을 위한 파일의 압축 풀기"], _
@@ -521,7 +521,7 @@ Global $polish = [ _
     ["okhotkeysset", "01", "Zdefiniuj przycisk dla polki wejscia."], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "Tutaj znajdziesz pliki instalacyjne VirtualBox, które można pobrać automatycznie i wprowadzić w nich zmiany. Wystarczy pobrać VirtualBox, dokonać ustawień i kliknąć ""Rozpakuj""."], _
-    ["download", "03", "Prześlij pliki"], _
+    ["download", "03", "Pobierz pliki"], _
     ["download", "04", "Ścieżka pliku instalacyjnego VirtualBox..."], _
     ["download", "05", "Szukaj"], _
     ["download", "06", "Wypakuj pliki dla 32-bit systemu"], _
@@ -582,7 +582,7 @@ Global $portuguese = [ _
     ["okhotkeysset", "01", "Registe uma chave no entrada-campo."], _
     ["download", "01", "VirtualBox Portable"], _
     ["download", "02", "Aqui você encontra os arquivos de instalação do VirtualBox, que podem ser baixados automaticamente e fazer algumas alterações, basta baixar o Virtualbox, fazer as configurações e clicar em ""Descompactar""."], _
-    ["download", "03", "Carregar arquivos"], _
+    ["download", "03", "Baixar arquivos"], _
     ["download", "04", "Caminho para o arquivo de instalação do VirtualBox é..."], _
     ["download", "05", "Pesquisa"], _
     ["download", "06", "Extraia os arquivos para um sistema de 32 bits"], _
@@ -643,7 +643,7 @@ Global $russian = [ _
     ["okhotkeysset", "01", "Определите ключ для поля ввода."], _
     ["download", "01", "VirtualBox Portable"], _
     ["download", "02", "Здесь вы можете найти установочные файлы VirtualBox, которые можно автоматически загрузить и внести некоторые изменения просто загрузите Virtualbox выполните настройки и нажмите ""Распаковать""."], _
-    ["download", "03", "Загрузить файлы"], _
+    ["download", "03", "Скачать файлы"], _
     ["download", "04", "Путь к установочному файлу VirtualBox..."], _
     ["download", "05", "Обзор"], _
     ["download", "06", "Распаковать файлы для 32-битных систем"], _
@@ -704,7 +704,7 @@ Global $spanish = [ _
     ["okhotkeysset", "01", "Pulse una tecla en el campo de entrada."], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "Aquí puedes encontrar los archivos de instalación de VirtualBox, los cuales se pueden descargar automáticamente y realizar algunos cambios, solo descarga Virtualbox, realiza las configuraciones y haz clic en ""Descomprimir""."], _
-    ["download", "03", "Subir archivos"], _
+    ["download", "03", "Descargar archivos"], _
     ["download", "04", "La ruta del archivo de instalación de VirtualBox es..."], _
     ["download", "05", "Revisar"], _
     ["download", "06", "Desempaquetar archivos para sistemas de 32 bits"], _
@@ -765,7 +765,7 @@ Global $turkish = [ _
     ["okhotkeysset", "01", "Giriş alanı için bir anahtar tanımlayın."], _
     ["download", "01", "Portable VirtualBox"], _
     ["download", "02", "Burada otomatik olarak indirilebilen ve üzerinde bazı değişiklikler yapılabilen VirtualBox kurulum dosyalarını bulabilirsiniz, sadece Virtualbox'ı indirin, ayarları yapın ve ""Paketi açmak"" tıklayın."], _
-    ["download", "03", "Dosyaları yükleyin"], _
+    ["download", "03", "Dosyaları indir"], _
     ["download", "04", "VirtualBox kurulum dosyaları yolu..."], _
     ["download", "05", "inceleme"], _
     ["download", "06", "32-Bit sistemler için dosyaları ayıkla"], _
