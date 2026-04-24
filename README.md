@@ -1,4 +1,4 @@
-<img width="658" height="378" alt="image" src="https://github.com/user-attachments/assets/c71d764b-9f73-470a-b1f4-3d887a5cbf9c"/><br>
+<img width="658" height="378" alt="image" src="https://github.com/user-attachments/assets/156b02dd-1ff9-4969-b8ec-9f5e52a27d48"/><br>
 <img width="576" height="378" alt="image" src="https://github.com/user-attachments/assets/842e4e72-5b98-4c27-b5a4-e3d0afed0acd"/><br>
 This version with a new settings window, delete the folder data\language if you copy to the old folder with virtualbox the language has differences and most of the unnecessary is removed.<br>
 <a href="https://github.com/Deac2/Portable-VirtualBox_old_menu-Settings" target="_blank">Old version of Virtualbox settings</a><br>
