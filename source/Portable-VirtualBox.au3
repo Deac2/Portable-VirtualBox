@@ -41,6 +41,7 @@ Global $DefaultMachineFolder = @ScriptDir&"\.VirtualBox\Machines"
 Global $32Bit_Last = "6.0.24"
 Global $version = "6.4.9.1"
 Global $Lang_changes = "24.04.2026"
+Global $MaxRetries = "3"		;Maximum number of retries when downloading files from https://download.virtualbox.org/virtualbox/
 
 Global $Radio1, $Radio2, $Radio3, $Radio4, $Radio5, $Radio6, $Radio7, $Radio8, $Radio9, $Radio10, $Radio11, $Radio12, $Radio13, $Radio14
 Global $Checkbox01, $Checkbox02, $Checkbox03, $Checkbox04, $Checkbox05, $Checkbox06, $Checkbox07, $Checkbox08, $Checkbox09
@@ -50,8 +51,7 @@ Global $Input1, $Input2, $Input3, $Input4, $Input5, $Input6
 Global $BTNUserHome, $BTNMachineFolder
 Global $HomeRoot, $MachineRoot, $VMStart, $StartLng
 Global $new1 = 0, $new2 = 0, $Settings = 0, $iSort
-; Window Extended Styles
-Global Const $WS_SYSMENU = 0x80000, $WS_MINIMIZEBOX = 0x20000, $CBS_DROPDOWNLIST = 0x3
+Global Const $WS_SYSMENU = 0x80000, $WS_MINIMIZEBOX = 0x20000, $CBS_DROPDOWNLIST = 0x3		; Window Extended Styles
 
 #cs
 If NOT FileExists(@ScriptDir&"\data\tools") Then DirCreate(@ScriptDir&"\data\tools")
@@ -1751,9 +1751,8 @@ Func DownloadFile()
 				Local $localPath = $save2
 				EndIf
 
-			Local $downloaded = False
-			Local $retryCount = 0
-			Local $maxRetries = 3
+			Local $Downloaded = False
+			Local $RetryCount = 0
 
 			Local $info1 = InetGet($link, $localPath, 8, 1)
 			Do
@@ -1764,16 +1763,16 @@ Func DownloadFile()
 				GUICtrlSetData($Input200, GetTranslation($Lang, "status", "01")&" "& @CRLF & $link & @CRLF &DisplayDownloadStatus($bytes, $total_bytes))
 				Sleep(50)
 				If $status = 1 Then
-					$downloaded = True
+					$Downloaded = True
 				ElseIf $status = 2 Or $status = 3 Then
-					$retryCount += 1
+					$RetryCount += 1
 					Sleep(3000)
-				If $retryCount < $maxRetries Then
+				If $RetryCount < $MaxRetries Then
 					InetClose($info1)
 					$info1 = InetGet($url1, $dest1, 8, 1)
 				EndIf
 				EndIf
-			Until $downloaded Or $retryCount >= $maxRetries
+			Until $Downloaded Or $RetryCount >= $MaxRetries
             Next
         EndIf
     Next
