@@ -884,19 +884,21 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
         Local $LangIni = $Dir_Lang & $CurrentLang & ".ini"
         If FileExists($LangIni) AND IniRead($var1, "language", "date", "") < $Lang_changes Then
 		FileDelete($LangIni)
-		IniWrite($var1, "language", "date", $Lang_changes)
+		;IniWrite($var1, "language", "date", $Lang_changes)
+		EmptyIniWrite($var1, "language", "date", $Lang_changes, $encoding)
 		EndIf
 
         For $i = 0 To UBound($Translations) - 1
         Local $Section = $Translations[$i][0]
         Local $Key     = $Translations[$i][1]
         Local $Value   = $Translations[$i][2]
+		Local $encoding = 32
 
-        If $CurrentLang = "russian" Or $CurrentLang = "ukrainian" Then
-        $encoding = 512
-		Else
-		$encoding = 32
-        EndIf
+        ;If $CurrentLang = "russian" Or $CurrentLang = "ukrainian" Then
+        ;$encoding = 512
+		;Else
+		;$encoding = 32
+        ;EndIf
 		
 		EmptyIniWrite($LangIni, $Section, $Key, $Value, $encoding)
         Next
