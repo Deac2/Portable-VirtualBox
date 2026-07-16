@@ -97,8 +97,8 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
 EndIf
 
 UpdateSettings()
-EmptyIniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome), "32")
-EmptyIniWrite($var1, "MachineFolder", "key", ValidatePath($MachineFolder, $DefaultMachineFolder), "32")
+EmptyIniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome), $encoding)
+EmptyIniWrite($var1, "MachineFolder", "key", ValidatePath($MachineFolder, $DefaultMachineFolder), $encoding)
 EnvSet("VBOX_USER_HOME", $UserHome)
 ; Thibaut : use Hybrid Mode if available
 If $CmdLine[0] = 1 AND $CmdLine[1]="noportable" Then
@@ -648,7 +648,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         If FileExists($UserHome) Then
           Local $StartVM  = IniRead($var1, "startvm", "key", "NotFound")
 		  If NOT FileExists($MachineFolder&"\"&$StartVM) Then
-		  EmptyIniWrite($var1, "startvm", "key", "", "32")
+		  EmptyIniWrite($var1, "startvm", "key", "", $encoding)
 		  RunWait("cmd /c set VBOX_USER_HOME="&$UserHome&"& "&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
 		  Else
 			Run("cmd /c set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
@@ -1065,7 +1065,7 @@ Func VM_List_Update()
     ; Checking the existence of the file
     If Not FileExists($MachineFolder&"\"&$VMStartName) Then
         $VMStartName = ""
-        EmptyIniWrite($var1, "startvm", "key", "", "32")
+        EmptyIniWrite($var1, "startvm", "key", "", $encoding)
     EndIf
     
     ; Get the currently selected element
@@ -1359,47 +1359,47 @@ Func Settings()
 EndFunc
 
 Func UpdateSettings()
-EmptyIniWrite($var1, "hotkeys", "key", "1", "32")
-EmptyIniWrite($var1, "hotkeys", "userkey", "0", "32")
-EmptyIniWrite($var1, "hotkeys", "01", "^", "32")
-EmptyIniWrite($var1, "hotkeys", "02", "^", "32")
-EmptyIniWrite($var1, "hotkeys", "03", "^", "32")
-EmptyIniWrite($var1, "hotkeys", "04", "^", "32")
-EmptyIniWrite($var1, "hotkeys", "05", "^", "32")
-EmptyIniWrite($var1, "hotkeys", "06", "^", "32")
-EmptyIniWrite($var1, "hotkeys", "07", "", "32")
-EmptyIniWrite($var1, "hotkeys", "08", "", "32")
-EmptyIniWrite($var1, "hotkeys", "09", "", "32")
-EmptyIniWrite($var1, "hotkeys", "10", "", "32")
-EmptyIniWrite($var1, "hotkeys", "11", "", "32")
-EmptyIniWrite($var1, "hotkeys", "12", "", "32")
-EmptyIniWrite($var1, "hotkeys", "13", "", "32")
-EmptyIniWrite($var1, "hotkeys", "14", "", "32")
-EmptyIniWrite($var1, "hotkeys", "15", "", "32")
-EmptyIniWrite($var1, "hotkeys", "16", "", "32")
-EmptyIniWrite($var1, "hotkeys", "17", "", "32")
-EmptyIniWrite($var1, "hotkeys", "18", "", "32")
-EmptyIniWrite($var1, "hotkeys", "19", "1", "32")
-EmptyIniWrite($var1, "hotkeys", "20", "2", "32")
-EmptyIniWrite($var1, "hotkeys", "21", "3", "32")
-EmptyIniWrite($var1, "hotkeys", "22", "4", "32")
-EmptyIniWrite($var1, "hotkeys", "23", "5", "32")
-EmptyIniWrite($var1, "hotkeys", "24", "6", "32")
-EmptyIniWrite($var1, "usb", "key", "0", "32")
-EmptyIniWrite($var1, "net", "key", "0", "32")
-EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, "32")
-EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, "32")
-EmptyIniWrite($var1, "userhome", "sort", "1", "32")
-EmptyIniWrite($var1, "startvm", "key", "", "32")
+EmptyIniWrite($var1, "hotkeys", "key", "1", $encoding)
+EmptyIniWrite($var1, "hotkeys", "userkey", "0", $encoding)
+EmptyIniWrite($var1, "hotkeys", "01", "^", $encoding)
+EmptyIniWrite($var1, "hotkeys", "02", "^", $encoding)
+EmptyIniWrite($var1, "hotkeys", "03", "^", $encoding)
+EmptyIniWrite($var1, "hotkeys", "04", "^", $encoding)
+EmptyIniWrite($var1, "hotkeys", "05", "^", $encoding)
+EmptyIniWrite($var1, "hotkeys", "06", "^", $encoding)
+EmptyIniWrite($var1, "hotkeys", "07", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "08", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "09", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "10", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "11", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "12", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "13", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "14", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "15", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "16", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "17", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "18", "", $encoding)
+EmptyIniWrite($var1, "hotkeys", "19", "1", $encoding)
+EmptyIniWrite($var1, "hotkeys", "20", "2", $encoding)
+EmptyIniWrite($var1, "hotkeys", "21", "3", $encoding)
+EmptyIniWrite($var1, "hotkeys", "22", "4", $encoding)
+EmptyIniWrite($var1, "hotkeys", "23", "5", $encoding)
+EmptyIniWrite($var1, "hotkeys", "24", "6", $encoding)
+EmptyIniWrite($var1, "usb", "key", "0", $encoding)
+EmptyIniWrite($var1, "net", "key", "0", $encoding)
+EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $encoding)
+EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $encoding)
+EmptyIniWrite($var1, "userhome", "sort", "1", $encoding)
+EmptyIniWrite($var1, "startvm", "key", "", $encoding)
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND IniRead($var1, "lang", "key", "") = 2 Then
-EmptyIniWrite($var1, "language", "date", $Lang_changes, "32")
+EmptyIniWrite($var1, "language", "date", $Lang_changes, $encoding)
 Else
 IniDelete($var1, "language", "date")
 Endif
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT IsLangValid(IniRead($var1, "language", "key", "False")) Then
-EmptyIniWrite($var1, "language", "key", "English", "32")
+EmptyIniWrite($var1, "language", "key", "English", $encoding)
 EndIf
 
 $Lang = IniRead($var1, "language", "key", "NotFound")
@@ -1412,59 +1412,59 @@ Func SaveSettings()
 Local $OldMachineFolder = IniRead($var1, "machinefolder", "key", "NotFound")
 Local $Net = GUICtrlRead($Checkbox19)
 If Not ($Net=1) Then
-EmptyIniWrite($var1, "net", "key", "0", "32")
+EmptyIniWrite($var1, "net", "key", "0", $encoding)
 Else
-EmptyIniWrite($var1, "net", "key", "1", "32")
+EmptyIniWrite($var1, "net", "key", "1", $encoding)
 EndIf
 
 Local $USB = GUICtrlRead($Checkbox20)
 If Not ($USB=1) Then
-EmptyIniWrite($var1, "usb", "key", "0", "32")
+EmptyIniWrite($var1, "usb", "key", "0", $encoding)
 Else
-EmptyIniWrite($var1, "usb", "key", "1", "32")
+EmptyIniWrite($var1, "usb", "key", "1", $encoding)
 EndIf
 
 Local $hotkeys = GUICtrlRead($Checkbox21)
 If Not ($hotkeys=1) Then
-EmptyIniWrite($var1, "hotkeys", "key", "0", "32")
+EmptyIniWrite($var1, "hotkeys", "key", "0", $encoding)
 Else
-EmptyIniWrite($var1, "hotkeys", "key", "1", "32")
+EmptyIniWrite($var1, "hotkeys", "key", "1", $encoding)
 EndIf
 
     If IniRead($var1, "language", "key", "") <> GUICtrlRead($StartLng) Then
-		EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), "32")
+		EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), $encoding)
     EndIf
 
 	Local $CheckHomeRoot = GUICtrlRead($Checkbox22)
 	Local $homedir = GUICtrlRead($HomeRoot)
 	If Not ($CheckHomeRoot = 1) Then
-    EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, "32")
+    EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $encoding)
     GUICtrlSetData($HomeRoot, $DefaultUserHome)
 	Else
 	GUICtrlSetData($HomeRoot, ValidatePath($homedir, $DefaultUserHome))
-	EmptyIniWrite($var1, "userhome", "key", ValidatePath($homedir, $DefaultUserHome), "32")
+	EmptyIniWrite($var1, "userhome", "key", ValidatePath($homedir, $DefaultUserHome), $encoding)
 	EndIf
 
 	Local $CheckMachineRoot = GUICtrlRead($Checkbox23)
 	Local $MachineDir = GUICtrlRead($MachineRoot)
 	If Not ($CheckMachineRoot = 1) Then
-    EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, "32")
+    EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $encoding)
     GUICtrlSetData($MachineRoot, $DefaultMachineFolder)
 	Else
 	GUICtrlSetData($MachineRoot, ValidatePath($MachineDir, $DefaultMachineFolder))
-	EmptyIniWrite($var1, "machinefolder", "key", ValidatePath($MachineDir, $DefaultMachineFolder), "32")
+	EmptyIniWrite($var1, "machinefolder", "key", ValidatePath($MachineDir, $DefaultMachineFolder), $encoding)
 	EndIf
 
 	Local $CheckVMStart = GUICtrlRead($Checkbox24)
 	Local $VMStartName = GUICtrlRead($VMStart)
 	
 	If $OldMachineFolder <> $DefaultMachineFolder and Not ($CheckMachineRoot=1) Then
-    EmptyIniWrite($var1, "startvm", "key", "", "32")
+    EmptyIniWrite($var1, "startvm", "key", "", $encoding)
 	GUICtrlSetState($Checkbox24, $GUI_UNCHECKED)
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
 	EndIf
 	If Not ($CheckVMStart=1) or $OldMachineFolder<>$MachineDir Then
-    EmptyIniWrite($var1, "startvm", "key", "", "32")
+    EmptyIniWrite($var1, "startvm", "key", "", $encoding)
 	GUICtrlSetState($Checkbox24, $GUI_UNCHECKED)
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
 	Else
@@ -1478,10 +1478,10 @@ EndIf
     Endif
 
 	if StringRegExp($VMStartName, "{[[:xdigit:]]{8}-[[:xdigit:]]{4}-[34][[:xdigit:]]{3}-[89abAB][[:xdigit:]]{3}-[[:xdigit:]]{12}}") Then
-	EmptyIniWrite($var1, "startvm", "key", $VMStartName, "32")
+	EmptyIniWrite($var1, "startvm", "key", $VMStartName, $encoding)
 	Else
 	If FileExists($Patch) Then
-      EmptyIniWrite($var1, "startvm", "key", $VMStartName, "32")
+      EmptyIniWrite($var1, "startvm", "key", $VMStartName, $encoding)
 	Else
 	  VM_List_Update()
 	EndIf
@@ -1534,139 +1534,139 @@ EndFunc
 
 Func OKHotKeysSet()
   If GUICtrlRead($Radio7) = $GUI_CHECKED Then
-    EmptyIniWrite($var1, "hotkeys", "userkey", "0", "32")
-    EmptyIniWrite($var1, "hotkeys", "01", "^", "32")
-    EmptyIniWrite($var1, "hotkeys", "02", "^", "32")
-    EmptyIniWrite($var1, "hotkeys", "03", "^", "32")
-    EmptyIniWrite($var1, "hotkeys", "04", "^", "32")
-    EmptyIniWrite($var1, "hotkeys", "05", "^", "32")
-    EmptyIniWrite($var1, "hotkeys", "06", "^", "32")
+    EmptyIniWrite($var1, "hotkeys", "userkey", "0", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "01", "^", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "02", "^", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "03", "^", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "04", "^", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "05", "^", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "06", "^", $encoding)
 
-    EmptyIniWrite($var1, "hotkeys", "07", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "08", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "09", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "10", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "11", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "12", "", "32")
+    EmptyIniWrite($var1, "hotkeys", "07", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "08", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "09", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "10", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "11", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "12", "", $encoding)
 
-    EmptyIniWrite($var1, "hotkeys", "13", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "14", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "15", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "16", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "17", "", "32")
-    EmptyIniWrite($var1, "hotkeys", "18", "", "32")
+    EmptyIniWrite($var1, "hotkeys", "13", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "14", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "15", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "16", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "17", "", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "18", "", $encoding)
 
-    EmptyIniWrite($var1, "hotkeys", "19", "1", "32")
-    EmptyIniWrite($var1, "hotkeys", "20", "2", "32")
-    EmptyIniWrite($var1, "hotkeys", "21", "3", "32")
-    EmptyIniWrite($var1, "hotkeys", "22", "4", "32")
-    EmptyIniWrite($var1, "hotkeys", "23", "5", "32")
-    EmptyIniWrite($var1, "hotkeys", "24", "6", "32")
+    EmptyIniWrite($var1, "hotkeys", "19", "1", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "20", "2", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "21", "3", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "22", "4", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "23", "5", $encoding)
+    EmptyIniWrite($var1, "hotkeys", "24", "6", $encoding)
     MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
   Else
     If GUICtrlRead($Input1) = false OR GUICtrlRead($Input2) = false OR GUICtrlRead($Input3) = false OR GUICtrlRead($Input4) = false OR GUICtrlRead($Input5) = false OR GUICtrlRead($Input6) = false Then
       MsgBox(0, GetTranslation($Lang, "messages", "01"), GetTranslation($Lang, "okhotkeysset", "01"))
     Else
-      EmptyIniWrite($var1, "hotkeys", "userkey", "1", "32")
+      EmptyIniWrite($var1, "hotkeys", "userkey", "1", $encoding)
       If GUICtrlRead($CheckBox01) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "01", "^", "32")
+        EmptyIniWrite($var1, "hotkeys", "01", "^", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "01", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "01", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox02) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "02", "^", "32")
+        EmptyIniWrite($var1, "hotkeys", "02", "^", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "02", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "02", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox03) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "03", "^", "32")
+        EmptyIniWrite($var1, "hotkeys", "03", "^", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "03", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "03", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox04) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "04", "^", "32")
+        EmptyIniWrite($var1, "hotkeys", "04", "^", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "04", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "04", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox05) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "05", "^", "32")
+        EmptyIniWrite($var1, "hotkeys", "05", "^", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "05", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "05", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox06) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "06", "^", "32")
+        EmptyIniWrite($var1, "hotkeys", "06", "^", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "06", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "06", "", $encoding)
       EndIf
 
       If GUICtrlRead($CheckBox07) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "07", "!", "32")
+        EmptyIniWrite($var1, "hotkeys", "07", "!", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "07", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "07", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox08) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "08", "!", "32")
+        EmptyIniWrite($var1, "hotkeys", "08", "!", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "08", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "08", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox09) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "09", "!", "32")
+        EmptyIniWrite($var1, "hotkeys", "09", "!", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "09", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "09", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox10) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "10", "!", "32")
+        EmptyIniWrite($var1, "hotkeys", "10", "!", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "10", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "10", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox11) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "11", "!", "32")
+        EmptyIniWrite($var1, "hotkeys", "11", "!", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "11", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "11", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox12) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "12", "!", "32")
+        EmptyIniWrite($var1, "hotkeys", "12", "!", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "12", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "12", "", $encoding)
       EndIf
 
       If GUICtrlRead($CheckBox13) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "13", "+", "32")
+        EmptyIniWrite($var1, "hotkeys", "13", "+", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "13", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "13", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox14) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "14", "+", "32")
+        EmptyIniWrite($var1, "hotkeys", "14", "+", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "14", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "14", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox15) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "15", "+", "32")
+        EmptyIniWrite($var1, "hotkeys", "15", "+", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "15", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "15", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox16) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "16", "+", "32")
+        EmptyIniWrite($var1, "hotkeys", "16", "+", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "16", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "16", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox17) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "17", "+", "32")
+        EmptyIniWrite($var1, "hotkeys", "17", "+", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "17", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "17", "", $encoding)
       EndIf
       If GUICtrlRead($CheckBox18) = $GUI_CHECKED Then
-        EmptyIniWrite($var1, "hotkeys", "18", "+", "32")
+        EmptyIniWrite($var1, "hotkeys", "18", "+", $encoding)
       Else
-        EmptyIniWrite($var1, "hotkeys", "18", "", "32")
+        EmptyIniWrite($var1, "hotkeys", "18", "", $encoding)
       EndIf
 
-      EmptyIniWrite($var1, "hotkeys", "19", GUICtrlRead($Input1), "32")
-      EmptyIniWrite($var1, "hotkeys", "20", GUICtrlRead($Input2), "32")
-      EmptyIniWrite($var1, "hotkeys", "21", GUICtrlRead($Input3), "32")
-      EmptyIniWrite($var1, "hotkeys", "22", GUICtrlRead($Input4), "32")
-      EmptyIniWrite($var1, "hotkeys", "23", GUICtrlRead($Input5), "32")
-      EmptyIniWrite($var1, "hotkeys", "24", GUICtrlRead($Input6), "32")
+      EmptyIniWrite($var1, "hotkeys", "19", GUICtrlRead($Input1), $encoding)
+      EmptyIniWrite($var1, "hotkeys", "20", GUICtrlRead($Input2), $encoding)
+      EmptyIniWrite($var1, "hotkeys", "21", GUICtrlRead($Input3), $encoding)
+      EmptyIniWrite($var1, "hotkeys", "22", GUICtrlRead($Input4), $encoding)
+      EmptyIniWrite($var1, "hotkeys", "23", GUICtrlRead($Input5), $encoding)
+      EmptyIniWrite($var1, "hotkeys", "24", GUICtrlRead($Input6), $encoding)
       MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
     EndIf
   EndIf
@@ -1674,11 +1674,11 @@ EndFunc
 
 Func OKLanguage()
 UpdateSettings()
-EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), "32")
+EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), $encoding)
 If GUICtrlRead($CheckboxLang) = $GUI_CHECKED Then
-EmptyIniWrite($var1, "lang", "key", "2", "32")
+EmptyIniWrite($var1, "lang", "key", "2", $encoding)
 Else
-EmptyIniWrite($var1, "lang", "key", "1", "32")
+EmptyIniWrite($var1, "lang", "key", "1", $encoding)
 Endif
 $cl = 0
 EndFunc
@@ -1937,7 +1937,7 @@ Func UseSettings()
   EndIf
 
   If GUICtrlRead($Checkbox120) = $GUI_CHECKED Then
-    EmptyIniWrite($var1, "startvbox", "key", "1", "32")
+    EmptyIniWrite($var1, "startvbox", "key", "1", $encoding)
   EndIf
 
   if (FileExists(@ScriptDir&"\virtualbox.exe") OR FileExists($SourceFile)) AND (GUICtrlRead($Checkbox100) = $GUI_CHECKED OR GUICtrlRead($Checkbox110) = $GUI_CHECKED) Then

@@ -1,3 +1,4 @@
+Global $encoding = 32
 Global $catalan = [ _
     ["tray", "01", "Mostra la VM"], _
     ["tray", "02", "Oculta la VM"], _
@@ -880,7 +881,7 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
 
     If IniRead($var1, "lang", "key", "") = "2" Then
         Local $Dir_Lang = @ScriptDir & "\data\language\"
-		Local $encoding = 32
+		;Local $encoding = 32
         If Not FileExists($Dir_Lang) Then DirCreate($Dir_Lang)
         Local $LangIni = $Dir_Lang & $CurrentLang & ".ini"
         If FileExists($LangIni) AND IniRead($var1, "language", "date", "") < $Lang_changes Then
