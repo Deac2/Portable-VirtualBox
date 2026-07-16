@@ -1402,7 +1402,7 @@ If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT IsLangValid(IniRead($var1, 
 EmptyIniWrite($var1, "language", "key", "English", "32")
 EndIf
 
-;Global $Lang = IniRead($var1, "language", "key", "NotFound")
+$Lang = IniRead($var1, "language", "key", "NotFound")
 Global $UserHome = IniRead($var1, "userhome", "key", "NotFound")
 Global $MachineFolder = IniRead($var1, "machinefolder", "key", "NotFound")
 Global $VMStartName = IniRead($var1, "startvm", "key", "")
