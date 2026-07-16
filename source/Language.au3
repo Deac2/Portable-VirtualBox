@@ -1,4 +1,4 @@
-Global $encoding = 32
+Global $ini_encoding = 32
 Global $catalan = [ _
     ["tray", "01", "Mostra la VM"], _
     ["tray", "02", "Oculta la VM"], _
@@ -887,7 +887,7 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
         If FileExists($LangIni) AND IniRead($var1, "language", "date", "") < $Lang_changes Then
 		FileDelete($LangIni)
 		;IniWrite($var1, "language", "date", $Lang_changes)
-		EmptyIniWrite($var1, "language", "date", $Lang_changes, $encoding)
+		EmptyIniWrite($var1, "language", "date", $Lang_changes, $ini_encoding)
 		EndIf
 
         For $i = 0 To UBound($Translations) - 1
@@ -901,7 +901,7 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
 		;$encoding = 32
         ;EndIf
 		
-		EmptyIniWrite($LangIni, $Section, $Key, $Value, $encoding)
+		EmptyIniWrite($LangIni, $Section, $Key, $Value, $ini_encoding)
         Next
         Return IniRead(@ScriptDir & "\data\language\" & $CurrentLang & ".ini", $sCategory, $sNumber, $sCategory & "_" & $sNumber)
     Else
