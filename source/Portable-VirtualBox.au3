@@ -299,7 +299,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 			If $uuid1[0] = $uuid2[0] Then
 			$b += 1
 			$values4 = StringReplace($values4, $a[$i], "")
-			MsgBox(0, "", "", $values4)
 			if $i>=$b Then
 			_LogDuplicate($a[$x])
 			Else
