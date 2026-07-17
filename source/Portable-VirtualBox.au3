@@ -633,29 +633,29 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 			Next
           Endif
 		  If IniRead($var1, "userhome", "key", "NotFound") = $UserHome Then
-			Run("cmd /c set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
-			RunWait("cmd /c set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VBoxManage.exe startvm """& $StartVM &"""" , @ScriptDir, @SW_HIDE)
+			Run(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+			RunWait(""""&@ScriptDir&"\"&$arch&"\VBoxManage.exe"" startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
           Else
-            RunWait("cmd /c set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
+            RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
           EndIf
         Else
-			RunWait("cmd /c set VBOX_USER_HOME="&$DefaultUserHome&"&"&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
+			RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
         EndIf
 
         ProcessWaitClose("VirtualBox.exe")
         ProcessWaitClose("VBoxManage.exe")
       Else
         If FileExists($UserHome) Then
-          Local $StartVM  = IniRead($var1, "startvm", "key", "NotFound") ;если не пусто
+          Local $StartVM  = IniRead($var1, "startvm", "key", "NotFound")
 		  If $StartVM <> "NotFound" And $StartVM <> ""  And FileExists($MachineFolder & "\" & $StartVM) Then
-			Run("cmd /c set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
-			RunWait("cmd /C set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VBoxManage.exe startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
+			Run(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+			RunWait(""""&@ScriptDir&"\"&$arch&"\VBoxManage.exe"" startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
 		  Else
 			IniWrite($var1, "startvm", "key", "")
-			RunWait("cmd /c set VBOX_USER_HOME="&$UserHome&"& "&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
+			RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
           EndIf
         Else
-          RunWait("cmd /c set VBOX_USER_HOME="&$DefaultUserHome&"& "&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
+          RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
         EndIf
 
         ProcessWaitClose("VirtualBox.exe")
@@ -665,8 +665,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
       SplashTextOn("Portable-VirtualBox", GetTranslation($Lang, "messages", "07"), 220, 40, -1, -1, 1, "arial", 12)
 
       ExitScript()
-
-      EnvSet("VBOX_USER_HOME")
 
       RunWait($arch&"\VBoxSVC.exe /unregserver", @ScriptDir, @SW_HIDE)
       RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
@@ -1707,11 +1705,12 @@ Func ExitScript()
   ProcessNameClose("VirtualBoxVM.exe")
   ProcessNameClose("VBoxSVC.exe")
   ProcessNameClose("VBoxSDS.exe")
+  EnvSet("VBOX_USER_HOME", "")
 EndFunc
 
 Func ProcessNameClose($ProcessName)
 	Local $ListArray = ProcessList($ProcessName)
-	For $i = 0 To $ListArray[0][0]
+	For $i = 1 To $ListArray[0][0]
 	If ProcessExists($ListArray[$i][1]) Then
 	ProcessClose($ListArray[$i][1])
 	EndIf
@@ -1867,9 +1866,9 @@ Func UseSettings()
       Next
 	Endif
 	If FileExists($PatchExtension) Then
-	  RunWait(@ComSpec & ' /c ""' & @ScriptDir & '\data\tools\7za.exe" x -o"' & @ScriptDir & '\temp\" "' & $PatchExtension & '""', @ScriptDir, @SW_HIDE)
-	  RunWait(@ComSpec & ' /c ""' & @ScriptDir & '\data\tools\7za.exe" x -o"' & @ScriptDir & '\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\" "' & @ScriptDir & '\temp\Extension""', @ScriptDir, @SW_HIDE)
-	  RunWait(@ComSpec & ' /c ""' & @ScriptDir & '\data\tools\7za.exe" x -o"' & @ScriptDir & '\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\" "' & @ScriptDir & '\temp\Extension~""', @ScriptDir, @SW_HIDE)
+	  RunWait(""""&@ScriptDir&"\data\tools\7za.exe"" x -y -o"""&@ScriptDir&"\temp\""" & " """&$PatchExtension&"""", @ScriptDir, @SW_HIDE)
+	  RunWait(""""&@ScriptDir&"\data\tools\7za.exe"" x -y -o"""&@ScriptDir&"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\""" & " """&@ScriptDir&"\temp\Extension""", @ScriptDir, @SW_HIDE)
+	  RunWait(""""&@ScriptDir&"\data\tools\7za.exe"" x -y -o"""&@ScriptDir&"\temp\ExtensionPacks\Oracle_VM_VirtualBox_Extension_Pack\""" & " """&@ScriptDir&"\temp\Extension~""", @ScriptDir, @SW_HIDE)
 	EndIf
 
   If GUICtrlRead($Checkbox100) = $GUI_CHECKED AND FileExists(@ScriptDir&"\temp") Then
