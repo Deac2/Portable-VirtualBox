@@ -617,8 +617,8 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
       EndIf
 
       RunWait($arch&"\VBoxSVC.exe /reregserver", @ScriptDir, @SW_HIDE)
-	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxcStub.dll", @ScriptDir, @SW_HIDE)
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
+	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
       DllCall($arch&"\VBoxRT.dll", "hwnd", "RTR3Init")
 
       If $CmdLine[0] = 1 Then
@@ -646,13 +646,13 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         ProcessWaitClose("VBoxManage.exe")
       Else
         If FileExists($UserHome) Then
-          Local $StartVM  = IniRead($var1, "startvm", "key", "NotFound")
-		  If NOT FileExists($MachineFolder&"\"&$StartVM) Then
-		  IniWrite($var1, "startvm", "key", "")
-		  RunWait("cmd /c set VBOX_USER_HOME="&$UserHome&"& "&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
-		  Else
+          Local $StartVM  = IniRead($var1, "startvm", "key", "NotFound") ;если не пусто
+		  If $StartVM <> "NotFound" And $StartVM <> ""  And FileExists($MachineFolder & "\" & $StartVM) Then
 			Run("cmd /c set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
 			RunWait("cmd /C set VBOX_USER_HOME="&$UserHome&"&"&$arch&"\VBoxManage.exe startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
+		  Else
+			IniWrite($var1, "startvm", "key", "")
+			RunWait("cmd /c set VBOX_USER_HOME="&$UserHome&"& "&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
           EndIf
         Else
           RunWait("cmd /c set VBOX_USER_HOME="&$DefaultUserHome&"& "&$arch&"\VirtualBox.exe", @ScriptDir, @SW_HIDE)
