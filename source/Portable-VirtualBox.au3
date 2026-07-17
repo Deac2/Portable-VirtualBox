@@ -42,11 +42,10 @@ Global $32Bit_Last = "6.0.24"
 Global $version = "6.4.9.1"
 Global $Lang_changes = "17.07.2026"
 Global $MaxRetries = "3"		;Maximum number of retries when downloading files from https://download.virtualbox.org/virtualbox/
-
 Global $Radio1, $Radio2, $Radio3, $Radio4, $Radio5, $Radio6, $Radio7, $Radio8, $Radio9, $Radio10, $Radio11, $Radio12, $Radio13, $Radio14
 Global $Checkbox01, $Checkbox02, $Checkbox03, $Checkbox04, $Checkbox05, $Checkbox06, $Checkbox07, $Checkbox08, $Checkbox09
 Global $Checkbox10, $Checkbox11, $Checkbox12, $Checkbox13, $Checkbox14, $Checkbox15, $Checkbox16, $Checkbox17, $Checkbox18
-Global $Checkbox19, $Checkbox20, $Checkbox21, $Checkbox22, $Checkbox23, $Checkbox24
+Global $Checkboxsett_19, $Checkboxsett_20, $Checkboxsett_21, $Checkboxsett_22, $Checkboxsett_23, $Checkboxsett_24, $Checkboxsett_200, $Checkboxsett_201, $Checkboxsett_202
 Global $Input1, $Input2, $Input3, $Input4, $Input5, $Input6
 Global $BTNUserHome, $BTNMachineFolder
 Global $HomeRoot, $MachineRoot, $VMStart, $StartLng
@@ -333,13 +332,17 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         EndIf
       Next
       FileClose($file)
+
       #clear log
+      If IniRead($var1, "Core_Logs", "key", "0") = 1 Then
       If FileExists($UserHome) Then
       FileDelete($UserHome&"\*.log")
       FileDelete($UserHome&"\*.log.*")
       EndIf
+	  EndIf
 
-      #clear log Machines
+		#clear log Machines
+		If IniRead($var1, "VM_Logs", "key", "0") = 1 Then
       If FileExists($UserHome&"\VirtualBox.xml") Then
 		For $i = 0 To UBound($values1) - 1
 		Local $Result = StringSplit(StringReplace($values1[$i], ".vbox", ""), "\")
@@ -356,6 +359,8 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 		EndIf
 		Next
       EndIf
+		EndIf
+	  
     EndIf
   Else
     MsgBox(0+262144, GetTranslation($Lang, "download", "15"), GetTranslation($Lang, "download", "16"))
@@ -670,6 +675,8 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 
       ExitScript()
 
+      Local $PortMode = IniRead($var1, "PortableMode", "key", "0")
+      If $PortMode = 0 Then
       RunWait($arch&"\VBoxSVC.exe /unregserver", @ScriptDir, @SW_HIDE)
       RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
       RunWait($arch&"\VBoxSDS.exe /UnregService", @ScriptDir, @SW_SHOW)
@@ -772,6 +779,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
       EndIf
 
       RunWait("sc delete VBoxSDS", @ScriptDir, @SW_HIDE)
+      EndIf
       SplashOff()
     Else
       _WinSetState("VirtualBox.exe", BitAND(@SW_SHOW, @SW_RESTORE))
@@ -1133,15 +1141,15 @@ Func Settings()
 	GUICtrlCreateTab(0, 0, 577, 358)
     
 	GUICtrlCreateTabItem(GetTranslation($Lang, "settings", "01"))
-	$Checkbox19 = GUICtrlCreateCheckbox("", 16, 40, 14, 14)
+	$Checkboxsett_19 = GUICtrlCreateCheckbox("", 16, 40, 14, 14)
 	GUICtrlCreateLabel(GetTranslation($Lang, "settings", "02"), 32, 39, 546, 14)
-	$Checkbox20 = GUICtrlCreateCheckbox("", 16, 60, 14, 14)
+	$Checkboxsett_20 = GUICtrlCreateCheckbox("", 16, 60, 14, 14)
 	GUICtrlCreateLabel(GetTranslation($Lang, "settings", "03"), 32, 59, 546, 14)
-	$Checkbox21 = GUICtrlCreateCheckbox("", 16, 80, 14, 14)
+	$Checkboxsett_21 = GUICtrlCreateCheckbox("", 16, 80, 14, 14)
 	GUICtrlCreateLabel(GetTranslation($Lang, "settings", "04"), 32, 79, 546, 14)
-	If IniRead($var1, "net", "key", "NotFound") = 1 Then GUICtrlSetState($Checkbox19, $GUI_CHECKED)
-	If IniRead($var1, "usb", "key", "NotFound") = 1 Then GUICtrlSetState($Checkbox20, $GUI_CHECKED)
-	If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then GUICtrlSetState($Checkbox21, $GUI_CHECKED)
+	If IniRead($var1, "net", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_19, $GUI_CHECKED)
+	If IniRead($var1, "usb", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_20, $GUI_CHECKED)
+	If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_21, $GUI_CHECKED)
 
     GUICtrlCreateLabel(GetTranslation($Lang, "settings", "05"), 32, 102, 110, 14)
     $StartLng = GUICtrlCreateCombo("", 142, 100, 100, 0, $CBS_DROPDOWNLIST)
@@ -1149,7 +1157,7 @@ Func Settings()
 
 	GuiCtrlCreateGroup("", 14, 120, 451, 60)
 	DllCall("UxTheme.dll", "int", "SetWindowTheme", "hwnd", GUICtrlGetHandle(-1), "wstr", 0, "wstr", 0)
-	$Checkbox22 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "06"), 16, 130, 442, 14)
+	$Checkboxsett_22 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "06"), 16, 130, 442, 14)
 	GUICtrlSetOnEvent(-1, "CheckboxSettings")
 	$User_Home = IniRead($var1, "userhome", "key", "NotFound")
 	$HomeRoot = GUICtrlCreateInput($User_Home, 33, 148, 332, 21)
@@ -1162,12 +1170,12 @@ Func Settings()
 	Else
 	GUICtrlSetState($HomeRoot, $GUI_ENABLE)
 	GUICtrlSetState($BTNUserHome, $GUI_ENABLE)
-	GUICtrlSetState($Checkbox22, $GUI_CHECKED)
+	GUICtrlSetState($Checkboxsett_22, $GUI_CHECKED)
 	Endif
 
 	GuiCtrlCreateGroup("", 14, 178, 451, 60)
 	DllCall("UxTheme.dll", "int", "SetWindowTheme", "hwnd", GUICtrlGetHandle(-1), "wstr", 0, "wstr", 0)
-	$Checkbox23 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "07"), 16, 190, 442, 14)
+	$Checkboxsett_23 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "07"), 16, 190, 442, 14)
 	GUICtrlSetOnEvent(-1, "CheckboxSettings")
 	$MachineDir = IniRead($var1, "machinefolder", "key", "NotFound")
 	$MachineRoot = GUICtrlCreateInput($MachineDir, 33, 208, 332, 21)
@@ -1178,13 +1186,13 @@ Func Settings()
 	Else
 	GUICtrlSetState($MachineRoot, $GUI_ENABLE)
 	GUICtrlSetState($BTNMachineFolder, $GUI_ENABLE)
-	GUICtrlSetState($Checkbox23, $GUI_CHECKED)
+	GUICtrlSetState($Checkboxsett_23, $GUI_CHECKED)
 	Endif
     GUICtrlSetOnEvent(-1, "SRCMachineFolder")
 
 	GuiCtrlCreateGroup("", 14, 236, 451, 60)
 	DllCall("UxTheme.dll", "int", "SetWindowTheme", "hwnd", GUICtrlGetHandle(-1), "wstr", 0, "wstr", 0)
-	$Checkbox24 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "08"), 16, 250, 442, 14)
+	$Checkboxsett_24 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "08"), 16, 250, 442, 14)
 	GUICtrlSetOnEvent(-1, "CheckboxSettings")
 	If IniRead($var1, "startvm", "key", "NotFound") = false Then
 	$VMStart = GUICtrlCreateCombo("", 33, 268, 417, 21, $CBS_DROPDOWNLIST)
@@ -1197,8 +1205,27 @@ Func Settings()
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
 	Else
 	GUICtrlSetState($VMStart, $GUI_ENABLE)
-	GUICtrlSetState($Checkbox24, $GUI_CHECKED)
+	GUICtrlSetState($Checkboxsett_24, $GUI_CHECKED)
 	Endif
+
+    GUICtrlCreateButton(GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
+    GUICtrlSetOnEvent(-1, "SaveSettings")
+    GUICtrlCreateButton(GetTranslation($Lang, "messages", "03"), 336, 302, 129, 27)
+    GUICtrlSetOnEvent(-1, "CloseGUI")
+
+
+	GUICtrlCreateTabItem(GetTranslation($Lang, "system", "01"))
+	$Checkboxsett_200 = GUICtrlCreateCheckbox("", 16, 40, 14, 14)
+	Local $Short_UserHome = StringReplace($UserHome, @ScriptDir&"\", "", 1)
+	GUICtrlCreateLabel(GetTranslation($Lang, "system", "02")&" ("&$Short_UserHome&"\*.log)", 32, 39, 546, 14)
+	$Checkboxsett_201 = GUICtrlCreateCheckbox("", 16, 60, 14, 14)
+	Local $Short_MachineFolder = StringReplace($DefaultMachineFolder, @ScriptDir&"\", "", 1)
+	GUICtrlCreateLabel(GetTranslation($Lang, "system", "03")&" ("&$Short_MachineFolder&"\...\*.log.*)", 32, 59, 546, 14)
+	$Checkboxsett_202 = GUICtrlCreateCheckbox("", 16, 80, 14, 14)
+	GUICtrlCreateLabel(GetTranslation($Lang, "system", "04"), 32, 79, 546, 14)
+	If IniRead($var1, "Core_Logs", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_200, $GUI_CHECKED)
+	If IniRead($var1, "VM_Logs", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_201, $GUI_CHECKED)
+	If IniRead($var1, "PortableMode", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_202, $GUI_CHECKED)
 
     GUICtrlCreateButton(GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
     GUICtrlSetOnEvent(-1, "SaveSettings")
@@ -1391,6 +1418,9 @@ EmptyIniWrite($var1, "usb", "key", "0", $ini_encoding)
 EmptyIniWrite($var1, "net", "key", "0", $ini_encoding)
 EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $ini_encoding)
 EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $ini_encoding)
+EmptyIniWrite($var1, "Core_Logs", "key", "1", $ini_encoding)
+EmptyIniWrite($var1, "VM_Logs", "key", "1", $ini_encoding)
+EmptyIniWrite($var1, "PortableMode", "key", "0", $ini_encoding)
 EmptyIniWrite($var1, "userhome", "sort", "1", $ini_encoding)
 EmptyIniWrite($var1, "startvm", "key", "", $ini_encoding)
 
@@ -1411,33 +1441,18 @@ Global $VMStartName = IniRead($var1, "startvm", "key", "")
 EndFunc
 
 Func SaveSettings()
-Local $OldMachineFolder = IniRead($var1, "machinefolder", "key", "NotFound")
-Local $Net = GUICtrlRead($Checkbox19)
-If Not ($Net=1) Then
-IniWrite($var1, "net", "key", "0")
-Else
-IniWrite($var1, "net", "key", "1")
-EndIf
-
-Local $USB = GUICtrlRead($Checkbox20)
-If Not ($USB=1) Then
-IniWrite($var1, "usb", "key", "0")
-Else
-IniWrite($var1, "usb", "key", "1")
-EndIf
-
-Local $hotkeys = GUICtrlRead($Checkbox21)
-If Not ($hotkeys=1) Then
-IniWrite($var1, "hotkeys", "key", "0")
-Else
-IniWrite($var1, "hotkeys", "key", "1")
-EndIf
+	Local $Net = (GUICtrlRead($Checkboxsett_19) = $GUI_CHECKED ? "1" : "0")
+    IniWrite($var1, "net", "key", $Net)
+	Local $USB = (GUICtrlRead($Checkboxsett_20) = $GUI_CHECKED ? "1" : "0")
+    IniWrite($var1, "usb", "key", $USB)
+	Local $hotkeys = (GUICtrlRead($Checkboxsett_21) = $GUI_CHECKED ? "1" : "0")
+    IniWrite($var1, "hotkeys", "key", $hotkeys)
 
     If IniRead($var1, "language", "key", "") <> GUICtrlRead($StartLng) Then
 		IniWrite($var1, "language", "key", GUICtrlRead($StartLng))
     EndIf
 
-	Local $CheckHomeRoot = GUICtrlRead($Checkbox22)
+	Local $CheckHomeRoot = GUICtrlRead($Checkboxsett_22)
 	Local $homedir = GUICtrlRead($HomeRoot)
 	If Not ($CheckHomeRoot = 1) Then
     IniWrite($var1, "userhome", "key", $DefaultUserHome)
@@ -1447,7 +1462,7 @@ EndIf
 	IniWrite($var1, "userhome", "key", ValidatePath($homedir, $DefaultUserHome))
 	EndIf
 
-	Local $CheckMachineRoot = GUICtrlRead($Checkbox23)
+	Local $CheckMachineRoot = GUICtrlRead($Checkboxsett_23)
 	Local $MachineDir = GUICtrlRead($MachineRoot)
 	If Not ($CheckMachineRoot = 1) Then
     IniWrite($var1, "machinefolder", "key", $DefaultMachineFolder)
@@ -1457,17 +1472,19 @@ EndIf
 	IniWrite($var1, "machinefolder", "key", ValidatePath($MachineDir, $DefaultMachineFolder))
 	EndIf
 
-	Local $CheckVMStart = GUICtrlRead($Checkbox24)
+	Local $CheckVMStart = GUICtrlRead($Checkboxsett_24)
 	Local $VMStartName = GUICtrlRead($VMStart)
-	
+
+	Local $OldMachineFolder = IniRead($var1, "machinefolder", "key", "NotFound")
 	If $OldMachineFolder <> $DefaultMachineFolder and Not ($CheckMachineRoot=1) Then
     IniWrite($var1, "startvm", "key", "")
-	GUICtrlSetState($Checkbox24, $GUI_UNCHECKED)
+	GUICtrlSetState($Checkboxsett_24, $GUI_UNCHECKED)
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
 	EndIf
+
 	If Not ($CheckVMStart=1) or $OldMachineFolder<>$MachineDir Then
     IniWrite($var1, "startvm", "key", "")
-	GUICtrlSetState($Checkbox24, $GUI_UNCHECKED)
+	GUICtrlSetState($Checkboxsett_24, $GUI_UNCHECKED)
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
 	Else
 	Local $Patch = ""
@@ -1488,13 +1505,21 @@ EndIf
 	  VM_List_Update()
 	EndIf
 	EndIf
-  EndIf
+	EndIf
+
+	Local $Core_Logs = (GUICtrlRead($Checkboxsett_200) = $GUI_CHECKED ? "1" : "0")
+    IniWrite($var1, "Core_Logs", "key", $Core_Logs)
+	Local $VM_Logs = (GUICtrlRead($Checkboxsett_201) = $GUI_CHECKED ? "1" : "0")
+    IniWrite($var1, "VM_Logs", "key", $VM_Logs)
+	Local $PortableMode = (GUICtrlRead($Checkboxsett_202) = $GUI_CHECKED ? "1" : "0")
+    IniWrite($var1, "PortableMode", "key", $PortableMode)
+
 	UpdateSettings()
 	MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
 EndFunc
 
 Func CheckboxSettings()
-Local $CheckHomeRoot = GUICtrlRead($Checkbox22)
+Local $CheckHomeRoot = GUICtrlRead($Checkboxsett_22)
 If Not ($CheckHomeRoot=4) Then
 GUICtrlSetState($HomeRoot, $GUI_ENABLE)
 GUICtrlSetState($BTNUserHome, $GUI_ENABLE)
@@ -1503,7 +1528,7 @@ GUICtrlSetState($HomeRoot, $GUI_DISABLE)
 GUICtrlSetState($BTNUserHome, $GUI_DISABLE)
 EndIf
 
-Local $CheckMachineRoot = GUICtrlRead($Checkbox23)
+Local $CheckMachineRoot = GUICtrlRead($Checkboxsett_23)
 If Not ($CheckMachineRoot=4) Then
 GUICtrlSetState($MachineRoot, $GUI_ENABLE)
 GUICtrlSetState($BTNMachineFolder, $GUI_ENABLE)
@@ -1512,7 +1537,7 @@ GUICtrlSetState($MachineRoot, $GUI_DISABLE)
 GUICtrlSetState($BTNMachineFolder, $GUI_DISABLE)
 EndIf
 
-Local $CheckVMStart = GUICtrlRead($Checkbox24)
+Local $CheckVMStart = GUICtrlRead($Checkboxsett_24)
 If Not ($CheckVMStart=4) Then
 GUICtrlSetState($VMStart, $GUI_ENABLE)
 Else
