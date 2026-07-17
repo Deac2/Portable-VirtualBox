@@ -99,7 +99,6 @@ EndIf
 UpdateSettings()
 IniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome))
 IniWrite($var1, "MachineFolder", "key", ValidatePath($MachineFolder, $DefaultMachineFolder))
-EnvSet("VBOX_USER_HOME", $UserHome)
 ; Thibaut : use Hybrid Mode if available
 If $CmdLine[0] = 1 AND $CmdLine[1]="noportable" Then
 HybridMode()
@@ -620,6 +619,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
       DllCall($arch&"\VBoxRT.dll", "hwnd", "RTR3Init")
+	  EnvSet("VBOX_USER_HOME", $UserHome)
 
       If $CmdLine[0] = 1 Then
         If FileExists($UserHome) Then
