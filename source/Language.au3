@@ -39,13 +39,15 @@ Global $catalan = [ _
     ["download", "05", "Revisió"], _
     ["download", "06", "Extreure els fitxers per un sistema de 32 bits"], _
     ["download", "07", "Extreure els fitxers per un sistema de 64 bits"], _
-    ["download", "08", "Inicieu VirtualBox Portable després de desempaquetar"], _
-    ["download", "09", "Informació d'estat:"], _
-    ["download", "10", "Desempaquetar"], _
-    ["download", "11", "Llicència de VirtualBox"], _
-    ["download", "12", "Sortida"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Si us plau, reinicieu VirtualBox per adaptar els camins!"], _
+    ["download", "08", "Suprimeix la carpeta temporal després de desempaquetar"], _
+    ["download", "09", "Suprimeix els fitxers descarregats després de desempaquetar"], _
+    ["download", "10", "Inicieu VirtualBox Portable després de desempaquetar"], _
+    ["download", "11", "Informació d'estat:"], _
+    ["download", "12", "Desempaquetar"], _
+    ["download", "13", "Llicència de VirtualBox"], _
+    ["download", "14", "Sortida"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Si us plau, reinicieu VirtualBox per adaptar els camins!"], _
     ["status", "01", "Carregant:"], _
     ["status", "02", "Descàrrega completa! Els fitxers s'emmagatzemen a la carpeta Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Instal·lació de fitxers"], _
@@ -100,13 +102,15 @@ Global $chinese = [ _
     ["download", "05", "审查"], _
     ["download", "06", "提取 32 位系统的文件"], _
     ["download", "07", "提取 64 位系统的文件"], _
-    ["download", "08", "解压后启动Portable VirtualBox"], _
-    ["download", "09", "状态信息："], _
-    ["download", "10", "解包"], _
-    ["download", "11", "许可证 VirtualBox"], _
-    ["download", "12", "出口"], _
-    ["download", "13", "信息"], _
-    ["download", "14", "请重新启动 VirtualBox 以更改路径!"], _
+    ["download", "08", "解压后删除temp文件夹"], _
+    ["download", "09", "解压后删除下载的文件"], _
+    ["download", "10", "解压后启动Portable VirtualBox"], _
+    ["download", "11", "状态信息："], _
+    ["download", "12", "解包"], _
+    ["download", "13", "许可证 VirtualBox"], _
+    ["download", "14", "出口"], _
+    ["download", "15", "信息"], _
+    ["download", "16", "请重新启动 VirtualBox 以更改路径!"], _
     ["status", "01", "加载中："], _
     ["status", "02", "下载完成！这些文件存储在 Portable VirtualBox 文件夹中。"], _
     ["status", "03", "VirtualBox - 安装文件"], _
@@ -161,13 +165,15 @@ Global $english = [ _
     ["download", "05", "Overview"], _
     ["download", "06", "Unzip files for 32-bit systems"], _
     ["download", "07", "Unzip files for 64-bit systems"], _
-    ["download", "08", "Run VirtualBox Portable after unpack"], _
-    ["download", "09", "Status:"], _
-    ["download", "10", "Unpack"], _
-    ["download", "11", "VirtualBox License"], _
-    ["download", "12", "Exit"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Please restart VirtualBox to adapt the paths"], _
+    ["download", "08", "Delete temp folder after unpacking"], _
+    ["download", "09", "Delete downloaded files after unpacking"], _
+    ["download", "10", "Run VirtualBox Portable after unpack"], _
+    ["download", "11", "Status:"], _
+    ["download", "12", "Unpack"], _
+    ["download", "13", "VirtualBox License"], _
+    ["download", "14", "Exit"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Please restart VirtualBox to adapt the paths"], _
     ["status", "01", "Downloading:"], _
     ["status", "02", "Download complete! Files are stored in the Portable VirtualBox folder."], _
     ["status", "03", "VirtualBox - Installing files"], _
@@ -222,13 +228,15 @@ Global $french = [ _
     ["download", "05", "Aperçu"], _
     ["download", "06", "Extraire les fichiers pour un système 32-Bit"], _
     ["download", "07", "Extraire les fichiers pour un système 64-Bit"], _
-    ["download", "08", "Démarrer Portable VirtualBox après l'extraction et / ou la compression"], _
-    ["download", "09", "Informations:"], _
-    ["download", "10", "Décompresser"], _
-    ["download", "11", "Licence de VirtualBox"], _
-    ["download", "12", "Sortie"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Veuillez redémarrer Portable VirtualBox afin de mettre à jour les chemins!"], _
+    ["download", "08", "Supprimer le dossier temporaire après le déballage"], _
+    ["download", "09", "Supprimer les fichiers téléchargés après le déballage"], _
+    ["download", "10", "Démarrer Portable VirtualBox après l'extraction et / ou la compression"], _
+    ["download", "11", "Informations:"], _
+    ["download", "12", "Décompresser"], _
+    ["download", "13", "Licence de VirtualBox"], _
+    ["download", "14", "Sortie"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Veuillez redémarrer Portable VirtualBox afin de mettre à jour les chemins!"], _
     ["status", "01", "Téléchargement en cours:"], _
     ["status", "02", "Téléchargement terminé ! Les fichiers sont enregistrés dans le dossier Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Fichier d'installation"], _
@@ -283,13 +291,15 @@ Global $german = [ _
     ["download", "05", "Rezension"], _
     ["download", "06", "Extrahieren Sie die Dateien für ein 32-Bit-Syste"], _
     ["download", "07", "Extrahieren Sie die Dateien für ein 64-Bit-Syste"], _
-    ["download", "08", "Starten VirtualBox Portable nach dem Entpacken"], _
-    ["download", "09", "Status-Info:"], _
-    ["download", "10", "Entpacken"], _
-    ["download", "11", "Lizenz VirtualBox"], _
-    ["download", "12", "Ausfahrt"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Bitte starten Sie VirtualBox neu, um die Pfade anzupassen!"], _
+    ["download", "08", "Temp-Ordner nach dem Entpacken löschen"], _
+    ["download", "09", "Heruntergeladene Dateien nach dem Entpacken löschen"], _
+    ["download", "10", "Starten VirtualBox Portable nach dem Entpacken"], _
+    ["download", "11", "Status-Info:"], _
+    ["download", "12", "Entpacken"], _
+    ["download", "13", "Lizenz VirtualBox"], _
+    ["download", "14", "Ausfahrt"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Bitte starten Sie VirtualBox neu, um die Pfade anzupassen!"], _
     ["status", "01", "Herunterladen:"], _
     ["status", "02", "Fertig mit dem Herunterladen! Die Dateien wurden im Portable VirtualBox Ordner gespeichert."], _
     ["status", "03", "VirtualBox - Installationsdatei"], _
@@ -344,13 +354,15 @@ Global $italian = [ _
     ["download", "05", "Seleziona"], _
     ["download", "06", "Estrarre i file da un sistema a 32-Bit"], _
     ["download", "07", "Estrarre i file da un sistema a 64-Bit"], _
-    ["download", "08", "Avvia VirtualBox Portable dopo aver decompresso"], _
-    ["download", "09", "Informazione-stato:"], _
-    ["download", "10", "Decomprimi"], _
-    ["download", "11", "Licenza di VirtualBox"], _
-    ["download", "12", "Uscita"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Si prega di avviare VirtualBox di nuovo, in modo che tutti i percorsi possono essere adattati!"], _
+    ["download", "08", "Elimina la cartella temporanea dopo averla decompressa"], _
+    ["download", "09", "Elimina i file scaricati dopo averli decompressi"], _
+    ["download", "10", "Avvia VirtualBox Portable dopo aver decompresso"], _
+    ["download", "11", "Informazione-stato:"], _
+    ["download", "12", "Decomprimi"], _
+    ["download", "13", "Licenza di VirtualBox"], _
+    ["download", "14", "Uscita"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Si prega di avviare VirtualBox di nuovo, in modo che tutti i percorsi possono essere adattati!"], _
     ["status", "01", "Il download:"], _
     ["status", "02", "Pronti con il download! Il file è stato memorizzato nella cartella-Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Installazione Faldone."], _
@@ -405,13 +417,15 @@ Global $japanese = [ _
     ["download", "05", "レビュー"], _
     ["download", "06", "32 ビットシステム用のファイルを展開します"], _
     ["download", "07", "64 ビットシステム用のファイルを展開します"], _
-    ["download", "08", "展開 および / または 圧縮の後、Portable VirtualBox を起動"], _
-    ["download", "09", "ステータス情報:"], _
-    ["download", "10", "開梱"], _
-    ["download", "11", "ライセンス VirtualBox"], _
-    ["download", "12", "出口"], _
-    ["download", "13", "情報"], _
-    ["download", "14", "VirtualBox を再起動してパスを適応させます。"], _
+    ["download", "08", "解凍後に一時フォルダを削除する"], _
+    ["download", "09", "ダウンロードしたファイルは解凍後に削除してください"], _
+    ["download", "10", "展開 および / または 圧縮の後、Portable VirtualBox を起動"], _
+    ["download", "11", "ステータス情報:"], _
+    ["download", "12", "開梱"], _
+    ["download", "13", "ライセンス VirtualBox"], _
+    ["download", "14", "出口"], _
+    ["download", "15", "情報"], _
+    ["download", "16", "VirtualBox を再起動してパスを適応させます。"], _
     ["status", "01", "ダウンロード中:"], _
     ["status", "02", "ダウンロード終了! ファイルは Portable VirtualBox フォルダに保存されています。"], _
     ["status", "03", "VirtualBox - インストールファイル"], _
@@ -466,13 +480,15 @@ Global $korean = [ _
     ["download", "05", "검색"], _
     ["download", "06", "32-비트 시스템을 위한 파일의 압축 풀기"], _
     ["download", "07", "64-비트 시스템을 위한 파일의 압축 풀기"], _
-    ["download", "08", "압축 풀기 및/또는 압축하고 나서 Portable VirtualBox 시작"], _
-    ["download", "09", "상태-정보:"], _
-    ["download", "10", "압축 풀기"], _
-    ["download", "11", "라이센스 VirtualBox"], _
-    ["download", "12", "나가기"], _
-    ["download", "13", "정보"], _
-    ["download", "14", "모든 경로를 적용할 수 있도록, VirtualBox를 다시 시작해주세요!"], _
+    ["download", "08", "압축을 푼 후 임시 폴더를 삭제하세요."], _
+    ["download", "09", "압축 해제 후 다운로드한 파일을 삭제하세요."], _
+    ["download", "10", "압축 풀기 및/또는 압축하고 나서 Portable VirtualBox 시작"], _
+    ["download", "11", "상태-정보:"], _
+    ["download", "12", "압축 풀기"], _
+    ["download", "13", "라이센스 VirtualBox"], _
+    ["download", "14", "나가기"], _
+    ["download", "15", "정보"], _
+    ["download", "16", "모든 경로를 적용할 수 있도록, VirtualBox를 다시 시작해주세요!"], _
     ["status", "01", "다운로드 중:"], _
     ["status", "02", "다운로드가 완료되었습니다! 파일은 Portable VirtualBox 폴더에 저장됩니다."], _
     ["status", "03", "VirtualBox - 파일 설치"], _
@@ -527,13 +543,15 @@ Global $polish = [ _
     ["download", "05", "Szukaj"], _
     ["download", "06", "Wypakuj pliki dla 32-bit systemu"], _
     ["download", "07", "Wypakuj pliki dla 64-bit systemu"], _
-    ["download", "08", "Uruchom Portable VirtualBox po wypakowaniu"], _
-    ["download", "09", "Status-Info:"], _
-    ["download", "10", "Rozpakuj"], _
-    ["download", "11", "Licencja VirtualBox"], _
-    ["download", "12", "Wyjście"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Proszę uruchomić VirtualBox ponownie, nowe pliki zostaną adoptowane!"], _
+    ["download", "08", "Po rozpakowaniu usuń folder tymczasowy"], _
+    ["download", "09", "Usuń pobrane pliki po rozpakowaniu"], _
+    ["download", "10", "Uruchom Portable VirtualBox po wypakowaniu"], _
+    ["download", "11", "Status-Info:"], _
+    ["download", "12", "Rozpakuj"], _
+    ["download", "13", "Licencja VirtualBox"], _
+    ["download", "14", "Wyjście"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Proszę uruchomić VirtualBox ponownie, nowe pliki zostaną adoptowane!"], _
     ["status", "01", "Załadunek:"], _
     ["status", "02", "Pobieranie zakończone! Pliki są przechowywane w folderze Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Instalacja plików"], _
@@ -588,13 +606,15 @@ Global $portuguese = [ _
     ["download", "05", "Pesquisa"], _
     ["download", "06", "Extraia os arquivos para um sistema de 32 bits"], _
     ["download", "07", "Extraia os arquivos para um sistema de 64 bits"], _
-    ["download", "08", "Inicie o VirtualBox Portable após descompactar"], _
-    ["download", "09", "Status-Info:"], _
-    ["download", "10", "Descompactar"], _
-    ["download", "11", "Licença VirtualBox"], _
-    ["download", "12", "Saída"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Reinicie o VirtualBox para adaptar os caminhos!"], _
+    ["download", "08", "Exclua a pasta temporária após descompactar"], _
+    ["download", "09", "Exclua os arquivos baixados após descompactar"], _
+    ["download", "10", "Inicie o VirtualBox Portable após descompactar"], _
+    ["download", "11", "Status-Info:"], _
+    ["download", "12", "Descompactar"], _
+    ["download", "13", "Licença VirtualBox"], _
+    ["download", "14", "Saída"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Reinicie o VirtualBox para adaptar os caminhos!"], _
     ["status", "01", "Carregando:"], _
     ["status", "02", "Download concluído! Os arquivos são armazenados na pasta Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Instalando arquivos"], _
@@ -649,13 +669,15 @@ Global $russian = [ _
     ["download", "05", "Обзор"], _
     ["download", "06", "Распаковать файлы для 32-битных систем"], _
     ["download", "07", "Распаковать файлы для 64-битных систем"], _
-    ["download", "08", "Запустить VirtualBox Portable после распаковки"], _
-    ["download", "09", "Статус:"], _
-    ["download", "10", "Распаковать"], _
-    ["download", "11", "Лицензия VirtualBox"], _
-    ["download", "12", "Выход"], _
-    ["download", "13", "Инфо"], _
-    ["download", "14", "Пожалуйста перезапустите VirtualBox, чтобы адаптировать пути"], _
+    ["download", "08", "Удалить папку temp после распаковки"], _
+    ["download", "09", "Удалить загруженные файлы после распаковки"], _
+    ["download", "10", "Запустить VirtualBox Portable после распаковки"], _
+    ["download", "11", "Статус:"], _
+    ["download", "12", "Распаковать"], _
+    ["download", "13", "Лицензия VirtualBox"], _
+    ["download", "14", "Выход"], _
+    ["download", "15", "Инфо"], _
+    ["download", "16", "Пожалуйста перезапустите VirtualBox, чтобы адаптировать пути"], _
     ["status", "01", "Загрузка:"], _
     ["status", "02", "Загрузка завершена! Файлы хранятся в папке Portable VirtualBox."], _
     ["status", "03", "VirtualBox - Установка файлов"], _
@@ -710,13 +732,15 @@ Global $spanish = [ _
     ["download", "05", "Revisar"], _
     ["download", "06", "Desempaquetar archivos para sistemas de 32 bits"], _
     ["download", "07", "Desempaquetar archivos para sistemas de 64 bits"], _
-    ["download", "08", "Iniciar Portable VirtualBox después de la extracción"], _
-    ["download", "09", "Información de estado:"], _
-    ["download", "10", "Descomprimir"], _
-    ["download", "11", "Licencia de VirtualBox"], _
-    ["download", "12", "Salida"], _
-    ["download", "13", "Info"], _
-    ["download", "14", "Por favor, reinicie VirtualBox, para que todas las rutas se puedan ajustar!"], _
+    ["download", "08", "Eliminar carpeta temporal después de descomprimir"], _
+    ["download", "09", "Eliminar los archivos descargados después de descomprimir"], _
+    ["download", "10", "Ejecutar VirtualBox Portable después de descomprimir"], _
+    ["download", "11", "Información de estado:"], _
+    ["download", "12", "Descomprimir"], _
+    ["download", "13", "Licencia de VirtualBox"], _
+    ["download", "14", "Salida"], _
+    ["download", "15", "Info"], _
+    ["download", "16", "Por favor, reinicie VirtualBox, para que todas las rutas se puedan ajustar!"], _
     ["status", "01", "Descargando:"], _
     ["status", "02", "¡Descarga finalizada! Los archivos se guardaron en la carpeta de Portable VirtualBox"], _
     ["status", "03", "VirtualBox - Archivo de instalación"], _
@@ -771,13 +795,15 @@ Global $turkish = [ _
     ["download", "05", "inceleme"], _
     ["download", "06", "32-Bit sistemler için dosyaları ayıkla"], _
     ["download", "07", "64-Bit sistemler için dosyaları ayıkla"], _
-    ["download", "08", "Ayıklama ve/veya sıkıştırma sonrası Portable VirtualBox'u çalıştır"], _
-    ["download", "09", "Durum Bilgisi:"], _
-    ["download", "10", "Paketi açmak"], _
-    ["download", "11", "Lisansı VirtualBox"], _
-    ["download", "12", "Çıkış"], _
-    ["download", "13", "Bilgi"], _
-    ["download", "14", "Lütfen VirtualBox'u tekrar başlatın, böylece tüm dizinler ayarlanabilir!"], _
+    ["download", "08", "Paketi açtıktan sonra geçici klasörü silin"], _
+    ["download", "09", "Sıkıştırılmış dosyayı açtıktan sonra indirilen dosyaları silin."], _
+	["download", "10", "Paketi açtıktan sonra VirtualBox Portable'ı başlatın"], _
+    ["download", "11", "Durum Bilgisi:"], _
+    ["download", "12", "Paketi açmak"], _
+    ["download", "13", "Lisansı VirtualBox"], _
+    ["download", "14", "Çıkış"], _
+    ["download", "15", "Bilgi"], _
+    ["download", "16", "Lütfen VirtualBox'u tekrar başlatın, böylece tüm dizinler ayarlanabilir!"], _
     ["status", "01", "İndiriliyor:"], _
     ["status", "02", "İndirme tamamlandı! Dosyalar Portable VirtualBox klasöründe saklanır."], _
     ["status", "03", "VirtualBox Kurulum Dosyası"], _
@@ -832,13 +858,15 @@ Global $ukrainian = [ _
     ["download", "05", "Огляд"], _
     ["download", "06", "Видобути файли для 32-бітної системиm"], _
     ["download", "07", "Видобути файли для 64-бітної системиm"], _
-    ["download", "08", "Запустити VirtualBox Portable після розпакування"], _
-    ["download", "09", "Статус-інформ.:"], _
-    ["download", "10", "Розпакувати"], _
-    ["download", "11", "Ліцензія VirtualBox"], _
-    ["download", "12", "Вихід"], _
-    ["download", "13", "Інформ."], _
-    ["download", "14", "Будь ласка запустіте VirtualBox знову щоб усі шляхи могли оновитися"], _
+    ["download", "08", "Видалити папку temp після розпакування"], _
+    ["download", "09", "Видалити завантажені файли після розпакування"], _
+    ["download", "10", "Запустити VirtualBox Portable після розпакування"], _
+    ["download", "11", "Статус-інформ.:"], _
+    ["download", "12", "Розпакувати"], _
+    ["download", "13", "Ліцензія VirtualBox"], _
+    ["download", "14", "Вихід"], _
+    ["download", "15", "Інформ."], _
+    ["download", "16", "Будь ласка запустіте VirtualBox знову щоб усі шляхи могли оновитися"], _
     ["status", "01", "Завантажується:"], _
     ["status", "02", "Завантаження завершено! Файли зберігаються у папці Portable VirtualBox."], _
     ["status", "03", "VirtualBox – Інсталяція файлів"], _

@@ -40,7 +40,7 @@ Global $DefaultUserHome = @ScriptDir&"\.VirtualBox"
 Global $DefaultMachineFolder = @ScriptDir&"\.VirtualBox\Machines"
 Global $32Bit_Last = "6.0.24"
 Global $version = "6.4.9.1"
-Global $Lang_changes = "24.04.2026"
+Global $Lang_changes = "17.07.2026"
 Global $MaxRetries = "3"		;Maximum number of retries when downloading files from https://download.virtualbox.org/virtualbox/
 
 Global $Radio1, $Radio2, $Radio3, $Radio4, $Radio5, $Radio6, $Radio7, $Radio8, $Radio9, $Radio10, $Radio11, $Radio12, $Radio13, $Radio14
@@ -105,7 +105,7 @@ HybridMode()
 Endif
 
 If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) Then
-  Global $Checkbox100, $Checkbox110, $Checkbox120
+  Global $Checkbox100, $Checkbox110, $Checkbox120, $Checkbox130, $Checkbox140
   Global $Input100, $Input200, $Button100, $Button200
   Global $install = 1
 
@@ -177,17 +177,21 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   $Checkbox100 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "06"), 152, 101, 330, 26)
   $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 330, 26)
   $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 330, 26)
+  $Checkbox130 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "09"), 152, 173, 330, 26)
+  $Checkbox140 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "10"), 152, 197, 330, 26)
+  GUICtrlSetState($Checkbox120, $GUI_CHECKED)
+  GUICtrlSetState($Checkbox130, $GUI_CHECKED)
 
-  $LabelDownload = GUICtrlCreateLabel(GetTranslation($Lang, "download", "09"), 152, 173, 300, 26)
+  $LabelDownload = GUICtrlCreateLabel(GetTranslation($Lang, "download", "11"), 152, 221, 300, 26)
   GUICtrlSetState($LabelDownload, $GUI_HIDE)
-  $Input200 = GUICtrlCreateEdit("", 149, 190, 476, 65, "", 0x06)
+  $Input200 = GUICtrlCreateEdit("", 149, 238, 476, 65, "", 0x06)
 
-  $Button200 = GUICtrlCreateButton(GetTranslation($Lang, "download", "10"), 209, 308, 129, 33)
+  $Button200 = GUICtrlCreateButton(GetTranslation($Lang, "download", "12"), 209, 308, 129, 33)
   GUICtrlSetState($Button200, $GUI_DISABLE)
   GUICtrlSetOnEvent(-1, "UseSettings")
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "11"), 351, 308, 149, 33)
+  GUICtrlCreateButton(GetTranslation($Lang, "download", "13"), 351, 308, 149, 33)
   GUICtrlSetOnEvent(-1, "Licence")
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "12"), 513, 308, 129, 33)
+  GUICtrlCreateButton(GetTranslation($Lang, "download", "14"), 513, 308, 129, 33)
   GUICtrlSetOnEvent(-1, "ExitGUI")
 
   If FileExists(@ScriptDir&"\virtualbox.exe") Then
@@ -354,7 +358,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
       EndIf
     EndIf
   Else
-    MsgBox(0+262144, GetTranslation($Lang, "download", "13"), GetTranslation($Lang, "download", "14"))
+    MsgBox(0+262144, GetTranslation($Lang, "download", "15"), GetTranslation($Lang, "download", "16"))
   EndIf
 
   If FileExists(@ScriptDir&"\"&$arch&"\VirtualBox.exe") AND FileExists(@ScriptDir&"\"&$arch&"\VBoxSVC.exe") AND FileExists(@ScriptDir&"\"&$arch&"\VBoxC.dll") Then
@@ -1930,14 +1934,18 @@ Func UseSettings()
   EndIf
 
   If FileExists(@ScriptDir&"\temp") Then
+	If GUICtrlRead($Checkbox120) = $GUI_CHECKED Then
     DirRemove(@ScriptDir&"\temp", 1)
+	EndIf
+	If GUICtrlRead($Checkbox130) = $GUI_CHECKED Then
     FileDelete(@ScriptDir&"\virtualbox.exe")
 	FileDelete(@ScriptDir&"\extension")
     FileDelete(@ScriptDir&"\extension.vbox-extpack")
+	EndIf
     RunWait("cmd /c taskkill /im msiexec.exe /f", @ScriptDir, @SW_HIDE)
   EndIf
 
-  If GUICtrlRead($Checkbox120) = $GUI_CHECKED Then
+  If GUICtrlRead($Checkbox140) = $GUI_CHECKED Then
     IniWrite($var1, "startvbox", "key", "1")
   EndIf
 
