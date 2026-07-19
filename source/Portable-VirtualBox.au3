@@ -173,11 +173,11 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   GUICtrlCreateButton(GetTranslation($Lang, "download", "05"), 532, 69, 93, 25)
   GUICtrlSetOnEvent(-1, "SearchFile")
 
-  $Checkbox100 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "06"), 152, 101, 330, 26)
-  $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 330, 26)
-  $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 330, 26)
-  $Checkbox130 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "09"), 152, 173, 330, 26)
-  $Checkbox140 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "10"), 152, 197, 330, 26)
+  $Checkbox100 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "06"), 152, 101, 490, 26)
+  $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 490, 26)
+  $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 490, 26)
+  $Checkbox130 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "09"), 152, 173, 490, 26)
+  $Checkbox140 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "10"), 152, 197, 490, 26)
   GUICtrlSetState($Checkbox120, $GUI_CHECKED)
   GUICtrlSetState($Checkbox130, $GUI_CHECKED)
 
