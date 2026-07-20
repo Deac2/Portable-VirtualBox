@@ -40,7 +40,7 @@ Global $DefaultUserHome = @ScriptDir&"\.VirtualBox"
 Global $DefaultMachineFolder = @ScriptDir&"\.VirtualBox\Machines"
 Global $32Bit_Last = "6.0.24"
 Global $version = "6.4.9.1"
-Global $Lang_changes = "17.07.2026"
+Global $Lang_changes = "20.07.2026"
 Global $MaxRetries = "3"		;Maximum number of retries when downloading files from https://download.virtualbox.org/virtualbox/
 Global $Radio1, $Radio2, $Radio3, $Radio4, $Radio5, $Radio6, $Radio7, $Radio8, $Radio9, $Radio10, $Radio11, $Radio12, $Radio13, $Radio14
 Global $Checkbox01, $Checkbox02, $Checkbox03, $Checkbox04, $Checkbox05, $Checkbox06, $Checkbox07, $Checkbox08, $Checkbox09
@@ -173,11 +173,11 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   GUICtrlCreateButton(GetTranslation($Lang, "download", "05"), 532, 69, 93, 25)
   GUICtrlSetOnEvent(-1, "SearchFile")
 
-  $Checkbox100 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "06"), 152, 101, 490, 26)
-  $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 490, 26)
-  $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 490, 26)
-  $Checkbox130 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "09"), 152, 173, 490, 26)
-  $Checkbox140 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "10"), 152, 197, 490, 26)
+  $Checkbox100 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "06"), 152, 101, 330, 26)
+  $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 330, 26)
+  $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 330, 26)
+  $Checkbox130 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "09"), 152, 173, 330, 26)
+  $Checkbox140 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "10"), 152, 197, 330, 26)
   GUICtrlSetState($Checkbox120, $GUI_CHECKED)
   GUICtrlSetState($Checkbox130, $GUI_CHECKED)
 
