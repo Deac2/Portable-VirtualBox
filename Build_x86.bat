@@ -43,8 +43,8 @@ rem Create build and release folders if needed.
 rem Make a copy of the file for easy compression later.
 Mkdir "%build_folder%" > nul 2>&1
 Mkdir "%build_folder%\data\settings" > nul 2>&1
-xcopy /d /c /e /i /y "%input_folder%source\data\tools" "%build_folder%\data\tools" > nul 2>&1
-xcopy /d /y "%input_folder%source\data\settings\SplashScreen.jpg" "%build_folder%\data\settings\" > nul 2>&1
+xcopy /d /c /e /i /y "%input_folder%source\src_data\tools" "%build_folder%\data\tools" > nul 2>&1
+xcopy /d /y "%input_folder%source\src_data\settings\SplashScreen.jpg" "%build_folder%\data\settings\" > nul 2>&1
 
 rem Compile Portable-VirtualBox.
 "%aut2exe%" /in "%input_folder%source\Portable-VirtualBox.au3" /out "%build_folder%\Portable-VirtualBox_x86.exe" /icon "%input_folder%source\VirtualBox.ico" /x86
