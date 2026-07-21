@@ -1,7 +1,6 @@
 @echo off
 @title Run AutoIt Source Tray Debug [%CD%]
 @chcp 65001>Nul
-color 07
 
 set "AutoIt3=source\AutoIt3.exe"
 
