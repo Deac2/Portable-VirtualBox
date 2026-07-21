@@ -1,6 +1,7 @@
 @echo off
 @title Run AutoIt Source Tray Debug [%CD%]
 @chcp 65001>Nul
+color 07
 
 set "AutoIt3=source\AutoIt3.exe"
 
@@ -46,11 +47,12 @@ echo 2 -^>^ Exit or close console to cancel
 echo.&
 
 Set /p choice="Write a number to continue: "
-
-if not defined choice cls&&goto m1
+if not defined choice goto m1
 if "%choice%"=="1" (cls
 goto Start)
 if "%choice%"=="2" (exit)
+cls
+goto m1
 
 :Start
 echo Wait for the Portable-VirtualBox source code to run,
@@ -66,6 +68,5 @@ rem Launch Portable-VirtualBox.
 start "" "%AutoIt3%" "%input_folder%source\Portable-VirtualBox.au3"
 Set choice=
 )
-
 cls
 goto m1
