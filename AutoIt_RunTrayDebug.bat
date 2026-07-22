@@ -6,7 +6,7 @@ set "AutoIt3=source\AutoIt3.exe"
 
 rem Setting up the different folders used for building. %~dp0 is the folder of the build script itself (may not be the same as the working directory).
 set "input_folder=%~dp0"
-set "build_folder=%input_folder%build"
+rem set "build_folder=%input_folder%build"
 
 
 rem Find path for AutoIt3
@@ -64,6 +64,8 @@ echo no longer needed, you can close it manually
 wmic process where "name='AutoIt3.exe'" get CommandLine | find /I "Portable-VirtualBox.au3" >nul
 if %errorlevel%==1 (
 rem Launch Portable-VirtualBox.
+xcopy /d /c /e /i /y "%input_folder%source\src_data\tools" "%input_folder%source\data\tools" > nul 2>&1
+xcopy /d /y "%input_folder%source\src_data\settings\SplashScreen.jpg" "%input_folder%source\data\settings\" > nul 2>&1
 start "" "%AutoIt3%" "%input_folder%source\Portable-VirtualBox.au3"
 Set choice=
 )
