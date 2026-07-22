@@ -212,6 +212,7 @@ EndIf
 
 If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND ($startvbox = 1 OR IniRead($var1, "startvbox", "key", "NotFound") = 1) Then
   IniDelete($var1, "startvbox")
+  EnvSet("VBOX_USER_HOME", $UserHome) ;Active UserHome
   If FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
     If @OSArch = "x86" Then
       Global $arch = "app32"
@@ -234,13 +235,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 
   If FileExists($UserHome&"\VirtualBox.xml-tmp") Then
     FileDelete($UserHome&"\VirtualBox.xml-tmp")
-  EndIf
-
-  If NOT FileExists($UserHome&"\VirtualBox.xml") Then
-	$file = FileOpen($UserHome&"\VirtualBox.xml", 2)
-	FileWrite($file, "<?xml version=""1.0""?>"&@LF&"<VirtualBox xmlns=""http://www.virtualbox.org/"" version=""1.12-windows"">"&@LF&"<Global>"&@LF&"<ExtraData>"&@LF&"</ExtraData>"&@LF&"<MachineRegistry/>"&@LF&"<NetserviceRegistry>"&@LF&"</NetserviceRegistry>"&@LF&"</Global>"&@LF&"</VirtualBox>")
-	FileClose($file)
-	Run('cmd /c ""'&@ScriptDir&'\'&$arch&'\VBoxManage.exe" setproperty machinefolder "'&$MachineFolder&'""', @ScriptDir, @SW_HIDE)
   EndIf
 
   If NOT FileExists($UserHome&"\VirtualBox.xml") Then
@@ -628,7 +622,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
 	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
       DllCall($arch&"\VBoxRT.dll", "hwnd", "RTR3Init")
-	  EnvSet("VBOX_USER_HOME", $UserHome)
 
       If $CmdLine[0] = 1 Then
         If FileExists($UserHome) Then
