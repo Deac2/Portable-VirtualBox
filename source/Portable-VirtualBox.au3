@@ -1102,7 +1102,7 @@ Func VM_List_Update()
     
     ; If the current choice is in the list, leave it
     If $foundCurrent Then
-        If (GUICtrlRead($Checkbox24)=4) Then
+        If (GUICtrlRead($Checkboxsett_24)=4) Then
 			GUICtrlSetData($VMStart, $aList[1])
         Else
 			GUICtrlSetData($VMStart, $currentSelection)
