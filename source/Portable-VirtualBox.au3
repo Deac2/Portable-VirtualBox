@@ -7,7 +7,10 @@
 ; Modified       : Deac2 Copyright (c) 2024
 ; Support        : https://github.com/Deac2
 
-If NOT @Compiled Then Opt("TrayIconDebug", 1)
+If NOT @Compiled Then
+Opt("TrayIconDebug", 1)
+TraySetIcon("VirtualBox.ico")
+Endif
 #pragma compile(Icon, VirtualBox.ico)
 #pragma compile(UPX, false)
 #pragma compile(LegalCopyright, https://github.com/Deac2/Portable-VirtualBox)
