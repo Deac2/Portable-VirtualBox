@@ -250,7 +250,7 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 	FileWrite($file,  $XmlContent)
 	FileClose($file)
 
-	Run('cmd /c ""'&@ScriptDir&'\'&$App_Dir&'\VBoxManage.exe" setproperty machinefolder "'&$MachineFolder&'""', @ScriptDir, @SW_HIDE)
+	Run("""" & @ScriptDir & "\" & $App_Dir & "\VBoxManage.exe"" setproperty machinefolder """ & $MachineFolder & """", @ScriptDir, @SW_HIDE)
   EndIf
 
   If FileExists($UserHome&"\VirtualBox.xml") Then
