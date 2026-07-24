@@ -65,7 +65,6 @@ wmic process where "name='AutoIt3.exe'" get CommandLine | find /I "Portable-Virt
 if %errorlevel%==1 (
 rem Launch Portable-VirtualBox.
 xcopy /d /c /e /i /y "%input_folder%source\src_data\tools" "%input_folder%source\data\tools" > nul 2>&1
-xcopy /d /y "%input_folder%source\src_data\settings\SplashScreen.jpg" "%input_folder%source\data\settings\" > nul 2>&1
 start "" "%AutoIt3%" "%input_folder%source\Portable-VirtualBox.au3"
 Set choice=
 )
