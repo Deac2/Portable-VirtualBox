@@ -1552,12 +1552,14 @@ Else
           $shift6 = "SHIFT"
           $plus18 = "+"
         EndIf
-
+		
+		If ProcessExists("VirtualBoxVM.exe") Then
         TrayCreateItem(_GetTranslation($Lang, "tray", "01") &" (" & $ctrl1 & $plus01 & $alt1 & $plus07 & $shift1 & $plus13 & IniRead($var1, "hotkeys", "19", "NotFound") & ")")
         TrayItemSetOnEvent(-1, "_ShowWindows_VM")
         TrayCreateItem(_GetTranslation($Lang, "tray", "02") &" (" & $ctrl2 & $plus02 & $alt2 & $plus08 & $shift2 & $plus14 & IniRead($var1, "hotkeys", "20", "NotFound") & ")")
         TrayItemSetOnEvent(-1, "_HideWindows_VM")
         TrayCreateItem("")
+		EndIf
         TrayCreateItem(_GetTranslation($Lang, "tray", "03") &" (" & $ctrl3 & $plus03 & $alt3 & $plus09 & $shift3 & $plus15 & IniRead($var1, "hotkeys", "21", "NotFound") & ")")
         TrayItemSetOnEvent(-1, "_ShowWindows")
         TrayCreateItem(_GetTranslation($Lang, "tray", "04") &" (" & $ctrl4 & $plus04 & $alt4 & $plus10 & $shift4 & $plus16 & IniRead($var1, "hotkeys", "22", "NotFound") & ")")
@@ -1592,7 +1594,31 @@ Else
         TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
       EndIf
 Endif
+EndFunc
 
+Func _UpdateTrayVMStatus()
+    ; Переменная, чтобы помнить прошлое состояние и не дергать систему зря
+    Static $bLastState = False 
+    
+    ; Проверяем, запущен ли процесс прямо сейчас
+    Local $bCurrentState = ProcessExists("VirtualBoxVM.exe") ? True : False
+    
+    ; Если состояние изменилось (машина запустилась или закрылась)
+    If $bCurrentState <> $bLastState Then
+        $bLastState = $bCurrentState ; Запоминаем новое состояние
+        
+        If $bCurrentState Then
+            ; Если машина ЗАПУСТИЛАСЬ — показываем пункты меню
+            TrayItemSetState($idShowVM, $TRAY_SHOW)
+            TrayItemSetState($idHideVM, $TRAY_SHOW)
+            TrayItemSetState($idSeparator, $TRAY_SHOW)
+        Else
+            ; Если машина ЗАКРЫЛАСЬ — скрываем пункты меню
+            TrayItemSetState($idShowVM, $TRAY_HIDE)
+            TrayItemSetState($idHideVM, $TRAY_HIDE)
+            TrayItemSetState($idSeparator, $TRAY_HIDE)
+        EndIf
+    EndIf
 EndFunc
 
 Func _CloseGUI()
