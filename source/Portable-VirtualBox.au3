@@ -835,7 +835,6 @@ EndFunc
 Func _Settings()
 	If NOT $Settings Then
 	Global $prevList = ""
-    Opt("GUIOnEventMode", 1)
 	_OnTabChange()
 
 	Local $WS_SYSMENU = 0x80000
