@@ -54,15 +54,35 @@ Global $BTNUserHome, $BTNMachineFolder
 Global $HomeRoot, $MachineRoot, $VMStart, $StartLng
 Global $new1 = 0, $new2 = 0, $Settings = 0, $iSort
 Global Const $WS_SYSMENU = 0x80000, $WS_MINIMIZEBOX = 0x20000, $CBS_DROPDOWNLIST = 0x3		; Window Extended Styles
+Global $idTab
+Global $OsArch = (@OSArch <> "x86" ? "x64" : "x86")
+
+If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) Then
+  If FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
+    If @OSArch = "x86" Then
+      Global $App_Dir = "app32"
+    EndIf
+    If @OSArch = "x64" Then
+      Global $App_Dir = "app64"
+    EndIf
+  Else
+    If FileExists(@ScriptDir&"\app32\") AND NOT FileExists(@ScriptDir&"\app64\") Then
+      Global $App_Dir = "app32"
+    EndIf
+    If NOT FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
+      Global $App_Dir = "app64"
+    EndIf
+  EndIf
+EndIf
 
 #cs
 If NOT FileExists(@ScriptDir&"\data\tools") Then DirCreate(@ScriptDir&"\data\tools")
-If NOT FileExists(@ScriptDir&"\data\settings\SplashScreen.jpg") Then DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/settings/SplashScreen.jpg", "data/settings/SplashScreen.jpg")
-If NOT FileExists(@ScriptDir&"\data\tools\7za.exe") Then DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/7za.exe", "data/tools/7za.exe")
-If @OSArch = "x86" AND NOT FileExists(@ScriptDir&"\data\tools\snetcfg_x86.exe") Then DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/snetcfg_x86.exe", "data/tools/snetcfg_x86.exe")
-If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\snetcfg_x64.exe") Then DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/snetcfg_x64.exe", "data/tools/snetcfg_x64.exe")
-If @OSArch = "x86" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x86.exe") Then DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/devcon_x86.exe", "data/tools/devcon_x86.exe")
-If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x64.exe") Then DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/devcon_x64.exe", "data/tools/devcon_x64.exe")
+If NOT FileExists(@ScriptDir&"\data\settings\SplashScreen.jpg") Then _DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/settings/SplashScreen.jpg", "data/settings/SplashScreen.jpg")
+If NOT FileExists(@ScriptDir&"\data\tools\7za.exe") Then _DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/7za.exe", "data/tools/7za.exe")
+If @OSArch = "x86" AND NOT FileExists(@ScriptDir&"\data\tools\snetcfg_x86.exe") Then _DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/snetcfg_x86.exe", "data/tools/snetcfg_x86.exe")
+If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\snetcfg_x64.exe") Then _DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/snetcfg_x64.exe", "data/tools/snetcfg_x64.exe")
+If @OSArch = "x86" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x86.exe") Then _DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/devcon_x86.exe", "data/tools/devcon_x86.exe")
+If @OSArch = "x64" AND NOT FileExists(@ScriptDir&"\data\tools\devcon_x64.exe") Then _DownloadGithub("http://raw.githubusercontent.com/Deac2/Portable-VirtualBox-resource/refs/heads/master/data/tools/devcon_x64.exe", "data/tools/devcon_x64.exe")
 #ce
 
 If IniRead($var1, "lang", "key", "NotFound") = 0 Then
@@ -70,24 +90,24 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
 
   Local $WS_POPUP
 
-  GUICreate("Language"&" "&GetTranslation($Lang, "download", "01"), 300, 156, -1, -1, $WS_POPUP)
+  GUICreate("Language"&" "&_GetTranslation($Lang, "download", "01"), 300, 156, -1, -1, $WS_POPUP)
   GUISetFont(10, 400, 0, "Arial")
   GUISetBkColor(0xFFFFFF)
 
   GUICtrlCreateLabel("Please select your language:", 31, 8, 260, 16)
 
   $StartLng = GUICtrlCreateCombo("", 31, 34, 100, 0, $CBS_DROPDOWNLIST)
-  GUICtrlSetData($StartLng, GetLangList(), "English")
+  GUICtrlSetData($StartLng, _GetLangList(), "English")
 
-  GUICtrlSetData($StartLng, GetLangList(), "English")
+  GUICtrlSetData($StartLng, _GetLangList(), "English")
   $CheckboxLang = GUICtrlCreateCheckbox("", 31, 65, 14, 14)
   GUICtrlSetState($CheckboxLang, $GUI_CHECKED)
   GUICtrlCreateLabel("Save language to ini file", 49, 64, 260, 16)
 
   GUICtrlCreateButton("Save", 30, 86, 100, 28, 0)
-  GUICtrlSetOnEvent(-1, "OKLanguage")
+  GUICtrlSetOnEvent(-1, "_OKLanguage")
   GUICtrlCreateButton("Exit", 162, 86, 100, 28, 0)
-  GUICtrlSetOnEvent(-1, "ExitGUI")
+  GUICtrlSetOnEvent(-1, "_ExitGUI")
 
   GUISetState()
 
@@ -98,12 +118,13 @@ If IniRead($var1, "lang", "key", "NotFound") = 0 Then
   GUIDelete()
 EndIf
 
-UpdateSettings()
-IniWrite($var1, "userhome", "key", ValidatePath($UserHome, $DefaultUserHome))
-IniWrite($var1, "MachineFolder", "key", ValidatePath($MachineFolder, $DefaultMachineFolder))
+_UpdateSettings()
+_TrayMenu()
+IniWrite($var1, "userhome", "key", _ValidatePath($UserHome, $DefaultUserHome))
+IniWrite($var1, "MachineFolder", "key", _ValidatePath($MachineFolder, $DefaultMachineFolder))
 ; Thibaut : use Hybrid Mode if available
 If $CmdLine[0] = 1 AND $CmdLine[1]="noportable" Then
-HybridMode()
+_HybridMode()
 Endif
 
 If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) Then
@@ -111,95 +132,49 @@ If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&
   Global $Input100, $Input200, $Button100, $Button200
   Global $install = 1
 
-      If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then
-        HotKeySet(IniRead($var1, "hotkeys", "05", "NotFound") & IniRead($var1, "hotkeys", "11", "NotFound") & IniRead($var1, "hotkeys", "17", "NotFound") & IniRead($var1, "hotkeys", "23", "NotFound"), "Settings")
-        HotKeySet(IniRead($var1, "hotkeys", "06", "NotFound") & IniRead($var1, "hotkeys", "12", "NotFound") & IniRead($var1, "hotkeys", "18", "NotFound") & IniRead($var1, "hotkeys", "24", "NotFound"), "ExitGUI")
-      EndIf
-
-        Local $ctrl5, $ctrl6
-        Local $alt5, $alt6
-        Local $shift5, $shift6
-        Local $plus05, $plus06, $plus11, $plus12, $plus17, $plus18
-
-        If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
-          $ctrl5  = "CTRL"
-          $plus05 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
-          $ctrl6  = "CTRL"
-          $plus06 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
-          $alt5   = "ALT"
-          $plus11 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
-          $alt6   = "ALT"
-          $plus12 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
-          $shift5 = "SHIFT"
-          $plus17 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
-          $shift6 = "SHIFT"
-          $plus18 = "+"
-        EndIf
-
-  TrayCreateItem(GetTranslation($Lang, "tray", "05") &" (" & $ctrl5 & $plus05 & $alt5 & $plus11 & $shift5 & $plus17 & IniRead($var1, "hotkeys", "23", "NotFound") & ")")
-  TrayItemSetOnEvent(-1, "Settings")
-  TrayCreateItem("")
-  TrayCreateItem(GetTranslation($Lang, "tray", "06") &" (" & $ctrl6 & $plus06 & $alt6 & $plus12 & $shift6 & $plus18 & IniRead($var1, "hotkeys", "24", "NotFound") & ")")
-  TrayItemSetOnEvent(-1, "ExitGUI")
-  TraySetState()
-  TraySetToolTip(GetTranslation($Lang, "tray", "07"))
-  TrayTip("", GetTranslation($Lang, "tray", "07"), 5)
-
-  Global $Gui_Setup = GUICreate(GetTranslation($Lang, "download", "01"), 662, 380, -1, -1, BitOR($WS_SYSMENU, $WS_MINIMIZEBOX))
-  GUISetOnEvent($GUI_EVENT_CLOSE, "ExitGUI")
+  Global $Gui_Setup = GUICreate(_GetTranslation($Lang, "download", "01"), 662, 380, -1, -1, BitOR($WS_SYSMENU, $WS_MINIMIZEBOX))
+  GUISetOnEvent($GUI_EVENT_CLOSE, "_ExitGUI")
   GUISetFont(10, 400, 0, "Arial")
   GUISetBkColor(0xFFFFFF)
 
-  GUICtrlCreateLabel(GetTranslation($Lang, "download", "02"), 152, 8, 476, 60)
+  GUICtrlCreateLabel(_GetTranslation($Lang, "download", "02"), 152, 8, 476, 60)
 
   GUISetFont(9, 400, 0, "Arial")
   Local $Download_listbox = GUICtrlCreateList("", 15, 11, 121, 290, BitOR(0xB00000, 0x800000), 0x06)
   
   GUISetFont(10, 400, 0, "Arial")
-  $Button100 = GUICtrlCreateButton(GetTranslation($Lang, "download", "03"), 11, 308, 185, 33)
-  GUICtrlSetOnEvent($Button100, "DownloadFile")
-  Load_ListBox()
+  $Button100 = GUICtrlCreateButton(_GetTranslation($Lang, "download", "03"), 11, 308, 185, 33)
+  GUICtrlSetOnEvent($Button100, "_DownloadFile")
+  _Load_ListBox()
 
-  $Input100 = GUICtrlCreateInput(GetTranslation($Lang, "download", "04"), 152, 70, 373, 23)
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "05"), 532, 69, 93, 25)
-  GUICtrlSetOnEvent(-1, "SearchFile")
+  $Input100 = GUICtrlCreateInput(_GetTranslation($Lang, "download", "04"), 152, 70, 373, 23)
+  GUICtrlCreateButton(_GetTranslation($Lang, "download", "05"), 532, 69, 93, 25)
+  GUICtrlSetOnEvent(-1, "_SearchFile")
 
-  $Checkbox100 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "06"), 152, 101, 490, 26)
-  $Checkbox110 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "07"), 152, 125, 490, 26)
-  $Checkbox120 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "08"), 152, 149, 490, 26)
-  $Checkbox130 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "09"), 152, 173, 490, 26)
-  $Checkbox140 = GUICtrlCreateCheckbox(GetTranslation($Lang, "download", "10"), 152, 197, 490, 26)
+  $Checkbox100 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "download", "06"), 152, 101, 490, 26)
+  $Checkbox110 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "download", "07"), 152, 125, 490, 26)
+  $Checkbox120 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "download", "08"), 152, 149, 490, 26)
+  $Checkbox130 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "download", "09"), 152, 173, 490, 26)
+  $Checkbox140 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "download", "10"), 152, 197, 490, 26)
   GUICtrlSetState($Checkbox120, $GUI_CHECKED)
   GUICtrlSetState($Checkbox130, $GUI_CHECKED)
 
-  $LabelDownload = GUICtrlCreateLabel(GetTranslation($Lang, "download", "11"), 152, 221, 300, 26)
+  $LabelDownload = GUICtrlCreateLabel(_GetTranslation($Lang, "download", "11"), 152, 221, 300, 26)
   GUICtrlSetState($LabelDownload, $GUI_HIDE)
   $Input200 = GUICtrlCreateEdit("", 149, 238, 476, 65, "", 0x06)
 
-  $Button200 = GUICtrlCreateButton(GetTranslation($Lang, "download", "12"), 209, 308, 129, 33)
+  $Button200 = GUICtrlCreateButton(_GetTranslation($Lang, "download", "12"), 209, 308, 129, 33)
   GUICtrlSetState($Button200, $GUI_DISABLE)
-  GUICtrlSetOnEvent(-1, "UseSettings")
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "13"), 351, 308, 149, 33)
-  GUICtrlSetOnEvent(-1, "Licence")
-  GUICtrlCreateButton(GetTranslation($Lang, "download", "14"), 513, 308, 129, 33)
-  GUICtrlSetOnEvent(-1, "ExitGUI")
+  GUICtrlSetOnEvent(-1, "_UseSettings")
+  GUICtrlCreateButton(_GetTranslation($Lang, "download", "13"), 351, 308, 149, 33)
+  GUICtrlSetOnEvent(-1, "_Licence")
+  GUICtrlCreateButton(_GetTranslation($Lang, "download", "14"), 513, 308, 129, 33)
+  GUICtrlSetOnEvent(-1, "_ExitGUI")
 
   If FileExists(@ScriptDir&"\virtualbox.exe") Then
     GUICtrlSetData($Input100, @ScriptDir&"\virtualbox.exe")
     GUICtrlSetState($Button200,$GUI_ENABLE)
-	CheckExeFile(@ScriptDir&"\VirtualBox.exe")
+	_CheckExeFile(@ScriptDir&"\VirtualBox.exe")
   EndIf
 
   GUISetState()
@@ -216,148 +191,23 @@ EndIf
 If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND ($startvbox = 1 OR IniRead($var1, "startvbox", "key", "NotFound") = 1) Then
   IniDelete($var1, "startvbox")
   EnvSet("VBOX_USER_HOME", $UserHome) ;Active UserHome
-      If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then
-        HotKeySet(IniRead($var1, "hotkeys", "01", "NotFound") & IniRead($var1, "hotkeys", "07", "NotFound") & IniRead($var1, "hotkeys", "13", "NotFound") & IniRead($var1, "hotkeys", "19", "NotFound"), "ShowWindows_VM")
-        HotKeySet(IniRead($var1, "hotkeys", "02", "NotFound") & IniRead($var1, "hotkeys", "08", "NotFound") & IniRead($var1, "hotkeys", "14", "NotFound") & IniRead($var1, "hotkeys", "20", "NotFound"), "HideWindows_VM")
-        HotKeySet(IniRead($var1, "hotkeys", "03", "NotFound") & IniRead($var1, "hotkeys", "09", "NotFound") & IniRead($var1, "hotkeys", "15", "NotFound") & IniRead($var1, "hotkeys", "21", "NotFound"), "ShowWindows")
-        HotKeySet(IniRead($var1, "hotkeys", "04", "NotFound") & IniRead($var1, "hotkeys", "10", "NotFound") & IniRead($var1, "hotkeys", "16", "NotFound") & IniRead($var1, "hotkeys", "22", "NotFound"), "HideWindows")
-        HotKeySet(IniRead($var1, "hotkeys", "05", "NotFound") & IniRead($var1, "hotkeys", "11", "NotFound") & IniRead($var1, "hotkeys", "17", "NotFound") & IniRead($var1, "hotkeys", "23", "NotFound"), "Settings")
-        HotKeySet(IniRead($var1, "hotkeys", "06", "NotFound") & IniRead($var1, "hotkeys", "12", "NotFound") & IniRead($var1, "hotkeys", "18", "NotFound") & IniRead($var1, "hotkeys", "24", "NotFound"), "ExitScript")
-
-        Local $ctrl1, $ctrl2, $ctrl3, $ctrl4, $ctrl5, $ctrl6
-        Local $alt1, $alt2, $alt3, $alt4, $alt5, $alt6
-        Local $shift1, $shift2, $shift3, $shift4, $shift5, $shift6
-        Local $plus01, $plus02, $plus03, $plus04, $plus05, $plus06, $plus07, $plus08, $plus09, $plus10, $plus11, $plus12, $plus13, $plus14, $plus15, $plus16, $plus17, $plus18
-
-	If IniRead($var1, "hotkeys", "01", "NotFound") = "^" Then
-          $ctrl1  = "CTRL"
-          $plus01 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "02", "NotFound") = "^" Then
-          $ctrl2  = "CTRL"
-          $plus02 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "03", "NotFound") = "^" Then
-          $ctrl3  = "CTRL"
-          $plus03 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "04", "NotFound") = "^" Then
-          $ctrl4  = "CTRL"
-          $plus04 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
-          $ctrl5  = "CTRL"
-          $plus05 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
-          $ctrl6  = "CTRL"
-          $plus06 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "07", "NotFound") = "!" Then
-          $alt1   = "ALT"
-          $plus07 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "08", "NotFound") = "!" Then
-          $alt2   = "ALT"
-          $plus08 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "09", "NotFound") = "!" Then
-          $alt3   = "ALT"
-          $plus09 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "10", "NotFound") = "!" Then
-          $alt4   = "ALT"
-          $plus10 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
-          $alt5   = "ALT"
-          $plus11 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
-          $alt6   = "ALT"
-          $plus12 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "13", "NotFound") = "+" Then
-          $shift1 = "SHIFT"
-          $plus13 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "14", "NotFound") = "+" Then
-          $shift2 = "SHIFT"
-          $plus14 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "15", "NotFound") = "+" Then
-          $shift3 = "SHIFT"
-          $plus15 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "16", "NotFound") = "+" Then
-          $shift4 = "SHIFT"
-          $plus16 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
-          $shift5 = "SHIFT"
-          $plus17 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
-          $shift6 = "SHIFT"
-          $plus18 = "+"
-        EndIf
-
-        TrayCreateItem(GetTranslation($Lang, "tray", "01") &" (" & $ctrl1 & $plus01 & $alt1 & $plus07 & $shift1 & $plus13 & IniRead($var1, "hotkeys", "19", "NotFound") & ")")
-        TrayItemSetOnEvent(-1, "ShowWindows_VM")
-        TrayCreateItem(GetTranslation($Lang, "tray", "02") &" (" & $ctrl2 & $plus02 & $alt2 & $plus08 & $shift2 & $plus14 & IniRead($var1, "hotkeys", "20", "NotFound") & ")")
-        TrayItemSetOnEvent(-1, "HideWindows_VM")
-        TrayCreateItem("")
-        TrayCreateItem(GetTranslation($Lang, "tray", "03") &" (" & $ctrl3 & $plus03 & $alt3 & $plus09 & $shift3 & $plus15 & IniRead($var1, "hotkeys", "21", "NotFound") & ")")
-        TrayItemSetOnEvent(-1, "ShowWindows")
-        TrayCreateItem(GetTranslation($Lang, "tray", "04") &" (" & $ctrl4 & $plus04 & $alt4 & $plus10 & $shift4 & $plus16 & IniRead($var1, "hotkeys", "22", "NotFound") & ")")
-        TrayItemSetOnEvent(-1, "HideWindows")
-        TrayCreateItem("")
-        TrayCreateItem(GetTranslation($Lang, "tray", "05") &" (" & $ctrl5 & $plus05 & $alt5 & $plus11 & $shift5 & $plus17 & IniRead($var1, "hotkeys", "23", "NotFound") & ")")
-        TrayItemSetOnEvent(-1, "Settings")
-        TrayCreateItem("")
-        TrayCreateItem(GetTranslation($Lang, "tray", "06") &" (" & $ctrl6 & $plus06 & $alt6 & $plus12 & $shift6 & $plus18 & IniRead($var1, "hotkeys", "24", "NotFound") & ")")
-        TrayItemSetOnEvent(-1, "ExitScript")
-        TraySetState()
-        TraySetToolTip(GetTranslation($Lang, "tray", "07"))
-        TrayTip("", GetTranslation($Lang, "tray", "07"), 5)
-      Else
-        TrayCreateItem(GetTranslation($Lang, "tray", "01"))
-        TrayItemSetOnEvent(-1, "ShowWindows_VM")
-        TrayCreateItem(GetTranslation($Lang, "tray", "02"))
-        TrayItemSetOnEvent(-1, "HideWindows_VM")
-        TrayCreateItem("")
-        TrayCreateItem(GetTranslation($Lang, "tray", "03"))
-        TrayItemSetOnEvent(-1, "ShowWindows")
-        TrayCreateItem(GetTranslation($Lang, "tray", "04"))
-        TrayItemSetOnEvent(-1, "HideWindows")
-        TrayCreateItem("")
-        TrayCreateItem(GetTranslation($Lang, "tray", "05"))
-        TrayItemSetOnEvent(-1, "Settings")
-        TrayCreateItem("")
-        TrayCreateItem(GetTranslation($Lang, "tray", "06"))
-        TrayItemSetOnEvent(-1, "ExitScript")
-        TraySetState()
-        TraySetToolTip(GetTranslation($Lang, "tray", "07"))
-        TrayTip("", GetTranslation($Lang, "tray", "07"), 5)
-      EndIf
-
+#cs
   If FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
     If @OSArch = "x86" Then
-      Global $arch = "app32"
+      Global $App_Dir = "app32"
     EndIf
     If @OSArch = "x64" Then
-      Global $arch = "app64"
+      Global $App_Dir = "app64"
     EndIf
   Else
     If FileExists(@ScriptDir&"\app32\") AND NOT FileExists(@ScriptDir&"\app64\") Then
-      Global $arch = "app32"
+      Global $App_Dir = "app32"
     EndIf
     If NOT FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
-      Global $arch = "app64"
+      Global $App_Dir = "app64"
     EndIf
   EndIf
+#ce
 
   If FileExists($UserHome&"\VirtualBox.xml-prev") Then
     FileDelete($UserHome&"\VirtualBox.xml-prev")
@@ -370,10 +220,37 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
   If NOT FileExists($UserHome&"\VirtualBox.xml") Then
 	DirCreate($UserHome)
 	DirCreate($MachineFolder)
-	$file = FileOpen($UserHome&"\VirtualBox.xml", 2)
-	FileWrite($file, "<?xml version=""1.0""?>"&@LF&"<VirtualBox xmlns=""http://www.virtualbox.org/"" version=""1.12-windows"">"&@LF&"<Global>"&@LF&"<ExtraData>"&@LF&"</ExtraData>"&@LF&"<MachineRegistry/>"&@LF&"<NetserviceRegistry>"&@LF&"</NetserviceRegistry>"&@LF&"</Global>"&@LF&"</VirtualBox>")
+    Local $XmlContent = '<?xml version="1.0"?>' & @CRLF & _
+        '<!--' & @CRLF & _
+        '** DO NOT EDIT THIS FILE.' & @CRLF & _
+        '** If you make changes to this file while any VirtualBox related application' & @CRLF & _
+        '** is running, your changes will be overwritten later, without taking effect.' & @CRLF & _
+        '** Use VBoxManage or the VirtualBox Manager GUI to make changes.' & @CRLF & _
+        '-->' & @CRLF & _
+        '<VirtualBox xmlns="http://virtualbox.org" version="1.12-windows">' & @CRLF & _
+        '  <Global>' & @CRLF & _
+        '    <ExtraData>' & @CRLF & _
+        '      <ExtraDataItem name="GUI/LastItemSelected" value="n=GLOBAL"/>' & @CRLF & _
+        '      <ExtraDataItem name="GUI/LastWindowPosition" value="512,264,640,488"/>' & @CRLF & _
+        '      <ExtraDataItem name="GUI/Tools/LastItemsSelected" value="Welcome,Details"/>' & @CRLF & _
+        '    </ExtraData>' & @CRLF & _
+        '    <MachineRegistry/>' & @CRLF & _
+        '    <NetserviceRegistry>' & @CRLF & _
+        '      <DHCPServers/>' & @CRLF & _
+        '    </NetserviceRegistry>' & @CRLF & _
+        '    <Updates enabled="false">' & @CRLF & _
+        '      <Host enabled="false" channel="1" checkFreqSec="86400" repoUrl="https://virtualbox.org" checkCount="0"/>' & @CRLF & _
+        '    </Updates>' & @CRLF & _
+        '    <SystemProperties defaultMachineFolder="' & $MachineFolder & '" defaultHardDiskFormat="VDI" VRDEAuthLibrary="VBoxAuth" webServiceAuthLibrary="VBoxAuth" LogHistoryCount="3" proxyMode="0" exclusiveHwVirt="false"/>' & @CRLF & _
+        '    <USBDeviceFilters/>' & @CRLF & _
+        '  </Global>' & @CRLF & _
+        '</VirtualBox>'
+
+	$file = FileOpen($UserHome&"\VirtualBox.xml", 2 + 8)
+	FileWrite($file,  $XmlContent)
 	FileClose($file)
-	Run('cmd /c ""'&@ScriptDir&'\'&$arch&'\VBoxManage.exe" setproperty machinefolder "'&$MachineFolder&'""', @ScriptDir, @SW_HIDE)
+
+	Run('cmd /c ""'&@ScriptDir&'\'&$App_Dir&'\VBoxManage.exe" setproperty machinefolder "'&$MachineFolder&'""', @ScriptDir, @SW_HIDE)
   EndIf
 
   If FileExists($UserHome&"\VirtualBox.xml") Then
@@ -487,15 +364,15 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 	  
     EndIf
   Else
-    MsgBox(0+262144, GetTranslation($Lang, "download", "15"), GetTranslation($Lang, "download", "16"))
+    MsgBox(0+262144, _GetTranslation($Lang, "download", "15"), _GetTranslation($Lang, "download", "16"))
   EndIf
 
-  If FileExists(@ScriptDir&"\"&$arch&"\VirtualBox.exe") AND FileExists(@ScriptDir&"\"&$arch&"\VBoxSVC.exe") AND FileExists(@ScriptDir&"\"&$arch&"\VBoxC.dll") Then
+  If FileExists(@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe") AND FileExists(@ScriptDir&"\"&$App_Dir&"\VBoxSVC.exe") AND FileExists(@ScriptDir&"\"&$App_Dir&"\VBoxC.dll") Then
     If NOT ProcessExists("VirtualBox.exe") OR NOT ProcessExists("VBoxManage.exe") Then
       If FileExists(@ScriptDir&"\data\settings\SplashScreen.jpg") Then
         SplashImageOn("Portable-VirtualBox", @ScriptDir&"\data\settings\SplashScreen.jpg", 480, 360, -1, -1, 1)
       Else
-        SplashTextOn("Portable-VirtualBox", GetTranslation($Lang, "messages", "06"), 220, 40, -1, -1, 1, "arial", 12)
+        SplashTextOn("Portable-VirtualBox", _GetTranslation($Lang, "messages", "06"), 220, 40, -1, -1, 1, "arial", 12)
       EndIf
 
       If @OSArch = "x86" Then
@@ -519,112 +396,15 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         EndIf
       EndIf
 
-      If FileExists(@ScriptDir&"\"&$arch&"\") AND FileExists(@ScriptDir&"\vboxadditions\") Then
-        DirMove(@ScriptDir&"\vboxadditions\doc", @ScriptDir&"\"& $arch, 1)
-        DirMove(@ScriptDir&"\vboxadditions\ExtensionPacks", @ScriptDir&"\"& $arch, 1)
-        DirMove(@ScriptDir&"\vboxadditions\nls", @ScriptDir&"\"& $arch, 1)
-        FileMove(@ScriptDir&"\vboxadditions\guestadditions\*.*", @ScriptDir&"\"&$arch&"\", 9)
+      If FileExists(@ScriptDir&"\"&$App_Dir&"\") AND FileExists(@ScriptDir&"\vboxadditions\") Then
+        DirMove(@ScriptDir&"\vboxadditions\doc", @ScriptDir&"\"& $App_Dir, 1)
+        DirMove(@ScriptDir&"\vboxadditions\ExtensionPacks", @ScriptDir&"\"& $App_Dir, 1)
+        DirMove(@ScriptDir&"\vboxadditions\nls", @ScriptDir&"\"& $App_Dir, 1)
+        FileMove(@ScriptDir&"\vboxadditions\guestadditions\*.*", @ScriptDir&"\"&$App_Dir&"\", 9)
       Endif
 
+      _Start_VirtualBox()
       SplashOff()
-
-      If FileExists(@ScriptDir&"\"&$arch&"\drivers\vboxdrv") AND RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxDRV", "DisplayName") <> "VirtualBox Service" Then
-        RunWait("cmd /c sc create VBoxDRV binpath= ""%CD%\"&$arch&"\drivers\VBoxDrv\VBoxDrv.sys"" type= kernel start= auto error= normal displayname= PortableVBoxDRV", @ScriptDir, @SW_HIDE)
-		RunWait("sc start VBoxDRV", @ScriptDir, @SW_HIDE)
-        Local $DRV = 1
-      Else
-        Local $DRV = 0
-      EndIf
-
-      If FileExists(@ScriptDir&"\"&$arch&"\drivers\vboxsup") AND RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxSUP", "DisplayName") <> "VirtualBox Service" Then
-        RunWait("cmd /c sc create VBoxSUP binpath= ""%CD%\"&$arch&"\drivers\VBoxSup\VBoxSup.sys"" type= kernel start= auto error= normal displayname= PortableVBoxSUP", @ScriptDir, @SW_HIDE)
-		RunWait("sc start VBoxSUP", @ScriptDir, @SW_HIDE)
-        Local $SUP = 1
-      Else
-        Local $SUP = 0
-      EndIf
-
-      If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "VirtualBox USB Monitor Driver" Then
-        RunWait("cmd /c sc create VBoxUSBMon binpath= ""%CD%\"&$arch&"\drivers\USB\filter\VBoxUSBMon.sys"" type= kernel start= auto error= normal displayname= PortableVBoxUSBMon", @ScriptDir, @SW_HIDE)
-		RunWait("sc start VBoxUSBMon", @ScriptDir, @SW_HIDE)
-        Local $MON = 1
-      Else
-        Local $MON = 0
-      EndIf
-
-      If IniRead($var1, "usb", "key", "NotFound") = 1 Then
-        If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "VirtualBox USB" Then
-          If @OSArch = "x86" Then
-            RunWait(@ScriptDir&"\data\tools\devcon_x86.exe install "&$arch&"\drivers\USB\device\VBoxUSB.inf ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
-          EndIf
-          If @OSArch = "x64" Then
-            RunWait(@ScriptDir&"\data\tools\devcon_x64.exe install "&$arch&"\drivers\USB\device\VBoxUSB.inf ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
-          EndIf
-          FileCopy(@ScriptDir&"\"&$arch&"\drivers\USB\device\VBoxUSB.sys", @WindowsDir&"\System32\drivers", 9)
-		  RunWait("sc start VBoxUSB", @ScriptDir, @SW_HIDE)
-          Local $USB = 1
-        Else
-          Local $USB = 0
-        EndIf
-      Else
-        Local $USB = 0
-      EndIf
-
-      If IniRead($var1, "net", "key", "NotFound") = 1 Then
-        If NOT FileExists(@ScriptDir&"\"&$arch&"\drivers\network\netadp6") Then
-        Local $ADPVER = ""
-        else
-        Local $ADPVER = 6
-        EndIf
-        If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "VirtualBox Host-Only Network Adapter" Then
-          If @OSArch = "x86" Then
-            RunWait(@ScriptDir&"\data\tools\devcon_x86.exe install "&$arch&"\drivers\network\netadp"&$ADPVER&"\VBoxNetAdp"&$ADPVER&".inf ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
-          EndIf
-          If @OSArch = "x64" Then
-            RunWait(@ScriptDir&"\data\tools\devcon_x64.exe install "&$arch&"\drivers\network\netadp"&$ADPVER&"\VBoxNetAdp"&$ADPVER&".inf ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
-          EndIf
-          FileCopy(@ScriptDir&"\"&$arch&"\drivers\network\netadp"&$ADPVER&"\VBoxNetAdp"&$ADPVER&".sys", @WindowsDir&"\System32\drivers", 9)
-          RunWait("sc start VBoxNetAdp", @ScriptDir, @SW_HIDE)
-          Local $ADP = 1
-        Else
-          Local $ADP = 0
-        EndIf
-      Else
-        Local $ADP = 0
-      EndIf
-
-      If IniRead($var1, "net", "key", "NotFound") = 1 Then
-        If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "VBoxNetFlt Service" Then
-          If @OSArch = "x86" Then
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x86.exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x86.exe -v -l "&$arch&"\drivers\network\netflt\VBoxNetFlt.inf -m \"&$arch&"\drivers\network\netflt\VBoxNetFlt.inf -c s -i ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x86.exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x86.exe -v -l "&$arch&"\drivers\network\netlwf\VBoxNetLwf.inf -m \"&$arch&"\drivers\network\netlwf\VBoxNetLwf.inf -c s -i ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
-          EndIf
-          If @OSArch = "x64" Then
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x64.exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x64.exe -v -l "&$arch&"\drivers\network\netflt\VBoxNetFlt.inf -m "&$arch&"\drivers\network\netflt\VBoxNetFlt.inf -c s -i ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x64.exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
-            RunWait(@ScriptDir&"\data\tools\snetcfg_x64.exe -v -l "&$arch&"\drivers\network\netlwf\VBoxNetLwf.inf -m "&$arch&"\drivers\network\netlwf\VBoxNetLwf.inf -c s -i ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
-          EndIf
-          FileCopy(@ScriptDir&"\"&$arch&"\drivers\network\netflt\VBoxNetFltNobj.dll", @WindowsDir&"\System32", 9)
-          FileCopy(@ScriptDir&"\"&$arch&"\drivers\network\netflt\VBoxNetFlt.sys", @WindowsDir&"\System32\drivers", 9)
-          RunWait(@SystemDir&"\regsvr32.exe /S "& @WindowsDir&"\System32\VBoxNetFltNobj.dll", @WindowsDir&"\System32", @SW_HIDE)
-          FileCopy(@ScriptDir&"\"&$arch&"\drivers\network\netlwf\VBoxNetLwf.sys", @WindowsDir&"\System32\drivers", 9)
-          RunWait("sc start VBoxNetFlt", @ScriptDir, @SW_HIDE)
-		  RunWait("sc start VBoxNetLwf", @ScriptDir, @SW_HIDE)
-          Local $NET = 1
-        Else
-          Local $NET = 0
-        EndIf
-      Else
-        Local $NET = 0
-      EndIf
-
-      RunWait($arch&"\VBoxSVC.exe /reregserver", @ScriptDir, @SW_HIDE)
-	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
-	  RunWait(@SystemDir&"\regsvr32.exe /S "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
-      DllCall($arch&"\VBoxRT.dll", "hwnd", "RTR3Init")
 
       If $CmdLine[0] = 1 Then
         If FileExists($UserHome) Then
@@ -638,13 +418,13 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
 			Next
           Endif
 		  If IniRead($var1, "userhome", "key", "NotFound") = $UserHome Then
-			Run(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
-			RunWait(""""&@ScriptDir&"\"&$arch&"\VBoxManage.exe"" startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
+			Run(""""&@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+			RunWait(""""&@ScriptDir&"\"&$App_Dir&"\VBoxManage.exe"" startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
           Else
-            RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+            RunWait(""""&@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
           EndIf
         Else
-			RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+			RunWait(""""&@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
         EndIf
 
         ProcessWaitClose("VirtualBox.exe")
@@ -653,128 +433,27 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         If FileExists($UserHome) Then
           Local $StartVM  = IniRead($var1, "startvm", "key", "NotFound")
 		  If $StartVM <> "NotFound" And $StartVM <> ""  And FileExists($MachineFolder & "\" & $StartVM) Then
-			Run(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
-			RunWait(""""&@ScriptDir&"\"&$arch&"\VBoxManage.exe"" startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
+			Run(""""&@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+			RunWait(""""&@ScriptDir&"\"&$App_Dir&"\VBoxManage.exe"" startvm """&$StartVM&"""", @ScriptDir, @SW_HIDE)
 		  Else
 			IniWrite($var1, "startvm", "key", "")
-			RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+			RunWait(""""&@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
           EndIf
         Else
-          RunWait(""""&@ScriptDir&"\"&$arch&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
+          RunWait(""""&@ScriptDir&"\"&$App_Dir&"\VirtualBox.exe""", @ScriptDir, @SW_SHOW)
         EndIf
 
         ProcessWaitClose("VirtualBox.exe")
         ProcessWaitClose("VBoxManage.exe")
       EndIf
 
-      SplashTextOn("Portable-VirtualBox", GetTranslation($Lang, "messages", "07"), 220, 40, -1, -1, 1, "arial", 12)
+      SplashTextOn("Portable-VirtualBox", _GetTranslation($Lang, "messages", "07"), 220, 40, -1, -1, 1, "arial", 12)
 
-      ExitScript()
+      _ExitScript()
 
       Local $PortMode = IniRead($var1, "PortableMode", "key", "0")
       If $PortMode = 0 Then
-      RunWait($arch&"\VBoxSVC.exe /unregserver", @ScriptDir, @SW_HIDE)
-      RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxC.dll", @ScriptDir, @SW_HIDE)
-      RunWait($arch&"\VBoxSDS.exe /UnregService", @ScriptDir, @SW_SHOW)
-      RunWait(@SystemDir&"\regsvr32.exe /S /U "&$arch&"\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
-
-      If $DRV = 1 Then
-        RunWait("sc stop VBoxDRV", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $SUP = 1 Then
-        RunWait("sc stop VBoxSUP", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $USB = 1 Then
-        RunWait("sc stop VBoxUSB", @ScriptDir, @SW_HIDE)
-        If @OSArch = "x86" Then
-          RunWait(@ScriptDir&"\data\tools\devcon_x86.exe remove ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
-        EndIf
-        If @OSArch = "x64" Then
-          RunWait(@ScriptDir&"\data\tools\devcon_x64.exe remove ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
-        EndIf
-        FileDelete(@WindowsDir&"\System32\drivers\VBoxUSB.sys")
-      EndIf
-
-      If $MON = 1 Then
-        RunWait("sc stop VBoxUSBMon", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $ADP = 1 Then
-        RunWait("sc stop VBoxNetAdp", @ScriptDir, @SW_HIDE)
-        If @OSArch = "x86" Then
-          RunWait(@ScriptDir&"\data\tools\devcon_x86.exe remove ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
-        EndIf
-        If @OSArch = "x64" Then
-          RunWait(@ScriptDir&"\data\tools\devcon_x64.exe remove ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
-        EndIf
-        FileDelete(@WindowsDir&"\System32\drivers\VBoxNetAdp"&$ADPVER&".sys")
-      EndIf
-
-      If $NET = 1 Then
-        RunWait("sc stop VBoxNetFlt", @ScriptDir, @SW_HIDE)
-        RunWait("sc stop VBoxNetLwf", @ScriptDir, @SW_HIDE)
-        If @OSArch = "x86" Then
-          RunWait(@ScriptDir&"\data\tools\snetcfg_x86.exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
-          RunWait(@ScriptDir&"\data\tools\snetcfg_x86.exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
-        EndIf
-        If @OSArch = "x64" Then
-          RunWait(@ScriptDir&"\data\tools\snetcfg_x64.exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
-          RunWait(@ScriptDir&"\data\tools\snetcfg_x64.exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
-        EndIf
-        RunWait(@SystemDir&"\regsvr32.exe /S /U "&@WindowsDir&"\System32\VBoxNetFltNobj.dll", @ScriptDir, @SW_HIDE)
-        RunWait("sc delete VBoxNetFlt", @ScriptDir, @SW_HIDE)
-        RunWait("sc delete VBoxNetLwf", @ScriptDir, @SW_HIDE)
-        FileDelete(@WindowsDir&"\System32\VBoxNetFltNobj.dll")
-        FileDelete(@WindowsDir&"\System32\drivers\VBoxNetFlt.sys")
-        FileDelete(@WindowsDir&"\System32\drivers\VBoxNetLwf.sys")
-      EndIf
-
-      If FileExists(@ScriptDir&"\"&$arch&"\") AND FileExists(@ScriptDir&"\vboxadditions\") Then
-        DirMove(@ScriptDir&"\"&$arch&"\doc", @ScriptDir&"\vboxadditions\", 1)
-        DirMove(@ScriptDir&"\"&$arch&"\ExtensionPacks", @ScriptDir&"\vboxadditions\", 1)
-        DirMove(@ScriptDir&"\"&$arch&"\nls", @ScriptDir&"\vboxadditions\", 1)
-        FileMove(@ScriptDir&"\"&$arch&"\*.iso", @ScriptDir&"\vboxadditions\guestadditions\", 9)
-      EndIf
-
-      If $msv = 1 Then
-        FileDelete(@SystemDir&"\msvcp71.dll")
-        FileDelete(@SystemDir&"\msvcr71.dll")
-        FileDelete(@SystemDir&"\msvcrt.dll")
-      EndIf
-
-      If $msv = 2 Then
-        FileDelete(@SystemDir&"\msvcp80.dll")
-        FileDelete(@SystemDir&"\msvcr80.dll")
-      EndIf
-
-      If $DRV = 1 Then
-        RunWait("sc delete VBoxDRV", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $SUP = 1 Then
-        RunWait("sc delete VBoxSUP", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $USB = 1 Then
-        RunWait("sc delete VBoxUSB", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $MON = 1 Then
-        RunWait("sc delete VBoxUSBMon", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $ADP = 1 Then
-        RunWait("sc delete VBoxNetAdp", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      If $NET = 1 Then
-        RunWait("sc delete VBoxNetFlt", @ScriptDir, @SW_HIDE)
-        RunWait("sc delete VBoxNetLwf", @ScriptDir, @SW_HIDE)
-      EndIf
-
-      RunWait("sc delete VBoxSDS", @ScriptDir, @SW_HIDE)
+	  _Stop_VirtualBox()
       EndIf
       SplashOff()
     Else
@@ -783,30 +462,30 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
     EndIf
   Else
     SplashOff()
-    MsgBox(0, GetTranslation($Lang, "messages", "01"), GetTranslation($Lang, "start", "01"))
+    MsgBox(0, _GetTranslation($Lang, "messages", "01"), _GetTranslation($Lang, "start", "01"))
   EndIf
 EndIf
 
 Break(1)
 Exit
 
-Func ShowWindows_VM()
+Func _ShowWindows_VM()
 _WinSetState("VirtualBoxVM.exe", BitAND(@SW_SHOW, @SW_RESTORE))
 EndFunc
 
-Func HideWindows_VM()
+Func _HideWindows_VM()
 _WinSetState("VirtualBoxVM.exe", @SW_HIDE)
 EndFunc
 
-Func ShowWindows()
+Func _ShowWindows()
 _WinSetState("VirtualBox.exe", BitAND(@SW_SHOW, @SW_RESTORE))
 EndFunc
 
-Func HideWindows()
+Func _HideWindows()
 _WinSetState("VirtualBox.exe", @SW_HIDE)
 EndFunc
 
-Func Load_ListBox()
+Func _Load_ListBox()
 Const $TH_MAJOR = 6, $TH_MINOR = 0, $TH_PATCH = 24
 Local $MAX_MAJOR070 = 7, $MAX_MIN070 = 0, $MaxNode070 = 0, $ver = ""
 
@@ -853,21 +532,21 @@ Func _LogDuplicate($Linetext)
         Return
     EndIf
     Local $uuid = _StringBetween($Linetext, 'uuid="', '"')
-    FileWrite($hFile, "Duplicate found with UUID: " & $uuid[0] & @LF)
-    FileWrite($hFile, "Duplicate line: " & $Linetext & @LF)
+    FileWrite($hFile, "[" & @MDAY & "." & @MON & "." & @YEAR & " " & @HOUR & ":" & @MIN & ":" & @SEC & "] Duplicate found with UUID: " & $uuid[0] & @LF)
+    FileWrite($hFile, "[" & @MDAY & "." & @MON & "." & @YEAR & " " & @HOUR & ":" & @MIN & ":" & @SEC & "] Duplicate line: " & $Linetext & @LF)
     FileWrite($hFile, "----------------------------------------" & @LF)
     FileClose($hFile)
 EndFunc
 
 Func _WinSetState($ProcessName, $Command)
-Local $titles = GetWindowTitle($ProcessName)
+Local $titles = _GetWindowTitle($ProcessName)
 If @error Then Return
 For $i = 1 To $titles[0]
 WinSetState(""&$titles[$i]&"", "", $Command)
 Next
 EndFunc
 
-Func GetWindowTitle($ProcessName)
+Func _GetWindowTitle($ProcessName)
     Local $pid = 0
     Local $processList = ProcessList()
     For $i = 1 To $processList[0][0]
@@ -896,7 +575,7 @@ Func GetWindowTitle($ProcessName)
     Return $titles
 EndFunc
 
-Func ValidatePath($Path, $DefaultPath)
+Func _ValidatePath($Path, $DefaultPath)
     ; Check disk and create folder
     If FileExists(StringLeft($Path, 2)) Then DirCreate($Path)
 
@@ -929,7 +608,7 @@ Func ValidatePath($Path, $DefaultPath)
     EndIf
 EndFunc
 
-Func EmptyIniWrite($filename, $section, $key, $value, $encoding = 256)
+Func _EmptyIniWrite($filename, $section, $key, $value, $encoding = 256)
 	Switch $encoding
 	Case 16, 32, 64, 128, 256, 512
     Case Else
@@ -965,19 +644,19 @@ Func EmptyIniWrite($filename, $section, $key, $value, $encoding = 256)
     EndIf
 EndFunc
 
-Func CheckExeFile($Directory)
+Func _CheckExeFile($Directory)
 	Local $sFileVer = StringRegExpReplace(FileGetVersion($Directory), "^(\d+\.\d+.\d+)?.*", "\1")
 	If Not StringRegExp(FileRead(FileOpen($Directory, 16), 180), "5669727475616C426F782065786563757461626C65") Then
-		GUICtrlSetData($Input100, GetTranslation($Lang, "download", "04"))
+		GUICtrlSetData($Input100, _GetTranslation($Lang, "download", "04"))
 		Else
-		WinSetTitle($Gui_Setup, "", GetTranslation($Lang, "download", "01")&" "&$sFileVer&"")
+		WinSetTitle($Gui_Setup, "", _GetTranslation($Lang, "download", "01")&" "&$sFileVer&"")
 	EndIf
 	If $sFileVer<=$32Bit_Last Then
-		GUICtrlSetData($Checkbox100, GetTranslation($Lang, "download", "06"))
+		GUICtrlSetData($Checkbox100, _GetTranslation($Lang, "download", "06"))
 		GUICtrlSetState($Checkbox100, $GUI_ENABLE)
 		Else
 		If @OSArch="x86" Then
-		GUICtrlSetData($Checkbox100, GetTranslation($Lang, "download", "06")&" "&$sFileVer&">"&$32Bit_Last&"")
+		GUICtrlSetData($Checkbox100, _GetTranslation($Lang, "download", "06")&" "&$sFileVer&">"&$32Bit_Last&"")
 		EndIf
 		GUICtrlSetState($Checkbox100, $GUI_UNCHECKED)
 		GUICtrlSetState($Checkbox100, $GUI_DISABLE)
@@ -1037,7 +716,7 @@ Func _StringBetween($s_String, $s_Start, $s_End, $v_Case = -1)
 	Return $a_ret
 EndFunc   ;==>_StringBetween
 
-Func VM_List_Load()
+Func _VM_List_Load()
      $values5 = ""
 	 $aArray = _RecFileListToArray($MachineFolder, "*.vbox", 1, 1, $iSort, 2)
      If IsArray($aArray) Then
@@ -1061,8 +740,8 @@ Func VM_List_Load()
 	 Return $values5
 EndFunc
 
-Func VM_List_Update()
-    Local $sList = VM_List_Load()
+Func _VM_List_Update()
+    Local $sList = _VM_List_Load()
     Local $aList = StringSplit($sList, "|", 1)
     
     ; Read the saved name from ini
@@ -1121,45 +800,56 @@ Func VM_List_Update()
     EndIf
 EndFunc
 
-Func Settings()
+Func _OnTabChange()
+    Local $idCurrentTab = GUICtrlRead($idTab) + 1
+    Switch $idCurrentTab
+        Case 1
+            _UpdateSettings()
+            AdlibRegister("_VM_List_Update", 1000)
+        Case Else
+            AdlibUnRegister("_VM_List_Update")
+    EndSwitch
+EndFunc
+
+Func _Settings()
 	If NOT $Settings Then
 	Global $prevList = ""
     Opt("GUIOnEventMode", 1)
-	AdlibRegister("VM_List_Update", 1000)
-	UpdateSettings()
+	_OnTabChange()
 
 	Local $WS_SYSMENU = 0x80000
 
-	$Settings = GUICreate(GetTranslation($Lang, "settings", "01")&" "&GetTranslation($Lang, "download", "01"), 580, 380, -1, -1, $WS_SYSMENU)
-	GUISetOnEvent($GUI_EVENT_CLOSE, "CloseGUI")
+	$Settings = GUICreate(_GetTranslation($Lang, "settings", "01")&" "&_GetTranslation($Lang, "download", "01"), 580, 380, -1, -1, $WS_SYSMENU)
+	GUISetOnEvent($GUI_EVENT_CLOSE, "_CloseGUI")
     GUISetFont(9, 400, 0, "Arial")
 	GUISetBkColor(0xFFFFFF)
-	GUICtrlCreateTab(0, 0, 577, 358)
+	$idTab = GUICtrlCreateTab(0, 0, 577, 358)
+	GUICtrlSetOnEvent($idTab, "_OnTabChange")
     
-	GUICtrlCreateTabItem(GetTranslation($Lang, "settings", "01"))
+	GUICtrlCreateTabItem(_GetTranslation($Lang, "settings", "01"))
 	$Checkboxsett_19 = GUICtrlCreateCheckbox("", 16, 40, 14, 14)
-	GUICtrlCreateLabel(GetTranslation($Lang, "settings", "02"), 32, 39, 546, 14)
+	GUICtrlCreateLabel(_GetTranslation($Lang, "settings", "02"), 32, 39, 546, 14)
 	$Checkboxsett_20 = GUICtrlCreateCheckbox("", 16, 60, 14, 14)
-	GUICtrlCreateLabel(GetTranslation($Lang, "settings", "03"), 32, 59, 546, 14)
+	GUICtrlCreateLabel(_GetTranslation($Lang, "settings", "03"), 32, 59, 546, 14)
 	$Checkboxsett_21 = GUICtrlCreateCheckbox("", 16, 80, 14, 14)
-	GUICtrlCreateLabel(GetTranslation($Lang, "settings", "04"), 32, 79, 546, 14)
+	GUICtrlCreateLabel(_GetTranslation($Lang, "settings", "04"), 32, 79, 546, 14)
 	If IniRead($var1, "net", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_19, $GUI_CHECKED)
 	If IniRead($var1, "usb", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_20, $GUI_CHECKED)
 	If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_21, $GUI_CHECKED)
 
-    GUICtrlCreateLabel(GetTranslation($Lang, "settings", "05"), 32, 102, 110, 14)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "settings", "05"), 32, 102, 110, 14)
     $StartLng = GUICtrlCreateCombo("", 142, 100, 100, 0, $CBS_DROPDOWNLIST)
-    GUICtrlSetData($StartLng, GetLangList(), IniRead($var1, "language", "key", "NotFound"))
+    GUICtrlSetData($StartLng, _GetLangList(), IniRead($var1, "language", "key", "NotFound"))
 
 	GuiCtrlCreateGroup("", 14, 120, 451, 60)
 	DllCall("UxTheme.dll", "int", "SetWindowTheme", "hwnd", GUICtrlGetHandle(-1), "wstr", 0, "wstr", 0)
-	$Checkboxsett_22 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "06"), 16, 130, 442, 14)
-	GUICtrlSetOnEvent(-1, "CheckboxSettings")
+	$Checkboxsett_22 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "settings", "06"), 16, 130, 442, 14)
+	GUICtrlSetOnEvent(-1, "_CheckboxSettings")
 	$User_Home = IniRead($var1, "userhome", "key", "NotFound")
 	$HomeRoot = GUICtrlCreateInput($User_Home, 33, 148, 332, 21)
 
-    $BTNUserHome = GUICtrlCreateButton(GetTranslation($Lang, "settings", "09"), 370, 147, 81, 23, 0)
-    GUICtrlSetOnEvent(-1, "SRCUserHome")
+    $BTNUserHome = GUICtrlCreateButton(_GetTranslation($Lang, "settings", "09"), 370, 147, 81, 23, 0)
+    GUICtrlSetOnEvent(-1, "_SRCUserHome")
     If IniRead($var1, "userhome", "key", "NotFound") = $DefaultUserHome Then
 	GUICtrlSetState($HomeRoot, $GUI_DISABLE)
 	GUICtrlSetState($BTNUserHome, $GUI_DISABLE)
@@ -1171,11 +861,11 @@ Func Settings()
 
 	GuiCtrlCreateGroup("", 14, 178, 451, 60)
 	DllCall("UxTheme.dll", "int", "SetWindowTheme", "hwnd", GUICtrlGetHandle(-1), "wstr", 0, "wstr", 0)
-	$Checkboxsett_23 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "07"), 16, 190, 442, 14)
-	GUICtrlSetOnEvent(-1, "CheckboxSettings")
+	$Checkboxsett_23 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "settings", "07"), 16, 190, 442, 14)
+	GUICtrlSetOnEvent(-1, "_CheckboxSettings")
 	$MachineDir = IniRead($var1, "machinefolder", "key", "NotFound")
 	$MachineRoot = GUICtrlCreateInput($MachineDir, 33, 208, 332, 21)
-    $BTNMachineFolder = GUICtrlCreateButton(GetTranslation($Lang, "settings", "09"), 370, 207, 81, 23, 0)
+    $BTNMachineFolder = GUICtrlCreateButton(_GetTranslation($Lang, "settings", "09"), 370, 207, 81, 23, 0)
     If IniRead($var1, "machinefolder", "key", "NotFound") = $DefaultMachineFolder Then
 	GUICtrlSetState($MachineRoot, $GUI_DISABLE)
 	GUICtrlSetState($BTNMachineFolder, $GUI_DISABLE)
@@ -1184,18 +874,18 @@ Func Settings()
 	GUICtrlSetState($BTNMachineFolder, $GUI_ENABLE)
 	GUICtrlSetState($Checkboxsett_23, $GUI_CHECKED)
 	Endif
-    GUICtrlSetOnEvent(-1, "SRCMachineFolder")
+    GUICtrlSetOnEvent(-1, "_SRCMachineFolder")
 
 	GuiCtrlCreateGroup("", 14, 236, 451, 60)
 	DllCall("UxTheme.dll", "int", "SetWindowTheme", "hwnd", GUICtrlGetHandle(-1), "wstr", 0, "wstr", 0)
-	$Checkboxsett_24 = GUICtrlCreateCheckbox(GetTranslation($Lang, "settings", "08"), 16, 250, 442, 14)
-	GUICtrlSetOnEvent(-1, "CheckboxSettings")
+	$Checkboxsett_24 = GUICtrlCreateCheckbox(_GetTranslation($Lang, "settings", "08"), 16, 250, 442, 14)
+	GUICtrlSetOnEvent(-1, "_CheckboxSettings")
 	If IniRead($var1, "startvm", "key", "NotFound") = false Then
 	$VMStart = GUICtrlCreateCombo("", 33, 268, 417, 21, $CBS_DROPDOWNLIST)
-	VM_List_Update()
+	_VM_List_Update()
 	Else
 	$VMStart = GUICtrlCreateCombo("", 33, 268, 417, 21, $CBS_DROPDOWNLIST)
-	VM_List_Update()
+	_VM_List_Update()
 	Endif
     If IniRead($var1, "startvm", "key", "NotFound") = false Then
 	GUICtrlSetState($VMStart, $GUI_DISABLE)
@@ -1204,33 +894,33 @@ Func Settings()
 	GUICtrlSetState($Checkboxsett_24, $GUI_CHECKED)
 	Endif
 
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
-    GUICtrlSetOnEvent(-1, "SaveSettings")
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "03"), 336, 302, 129, 27)
-    GUICtrlSetOnEvent(-1, "CloseGUI")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
+    GUICtrlSetOnEvent(-1, "_SaveSettings")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "03"), 336, 302, 129, 27)
+    GUICtrlSetOnEvent(-1, "_CloseGUI")
 
 
-	GUICtrlCreateTabItem(GetTranslation($Lang, "system", "01"))
+	GUICtrlCreateTabItem(_GetTranslation($Lang, "system", "01"))
 	$Checkboxsett_200 = GUICtrlCreateCheckbox("", 16, 40, 14, 14)
 	Local $Short_UserHome = StringRegExpReplace($UserHome, "(?i)^.*?(\.VirtualBox)", "$1")
-	GUICtrlCreateLabel(GetTranslation($Lang, "system", "02")&" ("&$Short_UserHome&"\*.log)", 32, 39, 546, 14)
+	GUICtrlCreateLabel(_GetTranslation($Lang, "system", "02")&" ("&$Short_UserHome&"\*.log)", 32, 39, 546, 14)
 	$Checkboxsett_201 = GUICtrlCreateCheckbox("", 16, 60, 14, 14)
 	Local $Short_MachineFolder = StringRegExpReplace($DefaultMachineFolder, "(?i)^.*?(\.VirtualBox)", "$1")
-	GUICtrlCreateLabel(GetTranslation($Lang, "system", "03")&" ("&$Short_MachineFolder&"\...\*.log.*)", 32, 59, 546, 14)
+	GUICtrlCreateLabel(_GetTranslation($Lang, "system", "03")&" ("&$Short_MachineFolder&"\...\*.log.*)", 32, 59, 546, 14)
 	$Checkboxsett_202 = GUICtrlCreateCheckbox("", 16, 80, 14, 14)
-	GUICtrlCreateLabel(GetTranslation($Lang, "system", "04"), 32, 79, 546, 14)
+	GUICtrlCreateLabel(_GetTranslation($Lang, "system", "04"), 32, 79, 546, 14)
 	If IniRead($var1, "Core_Logs", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_200, $GUI_CHECKED)
 	If IniRead($var1, "VM_Logs", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_201, $GUI_CHECKED)
 	If IniRead($var1, "PortableMode", "key", "NotFound") = 1 Then GUICtrlSetState($Checkboxsett_202, $GUI_CHECKED)
 
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
-    GUICtrlSetOnEvent(-1, "SaveSettings")
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "03"), 336, 302, 129, 27)
-    GUICtrlSetOnEvent(-1, "CloseGUI")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
+    GUICtrlSetOnEvent(-1, "_SaveSettings")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "03"), 336, 302, 129, 27)
+    GUICtrlSetOnEvent(-1, "_CloseGUI")
 
 
-    GUICtrlCreateTabItem(GetTranslation($Lang, "hotkey-settings", "01"))
-    GUICtrlCreateLabel(GetTranslation($Lang, "hotkey-settings", "02"), 16, 40, 546, 60)
+    GUICtrlCreateTabItem(_GetTranslation($Lang, "hotkey-settings", "01"))
+    GUICtrlCreateLabel(_GetTranslation($Lang, "hotkey-settings", "02"), 16, 40, 546, 60)
 
     $Radio7 = GUICtrlCreateRadio("Radio7", 20, 115, 14, 14)
     If IniRead($var1, "hotkeys", "userkey", "NotFound") = 0 Then
@@ -1242,14 +932,14 @@ Func Settings()
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
 
-    GUICtrlCreateLabel(GetTranslation($Lang, "hotkey-settings", "03"), 38, 113, 100, 122)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "hotkey-settings", "03"), 38, 113, 100, 122)
 
-    GUICtrlCreateLabel(GetTranslation($Lang, "tray", "01") &":", 172, 113, 120, 17)
-    GUICtrlCreateLabel(GetTranslation($Lang, "tray", "02") &":", 172, 133, 120, 17)
-    GUICtrlCreateLabel(GetTranslation($Lang, "tray", "03") &":", 172, 153, 120, 17)
-    GUICtrlCreateLabel(GetTranslation($Lang, "tray", "04") &":", 172, 173, 120, 17)
-    GUICtrlCreateLabel(GetTranslation($Lang, "tray", "05") &":", 172, 193, 120, 17)
-    GUICtrlCreateLabel(GetTranslation($Lang, "tray", "06") &":", 172, 213, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "01") &":", 172, 113, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "02") &":", 172, 133, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "03") &":", 172, 153, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "04") &":", 172, 173, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "05") &":", 172, 193, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "06") &":", 172, 213, 120, 17)
 
     GUICtrlCreateLabel("CTRL +", 318, 113, 44, 17)
     GUICtrlCreateLabel("CTRL +", 318, 133, 44, 17)
@@ -1354,18 +1044,18 @@ Func Settings()
     $Input5 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "23", "NotFound"), 524, 191, 24, 21)
     $Input6 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "24", "NotFound"), 524, 211, 24, 21)
 
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "02"), 112, 240, 129, 27)
-    GUICtrlSetOnEvent(-1, "OKHotKeysSet")
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "03"), 336, 240, 129, 27)
-    GUICtrlSetOnEvent(-1, "CloseGUI")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "02"), 112, 240, 129, 27)
+    GUICtrlSetOnEvent(-1, "_OKHotKeysSet")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "03"), 336, 240, 129, 27)
+    GUICtrlSetOnEvent(-1, "_CloseGUI")
 
 
-    GUICtrlCreateTabItem(GetTranslation($Lang, "about", "01"))
+    GUICtrlCreateTabItem(_GetTranslation($Lang, "about", "01"))
     GUICtrlCreateLabel(". : Portable-VirtualBox Launcher v"& $version &" : .", 100, 40, 448, 26)
-	GUICtrlSetOnEvent(-1, "github")
+	GUICtrlSetOnEvent(-1, "_github")
     GUICtrlSetFont(-1, 14, 800, 4, "Arial")
     GUICtrlCreateLabel("Download and Support: http://github.com/Deac2/Portable-VirtualBox", 40, 70, 500, 20)
-	GUICtrlSetOnEvent(-1, "github")
+	GUICtrlSetOnEvent(-1, "_github")
     GUICtrlSetFont(-1, 8, 800, 0, "Arial")
     GUICtrlCreateLabel("VirtualBox is a family of powerful x86 virtualization products for enterprise as well as home use. Not only is VirtualBox an extremely feature rich, high performance product for enterprise customers, it is also the only professional solution that is freely available as Open Source Software under the terms of the GNU General Public License(GPL).", 16, 94, 546, 55)
     GUICtrlSetFont(-1, 8, 400, 0, "Arial")
@@ -1376,58 +1066,58 @@ Func Settings()
     GUICtrlCreateLabel("VirtualBox is being actively developed with frequent releases and has an ever growing list of features, supported guest operating systems and platforms it runs on. VirtualBox is a community effort backed by a dedicated company: everyone is encouraged to contribute while Sun ensures the product always meets professional quality criteria.", 16, 192, 546, 40)
     GUICtrlSetFont(-1, 8, 400, 0, "Arial")
 
-    GUICtrlCreateButton(GetTranslation($Lang, "messages", "03"), 236, 240, 129, 27)
-    GUICtrlSetOnEvent(-1, "CloseGUI")
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "03"), 236, 240, 129, 27)
+    GUICtrlSetOnEvent(-1, "_CloseGUI")
 
     GUISetState()
 	Endif
 EndFunc
 
-Func UpdateSettings()
-EmptyIniWrite($var1, "hotkeys", "key", "1", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "userkey", "0", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "01", "^", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "02", "^", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "03", "^", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "04", "^", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "05", "^", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "06", "^", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "07", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "08", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "09", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "10", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "11", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "12", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "13", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "14", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "15", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "16", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "17", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "18", "", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "19", "1", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "20", "2", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "21", "3", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "22", "4", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "23", "5", $ini_encoding)
-EmptyIniWrite($var1, "hotkeys", "24", "6", $ini_encoding)
-EmptyIniWrite($var1, "usb", "key", "0", $ini_encoding)
-EmptyIniWrite($var1, "net", "key", "0", $ini_encoding)
-EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $ini_encoding)
-EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $ini_encoding)
-EmptyIniWrite($var1, "Core_Logs", "key", "1", $ini_encoding)
-EmptyIniWrite($var1, "VM_Logs", "key", "1", $ini_encoding)
-EmptyIniWrite($var1, "PortableMode", "key", "0", $ini_encoding)
-EmptyIniWrite($var1, "userhome", "sort", "1", $ini_encoding)
-EmptyIniWrite($var1, "startvm", "key", "", $ini_encoding)
+Func _UpdateSettings()
+_EmptyIniWrite($var1, "hotkeys", "key", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "userkey", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "01", "^", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "02", "^", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "03", "^", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "04", "^", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "05", "^", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "06", "^", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "07", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "08", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "09", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "10", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "11", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "12", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "13", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "14", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "15", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "16", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "17", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "18", "", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "19", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "20", "2", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "21", "3", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "22", "4", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "23", "5", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "24", "6", $ini_encoding)
+_EmptyIniWrite($var1, "usb", "key", "0", $ini_encoding)
+_EmptyIniWrite($var1, "net", "key", "0", $ini_encoding)
+_EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $ini_encoding)
+_EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $ini_encoding)
+_EmptyIniWrite($var1, "Core_Logs", "key", "1", $ini_encoding)
+_EmptyIniWrite($var1, "VM_Logs", "key", "1", $ini_encoding)
+_EmptyIniWrite($var1, "PortableMode", "key", "0", $ini_encoding)
+_EmptyIniWrite($var1, "userhome", "sort", "1", $ini_encoding)
+_EmptyIniWrite($var1, "startvm", "key", "", $ini_encoding)
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND IniRead($var1, "lang", "key", "") = 2 Then
-EmptyIniWrite($var1, "language", "date", $Lang_changes, $ini_encoding)
+_EmptyIniWrite($var1, "language", "date", $Lang_changes, $ini_encoding)
 Else
 IniDelete($var1, "language", "date")
 Endif
 
-If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT IsLangValid(IniRead($var1, "language", "key", "False")) Then
-EmptyIniWrite($var1, "language", "key", "English", $ini_encoding)
+If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT _IsLangValid(IniRead($var1, "language", "key", "False")) Then
+_EmptyIniWrite($var1, "language", "key", "English", $ini_encoding)
 EndIf
 
 $Lang = IniRead($var1, "language", "key", "NotFound")
@@ -1436,7 +1126,7 @@ Global $MachineFolder = IniRead($var1, "machinefolder", "key", "NotFound")
 Global $VMStartName = IniRead($var1, "startvm", "key", "")
 EndFunc
 
-Func SaveSettings()
+Func _SaveSettings()
 	Local $Net = (GUICtrlRead($Checkboxsett_19) = $GUI_CHECKED ? "1" : "0")
     IniWrite($var1, "net", "key", $Net)
 	Local $USB = (GUICtrlRead($Checkboxsett_20) = $GUI_CHECKED ? "1" : "0")
@@ -1454,8 +1144,8 @@ Func SaveSettings()
     IniWrite($var1, "userhome", "key", $DefaultUserHome)
     GUICtrlSetData($HomeRoot, $DefaultUserHome)
 	Else
-	GUICtrlSetData($HomeRoot, ValidatePath($homedir, $DefaultUserHome))
-	IniWrite($var1, "userhome", "key", ValidatePath($homedir, $DefaultUserHome))
+	GUICtrlSetData($HomeRoot, _ValidatePath($homedir, $DefaultUserHome))
+	IniWrite($var1, "userhome", "key", _ValidatePath($homedir, $DefaultUserHome))
 	EndIf
 
 	Local $CheckMachineRoot = GUICtrlRead($Checkboxsett_23)
@@ -1464,8 +1154,8 @@ Func SaveSettings()
     IniWrite($var1, "machinefolder", "key", $DefaultMachineFolder)
     GUICtrlSetData($MachineRoot, $DefaultMachineFolder)
 	Else
-	GUICtrlSetData($MachineRoot, ValidatePath($MachineDir, $DefaultMachineFolder))
-	IniWrite($var1, "machinefolder", "key", ValidatePath($MachineDir, $DefaultMachineFolder))
+	GUICtrlSetData($MachineRoot, _ValidatePath($MachineDir, $DefaultMachineFolder))
+	IniWrite($var1, "machinefolder", "key", _ValidatePath($MachineDir, $DefaultMachineFolder))
 	EndIf
 
 	Local $CheckVMStart = GUICtrlRead($Checkboxsett_24)
@@ -1498,7 +1188,7 @@ Func SaveSettings()
 	If FileExists($Patch) Then
       IniWrite($var1, "startvm", "key", $VMStartName)
 	Else
-	  VM_List_Update()
+	  _VM_List_Update()
 	EndIf
 	EndIf
 	EndIf
@@ -1510,11 +1200,11 @@ Func SaveSettings()
 	Local $PortableMode = (GUICtrlRead($Checkboxsett_202) = $GUI_CHECKED ? "1" : "0")
     IniWrite($var1, "PortableMode", "key", $PortableMode)
 
-	UpdateSettings()
-	MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
+	_UpdateSettings()
+	MsgBox(0+262144, _GetTranslation($Lang, "messages", "04"), _GetTranslation($Lang, "messages", "05"))
 EndFunc
 
-Func CheckboxSettings()
+Func _CheckboxSettings()
 Local $CheckHomeRoot = GUICtrlRead($Checkboxsett_22)
 If Not ($CheckHomeRoot=4) Then
 GUICtrlSetState($HomeRoot, $GUI_ENABLE)
@@ -1541,21 +1231,21 @@ GUICtrlSetState($VMStart, $GUI_DISABLE)
 EndIf
 EndFunc
 
-Func SRCUserHome()
-  Local $PathHR = FileSelectFolder(GetTranslation($Lang, "settings", "10"), "", 1+4)
+Func _SRCUserHome()
+  Local $PathHR = FileSelectFolder(_GetTranslation($Lang, "settings", "10"), "", 1+4)
   If NOT @error Then
     GUICtrlSetData($HomeRoot, $PathHR)
   EndIf
 EndFunc
 
-Func SRCMachineFolder()
-  Local $PathHR = FileSelectFolder(GetTranslation($Lang, "settings", "11"), "", 1+4)
+Func _SRCMachineFolder()
+  Local $PathHR = FileSelectFolder(_GetTranslation($Lang, "settings", "11"), "", 1+4)
   If NOT @error Then
     GUICtrlSetData($MachineRoot, $PathHR)
   EndIf
 EndFunc
 
-Func OKHotKeysSet()
+Func _OKHotKeysSet()
   If GUICtrlRead($Radio7) = $GUI_CHECKED Then
     IniWrite($var1, "hotkeys", "userkey", "0")
     IniWrite($var1, "hotkeys", "01", "^")
@@ -1585,10 +1275,10 @@ Func OKHotKeysSet()
     IniWrite($var1, "hotkeys", "22", "4")
     IniWrite($var1, "hotkeys", "23", "5")
     IniWrite($var1, "hotkeys", "24", "6")
-    MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
+    MsgBox(0+262144, _GetTranslation($Lang, "messages", "04"), _GetTranslation($Lang, "messages", "05"))
   Else
     If GUICtrlRead($Input1) = false OR GUICtrlRead($Input2) = false OR GUICtrlRead($Input3) = false OR GUICtrlRead($Input4) = false OR GUICtrlRead($Input5) = false OR GUICtrlRead($Input6) = false Then
-      MsgBox(0, GetTranslation($Lang, "messages", "01"), GetTranslation($Lang, "okhotkeysset", "01"))
+      MsgBox(0, _GetTranslation($Lang, "messages", "01"), _GetTranslation($Lang, "okhotkeysset", "01"))
     Else
       IniWrite($var1, "hotkeys", "userkey", "1")
       If GUICtrlRead($CheckBox01) = $GUI_CHECKED Then
@@ -1690,50 +1380,228 @@ Func OKHotKeysSet()
       IniWrite($var1, "hotkeys", "22", GUICtrlRead($Input4))
       IniWrite($var1, "hotkeys", "23", GUICtrlRead($Input5))
       IniWrite($var1, "hotkeys", "24", GUICtrlRead($Input6))
-      MsgBox(0+262144, GetTranslation($Lang, "messages", "04"), GetTranslation($Lang, "messages", "05"))
+      MsgBox(0+262144, _GetTranslation($Lang, "messages", "04"), _GetTranslation($Lang, "messages", "05"))
     EndIf
   EndIf
 EndFunc
 
-Func OKLanguage()
-UpdateSettings()
-EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), $ini_encoding)
+Func _OKLanguage()
+_UpdateSettings()
+_EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), $ini_encoding)
 If GUICtrlRead($CheckboxLang) = $GUI_CHECKED Then
-EmptyIniWrite($var1, "lang", "key", "2", $ini_encoding)
+_EmptyIniWrite($var1, "lang", "key", "2", $ini_encoding)
 Else
-EmptyIniWrite($var1, "lang", "key", "1", $ini_encoding)
+_EmptyIniWrite($var1, "lang", "key", "1", $ini_encoding)
 Endif
 $cl = 0
 EndFunc
 
-Func CloseGUI()
-  AdlibUnRegister("VM_List_Update")
+Func _TrayMenu()
+If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) Then
+      If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then
+        HotKeySet(IniRead($var1, "hotkeys", "05", "NotFound") & IniRead($var1, "hotkeys", "11", "NotFound") & IniRead($var1, "hotkeys", "17", "NotFound") & IniRead($var1, "hotkeys", "23", "NotFound"), "_Settings")
+        HotKeySet(IniRead($var1, "hotkeys", "06", "NotFound") & IniRead($var1, "hotkeys", "12", "NotFound") & IniRead($var1, "hotkeys", "18", "NotFound") & IniRead($var1, "hotkeys", "24", "NotFound"), "_ExitGUI")
+      EndIf
+
+        Local $ctrl5, $ctrl6
+        Local $alt5, $alt6
+        Local $shift5, $shift6
+        Local $plus05, $plus06, $plus11, $plus12, $plus17, $plus18
+
+        If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
+          $ctrl5  = "CTRL"
+          $plus05 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
+          $ctrl6  = "CTRL"
+          $plus06 = "+"
+        EndIf
+
+        If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
+          $alt5   = "ALT"
+          $plus11 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
+          $alt6   = "ALT"
+          $plus12 = "+"
+        EndIf
+
+        If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
+          $shift5 = "SHIFT"
+          $plus17 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
+          $shift6 = "SHIFT"
+          $plus18 = "+"
+        EndIf
+
+  TrayCreateItem(_GetTranslation($Lang, "tray", "05") &" (" & $ctrl5 & $plus05 & $alt5 & $plus11 & $shift5 & $plus17 & IniRead($var1, "hotkeys", "23", "NotFound") & ")")
+  TrayItemSetOnEvent(-1, "_Settings")
+  TrayCreateItem("")
+  TrayCreateItem(_GetTranslation($Lang, "tray", "06") &" (" & $ctrl6 & $plus06 & $alt6 & $plus12 & $shift6 & $plus18 & IniRead($var1, "hotkeys", "24", "NotFound") & ")")
+  TrayItemSetOnEvent(-1, "_ExitGUI")
+  TraySetState()
+  TraySetToolTip(_GetTranslation($Lang, "tray", "07"))
+  TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
+Else
+      If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then
+        HotKeySet(IniRead($var1, "hotkeys", "01", "NotFound") & IniRead($var1, "hotkeys", "07", "NotFound") & IniRead($var1, "hotkeys", "13", "NotFound") & IniRead($var1, "hotkeys", "19", "NotFound"), "_ShowWindows_VM")
+        HotKeySet(IniRead($var1, "hotkeys", "02", "NotFound") & IniRead($var1, "hotkeys", "08", "NotFound") & IniRead($var1, "hotkeys", "14", "NotFound") & IniRead($var1, "hotkeys", "20", "NotFound"), "_HideWindows_VM")
+        HotKeySet(IniRead($var1, "hotkeys", "03", "NotFound") & IniRead($var1, "hotkeys", "09", "NotFound") & IniRead($var1, "hotkeys", "15", "NotFound") & IniRead($var1, "hotkeys", "21", "NotFound"), "_ShowWindows")
+        HotKeySet(IniRead($var1, "hotkeys", "04", "NotFound") & IniRead($var1, "hotkeys", "10", "NotFound") & IniRead($var1, "hotkeys", "16", "NotFound") & IniRead($var1, "hotkeys", "22", "NotFound"), "_HideWindows")
+        HotKeySet(IniRead($var1, "hotkeys", "05", "NotFound") & IniRead($var1, "hotkeys", "11", "NotFound") & IniRead($var1, "hotkeys", "17", "NotFound") & IniRead($var1, "hotkeys", "23", "NotFound"), "_Settings")
+        HotKeySet(IniRead($var1, "hotkeys", "06", "NotFound") & IniRead($var1, "hotkeys", "12", "NotFound") & IniRead($var1, "hotkeys", "18", "NotFound") & IniRead($var1, "hotkeys", "24", "NotFound"), "_ExitScript")
+
+        Local $ctrl1, $ctrl2, $ctrl3, $ctrl4, $ctrl5, $ctrl6
+        Local $alt1, $alt2, $alt3, $alt4, $alt5, $alt6
+        Local $shift1, $shift2, $shift3, $shift4, $shift5, $shift6
+        Local $plus01, $plus02, $plus03, $plus04, $plus05, $plus06, $plus07, $plus08, $plus09, $plus10, $plus11, $plus12, $plus13, $plus14, $plus15, $plus16, $plus17, $plus18
+
+	If IniRead($var1, "hotkeys", "01", "NotFound") = "^" Then
+          $ctrl1  = "CTRL"
+          $plus01 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "02", "NotFound") = "^" Then
+          $ctrl2  = "CTRL"
+          $plus02 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "03", "NotFound") = "^" Then
+          $ctrl3  = "CTRL"
+          $plus03 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "04", "NotFound") = "^" Then
+          $ctrl4  = "CTRL"
+          $plus04 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
+          $ctrl5  = "CTRL"
+          $plus05 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
+          $ctrl6  = "CTRL"
+          $plus06 = "+"
+        EndIf
+
+        If IniRead($var1, "hotkeys", "07", "NotFound") = "!" Then
+          $alt1   = "ALT"
+          $plus07 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "08", "NotFound") = "!" Then
+          $alt2   = "ALT"
+          $plus08 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "09", "NotFound") = "!" Then
+          $alt3   = "ALT"
+          $plus09 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "10", "NotFound") = "!" Then
+          $alt4   = "ALT"
+          $plus10 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
+          $alt5   = "ALT"
+          $plus11 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
+          $alt6   = "ALT"
+          $plus12 = "+"
+        EndIf
+
+        If IniRead($var1, "hotkeys", "13", "NotFound") = "+" Then
+          $shift1 = "SHIFT"
+          $plus13 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "14", "NotFound") = "+" Then
+          $shift2 = "SHIFT"
+          $plus14 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "15", "NotFound") = "+" Then
+          $shift3 = "SHIFT"
+          $plus15 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "16", "NotFound") = "+" Then
+          $shift4 = "SHIFT"
+          $plus16 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
+          $shift5 = "SHIFT"
+          $plus17 = "+"
+        EndIf
+        If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
+          $shift6 = "SHIFT"
+          $plus18 = "+"
+        EndIf
+
+        TrayCreateItem(_GetTranslation($Lang, "tray", "01") &" (" & $ctrl1 & $plus01 & $alt1 & $plus07 & $shift1 & $plus13 & IniRead($var1, "hotkeys", "19", "NotFound") & ")")
+        TrayItemSetOnEvent(-1, "_ShowWindows_VM")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "02") &" (" & $ctrl2 & $plus02 & $alt2 & $plus08 & $shift2 & $plus14 & IniRead($var1, "hotkeys", "20", "NotFound") & ")")
+        TrayItemSetOnEvent(-1, "_HideWindows_VM")
+        TrayCreateItem("")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "03") &" (" & $ctrl3 & $plus03 & $alt3 & $plus09 & $shift3 & $plus15 & IniRead($var1, "hotkeys", "21", "NotFound") & ")")
+        TrayItemSetOnEvent(-1, "_ShowWindows")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "04") &" (" & $ctrl4 & $plus04 & $alt4 & $plus10 & $shift4 & $plus16 & IniRead($var1, "hotkeys", "22", "NotFound") & ")")
+        TrayItemSetOnEvent(-1, "_HideWindows")
+        TrayCreateItem("")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "05") &" (" & $ctrl5 & $plus05 & $alt5 & $plus11 & $shift5 & $plus17 & IniRead($var1, "hotkeys", "23", "NotFound") & ")")
+        TrayItemSetOnEvent(-1, "_Settings")
+        TrayCreateItem("")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "06") &" (" & $ctrl6 & $plus06 & $alt6 & $plus12 & $shift6 & $plus18 & IniRead($var1, "hotkeys", "24", "NotFound") & ")")
+        TrayItemSetOnEvent(-1, "_ExitScript")
+        TraySetState()
+        TraySetToolTip(_GetTranslation($Lang, "tray", "07"))
+        TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
+      Else
+        TrayCreateItem(_GetTranslation($Lang, "tray", "01"))
+        TrayItemSetOnEvent(-1, "_ShowWindows_VM")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "02"))
+        TrayItemSetOnEvent(-1, "_HideWindows_VM")
+        TrayCreateItem("")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "03"))
+        TrayItemSetOnEvent(-1, "_ShowWindows")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "04"))
+        TrayItemSetOnEvent(-1, "_HideWindows")
+        TrayCreateItem("")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "05"))
+        TrayItemSetOnEvent(-1, "_Settings")
+        TrayCreateItem("")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "06"))
+        TrayItemSetOnEvent(-1, "_ExitScript")
+        TraySetState()
+        TraySetToolTip(_GetTranslation($Lang, "tray", "07"))
+        TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
+      EndIf
+Endif
+
+EndFunc
+
+Func _CloseGUI()
+  AdlibUnRegister("_VM_List_Update")
   GUIDelete()
   $cl = 0
   $Settings = 0
 EndFunc
 
-Func ExitGUI()
+Func _ExitGUI()
   GUIDelete()
   Exit
 EndFunc
 
-Func ExitScript()
+Func _ExitScript()
   Opt("WinTitleMatchMode", 2)
   WinClose("VirtualBoxVM", "")
   WinWaitClose("VirtualBoxVM", "")
   WinClose("] - Oracle")
   WinWaitClose("] - Oracle")
   WinClose("Oracle", "")
-  ProcessNameClose("VirtualBox.exe")
-  ProcessNameClose("VBoxManage.exe")
-  ProcessNameClose("VirtualBoxVM.exe")
-  ProcessNameClose("VBoxSVC.exe")
-  ProcessNameClose("VBoxSDS.exe")
+  _ProcessNameClose("VirtualBox.exe")
+  _ProcessNameClose("VBoxManage.exe")
+  _ProcessNameClose("VirtualBoxVM.exe")
+  _ProcessNameClose("VBoxSVC.exe")
+  _ProcessNameClose("VBoxSDS.exe")
   EnvSet("VBOX_USER_HOME", "")
 EndFunc
 
-Func ProcessNameClose($ProcessName)
+Func _ProcessNameClose($ProcessName)
 	Local $ListArray = ProcessList($ProcessName)
 	For $i = 1 To $ListArray[0][0]
 	If ProcessExists($ListArray[$i][1]) Then
@@ -1742,7 +1610,208 @@ Func ProcessNameClose($ProcessName)
 	Next
 EndFunc
 
-Func DownloadFile()
+Func _Start_VirtualBox()
+    If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxdrv") And RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxDRV", "DisplayName") <> "Portable VBoxDRV" Then
+        RunWait("cmd /c sc create VBoxDRV binpath= ""%CD%\" & $App_Dir & "\drivers\VBoxDrv\VBoxDrv.sys"" type= kernel start= auto error= normal displayname=""Portable VBoxDRV""", @ScriptDir, @SW_HIDE)
+        RunWait("sc start VBoxDRV", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxsup") And RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxSUP", "DisplayName") <> "Portable VBoxSUP" Then
+        RunWait("cmd /c sc create VBoxSUP binpath= ""%CD%\" & $App_Dir & "\drivers\VBoxSup\VBoxSup.sys"" type= kernel start= auto error= normal displayname=""Portable VBoxSUP""", @ScriptDir, @SW_HIDE)
+        RunWait("sc start VBoxSUP", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "Portable VirtualBox USB Monitor Driver" Then
+        RunWait("cmd /c sc create VBoxUSBMon binpath= ""%CD%\" & $App_Dir & "\drivers\USB\filter\VBoxUSBMon.sys"" type= kernel start= auto error= normal displayname=""Portable VirtualBox USB Monitor Driver""", @ScriptDir, @SW_HIDE)
+        RunWait("sc start VBoxUSBMon", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If IniRead($var1, "usb", "key", "NotFound") = 1 Then
+		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName"), "VBoxUSB") = 0 Then
+        ;If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "VirtualBox USB" Then
+            ;RunWait(@ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe install " & $App_Dir & "\drivers\USB\device\VBoxUSB.inf ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
+			RunWait("""" & @ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe"" install """ & $App_Dir & "\drivers\USB\device\VBoxUSB.inf"" ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
+            FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\USB\device\VBoxUSB.sys", @WindowsDir & "\System32\drivers", 9)
+            RunWait("sc start VBoxUSB", @ScriptDir, @SW_HIDE)
+        EndIf
+    EndIf
+
+    If IniRead($var1, "net", "key", "NotFound") = 1 Then
+        Local $ADPVER = (FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\network\netadp6") ? 6 : "")
+		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName"), "VBoxNetAdp") = 0 Then
+        ;If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "VirtualBox Host-Only Network Adapter" Then
+            ;RunWait(@ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe install " & $App_Dir & "\drivers\network\netadp" & $ADPVER & "\VBoxNetAdp" & $ADPVER & ".inf ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
+			RunWait("""" & @ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe"" install """ & $App_Dir & "\drivers\network\netadp" & $ADPVER & "\VBoxNetAdp" & $ADPVER & ".inf"" ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
+            FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\network\netadp" & $ADPVER & "\VBoxNetAdp" & $ADPVER & ".sys", @WindowsDir & "\System32\drivers", 9)
+            RunWait("sc start VBoxNetAdp", @ScriptDir, @SW_HIDE)
+        EndIf
+    EndIf
+
+    If IniRead($var1, "net", "key", "NotFound") = 1 Then
+        ;If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "VBoxNetFlt Service" Then
+		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName"), "VBoxNetFlt") = 0 Then
+            ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
+			RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
+            ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -l " & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.inf -m " & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.inf -c s -i ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
+			RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -l """ & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.inf"" -m """ & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.inf"" -c s -i sun_VBoxNetFlt", @ScriptDir, @SW_HIDE)
+            FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\network\netflt\VBoxNetFltNobj.dll", @WindowsDir & "\System32", 9)
+            FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.sys", @WindowsDir & "\System32\drivers", 9)
+            RunWait(@SystemDir & "\regsvr32.exe /S " & @WindowsDir & "\System32\VBoxNetFltNobj.dll", @WindowsDir & "\System32", @SW_HIDE)
+            RunWait("sc start VBoxNetFlt", @ScriptDir, @SW_HIDE)
+        EndIf
+		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetLwf", "DisplayName"), "VBoxNetLwf") = 0 Then
+            ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
+			RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_SHOW)
+            ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -l " & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.inf -m " & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.inf -c s -i ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
+			RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -l """ & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.inf"" -m """ & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.inf"" -c s -i oracle_VBoxNetLwf", @ScriptDir, @SW_HIDE)
+			FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.sys", @WindowsDir & "\System32\drivers", 9)
+			RunWait("sc start VBoxNetLwf", @ScriptDir, @SW_HIDE)
+        EndIf
+    EndIf
+
+#cs
+    RunWait($App_Dir & "\VBoxSDS.exe /RegService", @ScriptDir, @SW_HIDE)
+    RunWait($App_Dir & "\VBoxSVC.exe /reregserver", @ScriptDir, @SW_HIDE)
+    RunWait(@SystemDir & "\regsvr32.exe /S " & $App_Dir & "\VBoxC.dll", @ScriptDir, @SW_HIDE)
+    RunWait(@SystemDir & "\regsvr32.exe /S " & $App_Dir & "\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
+	DllCall(@ScriptDir & "\" & $App_Dir & "\VBoxRT.dll", "int", "RTR3Init")
+#ce
+
+
+    RunWait($App_Dir & "\VBoxSDS.exe /RegService", @ScriptDir, @SW_HIDE)
+    RunWait($App_Dir & "\VBoxSVC.exe /reregserver", @ScriptDir, @SW_HIDE)
+    If NOT @AutoItX64 AND FileExists(@ScriptDir & "\" & $App_Dir & "\x86\VBoxClient-x86.dll") AND $App_Dir = "app64" Then
+	RunWait(@WindowsDir & "\SysWOW64\regsvr32.exe /S " & $App_Dir & "\x86\VBoxClient-x86.dll", @ScriptDir, @SW_HIDE)
+	Else
+	RunWait(@WindowsDir & "\System32\regsvr32.exe /S " & $App_Dir & "\VBoxC.dll", @ScriptDir, @SW_HIDE)
+	Endif
+	
+	If NOT @AutoItX64 AND FileExists(@ScriptDir & "\" & $App_Dir & "\x86\VBoxProxyStub-x86.dll") AND $App_Dir = "app64" Then
+	RunWait(@WindowsDir & "\SysWOW64\regsvr32.exe /S " & $App_Dir & "\x86\VBoxProxyStub-x86.dll", @ScriptDir, @SW_HIDE)
+	Else
+	RunWait(@WindowsDir & "\System32\regsvr32.exe /S " & $App_Dir & "\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
+	Endif
+
+	if NOT @AutoItX64 AND FileExists(@ScriptDir & "\" & $App_Dir & "\x86\VBoxRT-x86.dll") Then
+	DllCall(@ScriptDir & "\" & $App_Dir & "\x86\VBoxRT-x86.dll", "int", "RTR3Init")
+	Else
+	DllCall(@ScriptDir & "\" & $App_Dir & "\VBoxRT.dll", "int", "RTR3Init")
+	Endif
+EndFunc
+
+Func _Stop_VirtualBox()
+    Local $DRV = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxDrv", "DisplayName") <> "" ? 1 : 0)
+    Local $SUP = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxSup", "DisplayName") <> "" ? 1 : 0)
+    Local $USB = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "" ? 1 : 0)
+    Local $MON = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "" ? 1 : 0)
+    Local $ADP = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "" ? 1 : 0)
+	Local $NET = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "" Or RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetLwf", "DisplayName") <> "" ? 1 : 0)
+
+    Local $ADPVER = (FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\network\netadp6") ? 6 : "")
+
+#cs
+    RunWait($App_Dir & "\VBoxSVC.exe /unregserver", @ScriptDir, @SW_HIDE)
+    RunWait(@SystemDir & "\regsvr32.exe /S /U " & $App_Dir & "\VBoxC.dll", @ScriptDir, @SW_HIDE)
+    RunWait($App_Dir & "\VBoxSDS.exe /UnregService", @ScriptDir, @SW_HIDE)
+    RunWait(@SystemDir & "\regsvr32.exe /S /U " & $App_Dir & "\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
+#ce
+    RunWait($App_Dir & "\VBoxSVC.exe /unregserver", @ScriptDir, @SW_HIDE)
+    RunWait($App_Dir & "\VBoxSDS.exe /UnregService", @ScriptDir, @SW_HIDE)
+    If NOT @AutoItX64 AND FileExists(@ScriptDir & "\" & $App_Dir & "\x86\VBoxClient-x86.dll") AND $App_Dir = "app64" Then
+	RunWait(@WindowsDir & "\SysWOW64\regsvr32.exe /S /U " & $App_Dir & "\x86\VBoxClient-x86.dll", @ScriptDir, @SW_HIDE)
+	Else
+	RunWait(@WindowsDir & "\System32\regsvr32.exe /S /U " & $App_Dir & "\VBoxC.dll", @ScriptDir, @SW_HIDE)
+	Endif
+	
+	If NOT @AutoItX64 AND FileExists(@ScriptDir & "\" & $App_Dir & "\x86\VBoxProxyStub-x86.dll") AND $App_Dir = "app64" Then
+	RunWait(@WindowsDir & "\SysWOW64\regsvr32.exe /S /U " & $App_Dir & "\x86\VBoxProxyStub-x86.dll", @ScriptDir, @SW_HIDE)
+	Else
+	RunWait(@WindowsDir & "\System32\regsvr32.exe /S /U " & $App_Dir & "\VBoxProxyStub.dll", @ScriptDir, @SW_HIDE)
+	Endif
+
+    If $DRV = 1 Then
+        RunWait("sc stop VBoxDRV", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $SUP = 1 Then
+        RunWait("sc stop VBoxSUP", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $USB = 1 Then
+        RunWait("sc stop VBoxUSB", @ScriptDir, @SW_HIDE)
+        ;RunWait(@ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe remove ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
+		RunWait("""" & @ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe"" remove ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
+        FileDelete(@WindowsDir & "\System32\drivers\VBoxUSB.sys")
+    EndIf
+
+    If $MON = 1 Then
+        RunWait("sc stop VBoxUSBMon", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $ADP = 1 Then
+        RunWait("sc stop VBoxNetAdp", @ScriptDir, @SW_HIDE)
+		RunWait("""" & @ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe"" remove ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
+        ;RunWait(@ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe remove ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
+        FileDelete(@WindowsDir & "\System32\drivers\VBoxNetAdp" & $ADPVER & ".sys")
+    EndIf
+
+    If $NET = 1 Then
+        RunWait("sc stop VBoxNetFlt", @ScriptDir, @SW_HIDE)
+        RunWait("sc stop VBoxNetLwf", @ScriptDir, @SW_HIDE)
+        ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
+        ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
+		RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
+		RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
+        RunWait(@SystemDir & "\regsvr32.exe /S /U " & @WindowsDir & "\System32\VBoxNetFltNobj.dll", @ScriptDir, @SW_HIDE)
+        RunWait("sc delete VBoxNetFlt", @ScriptDir, @SW_HIDE)
+        RunWait("sc delete VBoxNetLwf", @ScriptDir, @SW_HIDE)
+        FileDelete(@WindowsDir & "\System32\VBoxNetFltNobj.dll")
+        FileDelete(@WindowsDir & "\System32\drivers\VBoxNetFlt.sys")
+        FileDelete(@WindowsDir & "\System32\drivers\VBoxNetLwf.sys")
+    EndIf
+
+    If FileExists(@ScriptDir & "\" & $App_Dir & "\") And FileExists(@ScriptDir & "\vboxadditions\") Then
+        DirMove(@ScriptDir & "\" & $App_Dir & "\doc", @ScriptDir & "\vboxadditions\", 1)
+        DirMove(@ScriptDir & "\" & $App_Dir & "\ExtensionPacks", @ScriptDir & "\vboxadditions\", 1)
+        DirMove(@ScriptDir & "\" & $App_Dir & "\nls", @ScriptDir & "\vboxadditions\", 1)
+        FileMove(@ScriptDir & "\" & $App_Dir & "\*.iso", @ScriptDir & "\vboxadditions\guestadditions\", 9)
+    EndIf
+
+    If FileExists(@SystemDir & "\msvcp71.dll") Then FileDelete(@SystemDir & "\msvcp71.dll")
+    If FileExists(@SystemDir & "\msvcr71.dll") Then FileDelete(@SystemDir & "\msvcr71.dll")
+    If FileExists(@SystemDir & "\msvcrt.dll")  Then FileDelete(@SystemDir & "\msvcrt.dll")
+    If FileExists(@SystemDir & "\msvcp80.dll") Then FileDelete(@SystemDir & "\msvcp80.dll")
+    If FileExists(@SystemDir & "\msvcr80.dll") Then FileDelete(@SystemDir & "\msvcr80.dll")
+
+    If $DRV = 1 Then
+        RunWait("sc delete VBoxDRV", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $SUP = 1 Then
+        RunWait("sc delete VBoxSUP", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $USB = 1 Then
+        RunWait("sc delete VBoxUSB", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $MON = 1 Then
+        RunWait("sc delete VBoxUSBMon", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $ADP = 1 Then
+        RunWait("sc delete VBoxNetAdp", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    If $NET = 1 Then
+        RunWait("sc delete VBoxNetFlt", @ScriptDir, @SW_HIDE)
+        RunWait("sc delete VBoxNetLwf", @ScriptDir, @SW_HIDE)
+    EndIf
+
+    RunWait("sc delete VBoxSDS", @ScriptDir, @SW_HIDE)
+EndFunc
+
+Func _DownloadFile()
     GUICtrlSetState($Button100, $GUI_DISABLE)
     GUICtrlSetState($Button200, $GUI_DISABLE)
 	GUICtrlSetState($LabelDownload, $GUI_SHOW)
@@ -1784,7 +1853,7 @@ Func DownloadFile()
 				Local $bytes = InetGetInfo($info1, 0)
 				Local $total_bytes = InetGetInfo($info1, 1)
 				Local $status = InetGetInfo($info1, 3)
-				GUICtrlSetData($Input200, GetTranslation($Lang, "status", "01")&" "& @CRLF & $link & @CRLF &DisplayDownloadStatus($bytes, $total_bytes))
+				GUICtrlSetData($Input200, _GetTranslation($Lang, "status", "01")&" "& @CRLF & $link & @CRLF &_DisplayDownloadStatus($bytes, $total_bytes))
 				Sleep(50)
 				If $status = 1 Then
 					$Downloaded = True
@@ -1802,22 +1871,22 @@ Func DownloadFile()
     Next
     If FileExists($save1) Then
         GUICtrlSetData($Input100, $save1)
-		CheckExeFile($save1)
+		_CheckExeFile($save1)
     EndIf
-    GUICtrlSetData($Input200, GetTranslation($Lang, "status", "02"))
+    GUICtrlSetData($Input200, _GetTranslation($Lang, "status", "02"))
     GUICtrlSetState($Button100, $GUI_ENABLE)
     GUICtrlSetState($Button200, $GUI_ENABLE)
 EndFunc
 
-Func DisplayDownloadStatus($downloaded_bytes, $total_bytes)
+Func _DisplayDownloadStatus($downloaded_bytes, $total_bytes)
     If $total_bytes > 0 Then
-        Return RoundForceDecimalMB($downloaded_bytes) & "MB / " & RoundForceDecimalMB($total_bytes) & "MB (" & Round(100 * $downloaded_bytes / $total_bytes) & "%)"
+        Return _RoundForceDecimalMB($downloaded_bytes) & "MB / " & _RoundForceDecimalMB($total_bytes) & "MB (" & Round(100 * $downloaded_bytes / $total_bytes) & "%)"
     Else
-        Return RoundForceDecimalMB($downloaded_bytes) & "MB"
+        Return _RoundForceDecimalMB($downloaded_bytes) & "MB"
     EndIf
 EndFunc
 
-Func RoundForceDecimalMB($number)
+Func _RoundForceDecimalMB($number)
     Local $rounded = Round($number / 1048576, 1)
     If Not StringInStr($rounded, ".") Then
         Return $rounded & ".0"
@@ -1826,7 +1895,7 @@ Func RoundForceDecimalMB($number)
     EndIf
 EndFunc   ;==>RoundForceDecimal
 
-Func DownloadGithub($File, $Save)
+Func _DownloadGithub($File, $Save)
   Local $download = InetGet($File, @ScriptDir&"\"&$Save, 8, 1)
   Do
     Sleep(250)
@@ -1834,17 +1903,17 @@ Func DownloadGithub($File, $Save)
   InetClose($download)
 EndFunc
 
-Func SearchFile()
-  Local $FilePath = FileOpenDialog(GetTranslation($Lang, "status", "03"), @ScriptDir, "(*.exe)", 1+2)
+Func _SearchFile()
+  Local $FilePath = FileOpenDialog(_GetTranslation($Lang, "status", "03"), @ScriptDir, "(*.exe)", 1+2)
   If NOT @error Then
     GUICtrlSetData($Input100, $FilePath)
     GUICtrlSetState($Button200,$GUI_ENABLE)
-	CheckExeFile($FilePath)
+	_CheckExeFile($FilePath)
   EndIf
 EndFunc
 
-Func UseSettings()
-  If GUICtrlRead($Input100) = "" OR GUICtrlRead($Input100) = GetTranslation($Lang, "download", "04") Then
+Func _UseSettings()
+  If GUICtrlRead($Input100) = "" OR GUICtrlRead($Input100) = _GetTranslation($Lang, "download", "04") Then
     Local $SourceFile = @ScriptDir&"\forgetit"
   Else
     Local $SourceFile = GUICtrlRead($Input100)
@@ -1858,7 +1927,7 @@ Func UseSettings()
 
   If (FileExists(@ScriptDir&"\virtualbox.exe") OR FileExists($SourceFile)) AND (GUICtrlRead($Checkbox100) = $GUI_CHECKED OR GUICtrlRead($Checkbox110) = $GUI_CHECKED) Then
     GUICtrlSetState($LabelDownload, $GUI_SHOW)
-    GUICtrlSetData($Input200, @LF & GetTranslation($Lang, "status", "04"))
+    GUICtrlSetData($Input200, @LF & _GetTranslation($Lang, "status", "04"))
 
     If FileExists(@ScriptDir&"\virtualbox.exe") Then
       Run(@ScriptDir&"\virtualbox.exe -x -p temp", @ScriptDir, @SW_HIDE)
@@ -1897,7 +1966,7 @@ Func UseSettings()
 	EndIf
 
   If GUICtrlRead($Checkbox100) = $GUI_CHECKED AND FileExists(@ScriptDir&"\temp") Then
-    GUICtrlSetData($Input200, @LF & GetTranslation($Lang, "status", "05"))
+    GUICtrlSetData($Input200, @LF & _GetTranslation($Lang, "status", "05"))
     RunWait("cmd /c ren ""%CD%\temp\*_x86.msi"" x86.msi", @ScriptDir, @SW_HIDE)
     RunWait("cmd /c msiexec.exe /quiet /a ""%CD%\temp\x86.msi"" TARGETDIR=""%CD%\temp\x86""", @ScriptDir, @SW_HIDE)
     DirCopy(@ScriptDir&"\temp\x86\PFiles\Oracle\VirtualBox", @ScriptDir&"\app32", 1)
@@ -1919,7 +1988,7 @@ Func UseSettings()
   EndIf
 
   If GUICtrlRead($Checkbox110) = $GUI_CHECKED AND FileExists(@ScriptDir&"\temp") Then
-    GUICtrlSetData($Input200, @LF & GetTranslation($Lang, "status", "05"))
+    GUICtrlSetData($Input200, @LF & _GetTranslation($Lang, "status", "05"))
 	Local $msiFiles = _RecFileListToArray(@ScriptDir&"\temp\", "*.msi", 1, 1, 0, 0)
 	If @error Or $msiFiles[0] = 0 Then
     Exit
@@ -1971,7 +2040,7 @@ Func UseSettings()
   EndIf
 
   if (FileExists(@ScriptDir&"\virtualbox.exe") OR FileExists($SourceFile)) AND (GUICtrlRead($Checkbox100) = $GUI_CHECKED OR GUICtrlRead($Checkbox110) = $GUI_CHECKED) Then
-    GUICtrlSetData($Input200, @LF & GetTranslation($Lang, "status", "08"))
+    GUICtrlSetData($Input200, @LF & _GetTranslation($Lang, "status", "08"))
     Sleep(2000)
   EndIf
 
@@ -1979,16 +2048,16 @@ Func UseSettings()
   $install = 0
 EndFunc
 
-Func github()
+Func _github()
 ShellExecute("https://github.com/Deac2/Portable-VirtualBox")
 EndFunc
 
-Func Licence()
+Func _Licence()
   ShellExecute("http://www.virtualbox.org/wiki/VirtualBox_PUEL")
 EndFunc
 
 ; Check if virtualbox is installed and run from it
-Func HybridMode()
+Func _HybridMode()
 	if @OSArch="X64" Then
 		$append_arch="64"
 	Else

@@ -953,7 +953,7 @@ $Languages.Add("spanish", $spanish)
 $Languages.Add("turkish", $turkish)
 $Languages.Add("ukrainian", $ukrainian)
 
-Func GetTranslation($Lang, $sCategory, $sNumber)
+Func _GetTranslation($Lang, $sCategory, $sNumber)
     Local $CurrentLang = StringLower($Lang)
 
     If $Languages.Exists($CurrentLang) Then
@@ -969,7 +969,7 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
         If Not FileExists($Dir_Lang) Then DirCreate($Dir_Lang)
         Local $LangIni = $Dir_Lang & $CurrentLang & ".ini"
 
-        If FileExists($LangIni) AND Date_Diff(IniRead($var1, "language", "date", "01.01.2000"), $Lang_changes) Then
+        If FileExists($LangIni) AND _Date_Diff(IniRead($var1, "language", "date", "01.01.2000"), $Lang_changes) Then
         FileDelete($LangIni)
         IniWrite($var1, "language", "date", $Lang_changes)
         EndIf
@@ -985,7 +985,7 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
 		;$encoding = 32
         ;EndIf
 		
-		EmptyIniWrite($LangIni, $Section, $Key, $Value, $ini_encoding)
+		_EmptyIniWrite($LangIni, $Section, $Key, $Value, $ini_encoding)
         Next
         Return IniRead(@ScriptDir & "\data\language\" & $CurrentLang & ".ini", $sCategory, $sNumber, $sCategory & "_" & $sNumber)
     Else
@@ -998,7 +998,7 @@ Func GetTranslation($Lang, $sCategory, $sNumber)
     EndIf
 EndFunc
 
-Func Date_Diff($sOldDate, $sNewDate)
+Func _Date_Diff($sOldDate, $sNewDate)
     Local $sCleanOld = StringRegExpReplace($sOldDate, "[./ ]", "")
     Local $sCleanNew = StringRegExpReplace($sNewDate, "[./ ]", "")
     If StringLen($sCleanOld) <> 8 Or StringLen($sCleanNew) <> 8 Then Return False
@@ -1007,22 +1007,22 @@ Func Date_Diff($sOldDate, $sNewDate)
     Return ($iNewTech > $iOldTech)
 EndFunc
 
-Func IsLangValid($lang)
+Func _IsLangValid($lang)
     Return $Languages.Exists(StringLower($lang))
 EndFunc
 
-Func GetLangList()
+Func _GetLangList()
     Local $Lang_all = $Languages.Keys()
     Local $Lang_list = ""
     For $i = 0 To UBound($Lang_all) - 1
-        $Lang_list &= FirstLetterUpper($Lang_all[$i]) & "|"
+        $Lang_list &= _FirstLetterUpper($Lang_all[$i]) & "|"
     Next
 
     $Lang_list = StringTrimRight($Lang_list, 1)
     Return $Lang_list
 EndFunc
 
-Func FirstLetterUpper($sText)
+Func _FirstLetterUpper($sText)
     If StringLen($sText) = 0 Then Return $sText
     Return StringUpper(StringLeft($sText, 1)) & StringMid($sText, 2)
 EndFunc
