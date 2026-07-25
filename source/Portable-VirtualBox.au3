@@ -660,9 +660,13 @@ Func _RegRead($keyname, $valuename)
     $keyname = StringReplace($keyname, "HKLM", "HKLM" & $RegRoot)
     $keyname = StringReplace($keyname, "HKCU", "HKCU" & $RegRoot)
     $keyname = StringReplace($keyname, "HKCR", "HKCR" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKCC", "HKCC" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKU", "HKU" & $RegRoot)
     $keyname = StringReplace($keyname, "HKEY_LOCAL_MACHINE", "HKLM" & $RegRoot)
     $keyname = StringReplace($keyname, "HKEY_CURRENT_USER", "HKCU" & $RegRoot)
     $keyname = StringReplace($keyname, "HKEY_CLASSES_ROOT", "HKCU" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKEY_CURRENT_CONFIG", "HKCC" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKEY_USERS", "HKU" & $RegRoot)
     Return RegRead($keyname, $valuename)
 EndFunc
 
