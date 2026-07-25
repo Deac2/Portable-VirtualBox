@@ -27,8 +27,8 @@ Global $catalan = [ _
     ["settings", "10", "Selecciona el directori d'inici"], _
     ["settings", "11", "Seleccioneu el directori de la màquina virtual"], _
     ["system", "01", "Sistema"], _
-    ["system", "02", "Esborra els registres de VirtualBox en sortir"], _
-    ["system", "03", "Eliminació dels registres de VirtualBoxVM en sortir"], _
+    ["system", "02", "Esborrant els registres de VirtualBox abans de l'inici"], _
+    ["system", "03", "Esborrant els registres de VirtualBoxVM abans de l'inici"], _
     ["system", "04", "No desactiveu els serveis i els controladors en sortir de VirtualBox"], _
     ["hotkey-settings", "01", "Opcions de HotKeys"], _
     ["hotkey-settings", "02", "Si no esteu d'acord amb les opcions predeterminades de les 'HotKeys' (decreres de teclat), aquí podeu especificar altres combinacions de tecles. Nota: Les tecles de control es limiten a Alt, Ctrl i Majús, la tecla restant es pot triar lliurement (per defecte, Ctrl+""1~6"")."], _
@@ -94,8 +94,8 @@ Global $chinese = [ _
     ["settings", "10", "选择主目录"], _
     ["settings", "11", "选择虚拟机目录"], _
     ["system", "01", "系统"], _
-    ["system", "02", "退出时清除 VirtualBox 日志"], _
-    ["system", "03", "退出时删除 VirtualBoxVM 日志"], _
+    ["system", "02", "启动前清除 VirtualBox 日志"], _
+    ["system", "03", "启动前清除 VirtualBoxVM 日志"], _
     ["system", "04", "退出 VirtualBox 时，请勿禁用服务和驱动程序。"], _
     ["hotkey-settings", "01", "热键设置"], _
     ["hotkey-settings", "02", "要设置不被系统占用了的热键。注意：命令键必须为 ALT，CTRL 和 SHIFT 键之一，后面为自定义（默认为 Ctrl + 1 ～ Ctrl + 6）"], _
@@ -161,8 +161,8 @@ Global $english = [ _
     ["settings", "10", "Select home directory"], _
     ["settings", "11", "Select VM directory"], _
     ["system", "01", "System"], _
-    ["system", "02", "Clear VirtualBox logs on exit"], _
-    ["system", "03", "Deleting VirtualBoxVM logs on exit"], _
+    ["system", "02", "Clearing VirtualBox logs before startup"], _
+    ["system", "03", "Clearing VirtualBoxVM logs before startup"], _
     ["system", "04", "Do not disable services and drivers when exiting VirtualBox"], _
     ["hotkey-settings", "01", "Hot hotkey-settings"], _
     ["hotkey-settings", "02", "Here you can change the hotkey values. Note: you can use the ALT, CTRL and SHIFT keys. (Default = CTRL+""1-6"")"], _
@@ -228,8 +228,8 @@ Global $french = [ _
     ["settings", "10", "Sélectionnez le répertoire personnel"], _
     ["settings", "11", "Sélectionnez le répertoire de la machine virtuelle"], _
     ["system", "01", "Système"], _
-    ["system", "02", "Effacer les journaux VirtualBox à la sortie"], _
-    ["system", "03", "Suppression des journaux VirtualBoxVM à la sortie"], _
+    ["system", "02", "Effacement des journaux VirtualBox avant le démarrage"], _
+    ["system", "03", "Effacement des journaux de VirtualBoxVM avant le démarrage"], _
     ["system", "04", "Ne désactivez pas les services et les pilotes lorsque vous quittez VirtualBox."], _
     ["hotkey-settings", "01", "Paramètres des raccourcis clavier"], _
     ["hotkey-settings", "02", "Vous pouvez personnaliser les raccourcis claviers sur cette page. Note: Les touches de commande sont limitées à ALT, CTRL et SHIFT. (DÉFAUT = CTRL+""1 à 6"")"], _
@@ -295,8 +295,8 @@ Global $german = [ _
     ["settings", "10", "Home-Verzeichnis auswählen"], _
     ["settings", "11", "VM-Verzeichnis auswählen"], _
     ["system", "01", "System"], _
-    ["system", "02", "VirtualBox-Protokolle beim Beenden löschen"], _
-    ["system", "03", "VirtualBoxVM-Protokolle beim Beenden löschen"], _
+    ["system", "02", "VirtualBox-Protokolle vor dem Start löschen"], _
+    ["system", "03", "VirtualBoxVM-Protokolle vor dem Start löschen"], _
     ["system", "04", "Deaktivieren Sie beim Beenden von VirtualBox keine Dienste und Treiber."], _
     ["hotkey-settings", "01", "HotKey-Einstellungen"], _
     ["hotkey-settings", "02", "Falls dir die Standardeinstellungen der HotKeys nicht zusagen, ist es hier möglich, eigene Tastenkombinationen zu definieren. Hinweis: Die Steuertasten beschränken sich auf ALT, CTRL und SHIFT, die letzte Taste ist frei definierbar. (DEFAULT = STRG+""1-6"")"], _
@@ -362,8 +362,8 @@ Global $italian = [ _
     ["settings", "10", "Seleziona la directory home"], _
     ["settings", "11", "Seleziona la directory della VM"], _
     ["system", "01", "Sistema"], _
-    ["system", "02", "Cancella i log di VirtualBox all'uscita"], _
-    ["system", "03", "Eliminazione dei log di VirtualBoxVM all'uscita"], _
+    ["system", "02", "Cancellazione dei log di VirtualBox prima dell'avvio"], _
+    ["system", "03", "Cancellazione dei log di VirtualBoxVM prima dell'avvio"], _
     ["system", "04", "Non disattivare servizi e driver all'uscita da VirtualBox."], _
     ["hotkey-settings", "01", "Imposta HotKeys"], _
     ["hotkey-settings", "02", "Per specificare hotkeys diversi da quelli predefiniti, farlo quì. Nota: I tasti di comando sono limitati a Alt, Ctrl e Shift. L'ultimo tasto e autodefinito. (Predefinito: CTRL+""1-6"")"], _
@@ -429,8 +429,8 @@ Global $japanese = [ _
     ["settings", "10", "ホームディレクトリを選択"], _
     ["settings", "11", "VMディレクトリを選択"], _
     ["system", "01", "システム"], _
-    ["system", "02", "終了時にVirtualBoxのログをクリアする"], _
-    ["system", "03", "VirtualBoxVMのログを終了時に削除する"], _
+    ["system", "02", "VirtualBoxの起動前にログをクリアする"], _
+    ["system", "03", "VirtualBoxVMの起動前にログをクリアする"], _
     ["system", "04", "VirtualBoxを終了する際に、サービスとドライバーを無効にしないでください。"], _
     ["hotkey-settings", "01", "ホットキーの設定"], _
     ["hotkey-settings", "02", "プリセット以外のホットキーを選択するには、ここに独自のコマンドを指定します。注: コマンドキーは ALT 、CTRL 、SHIFT に制限されています。最後のキーは自己定義です。(デフォルト = CTRL+""1-6"")"], _
@@ -496,8 +496,8 @@ Global $korean = [ _
     ["settings", "10", "홈 디렉토리 선택"], _
     ["settings", "11", "VM 디렉토리 선택"], _
     ["system", "01", "체계"], _
-    ["system", "02", "VirtualBox 종료 시 로그를 지웁니다."], _
-    ["system", "03", "VirtualBoxVM 종료 시 로그 삭제"], _
+    ["system", "02", "VirtualBox 시작 전 로그 지우기"], _
+    ["system", "03", "VirtualBoxVM 시작 전 로그 지우기"], _
     ["system", "04", "VirtualBox를 종료할 때 서비스 및 드라이버를 비활성화하지 마십시오."], _
     ["hotkey-settings", "01", "단축키-설정"], _
     ["hotkey-settings", "02", "사전 설정보다 다른 단축키를 선택하려면, 여기에서 직접 명령을 지정하세요. 참고: 명령 키는 ALT, CTRL 및 SHIFT로 제한됩니다. 마지막 키는 자체 정의됩니다. (기본값 = CTRL+""1-6"")"], _
@@ -563,8 +563,8 @@ Global $polish = [ _
     ["settings", "10", "Wybierz katalog domowy"], _
     ["settings", "11", "Wybierz katalog maszyny wirtualnej"], _
     ["system", "01", "System"], _
-    ["system", "02", "Wyczyść logi VirtualBox przy wyjściu"], _
-    ["system", "03", "Usuwanie dzienników VirtualBoxVM przy wyjściu"], _
+    ["system", "02", "Czyszczenie logów VirtualBox przed uruchomieniem"], _
+    ["system", "03", "Czyszczenie logów VirtualBoxVM przed uruchomieniem"], _
     ["system", "04", "Nie wyłączaj usług i sterowników podczas wychodzenia z VirtualBox"], _
     ["hotkey-settings", "01", "Ustawienia-HotKey"], _
     ["hotkey-settings", "02", "Żeby wybrać HotKey, ustaw komendy tutaj. Uwaga: Komendy przycisków limitowane do ALT, CTRL i SHIFT. Ostatni przycisk definiowany przez użytkownika. (DOMYŚLNIE = CTRL+""1-6"")"], _
@@ -630,8 +630,8 @@ Global $portuguese = [ _
     ["settings", "10", "Selecione o diretório inicial"], _
     ["settings", "11", "Selecione o diretório da VM"], _
     ["system", "01", "Sistema"], _
-    ["system", "02", "Limpar os logs do VirtualBox ao sair"], _
-    ["system", "03", "Excluindo os logs do VirtualBoxVM ao sair"], _
+    ["system", "02", "Limpar os logs do VirtualBox antes da inicialização"], _
+    ["system", "03", "Limpar os logs da VM do VirtualBox antes da inicialização"], _
     ["system", "04", "Não desative serviços e drivers ao sair do VirtualBox."], _
     ["hotkey-settings", "01", "HotKey-Ajustes"], _
     ["hotkey-settings", "02", "Aqui você pode alterar os valores das teclas de atalho. Nota: Você pode usar as teclas ALT, CTRL e SHIFT. (PADRÃO = CTRL+""1-6"")"], _
@@ -697,8 +697,8 @@ Global $russian = [ _
     ["settings", "10", "Выберите домашнюю директорию"], _
     ["settings", "11", "Выберите VM директорию"], _
     ["system", "01", "Система"], _
-    ["system", "02", "Удаление логов VirtualBox при выходе"], _
-    ["system", "03", "Удаление логов VirtualBoxVM при выходе"], _
+    ["system", "02", "Удаление логов VirtualBox перед запуском"], _
+    ["system", "03", "Удаление логов VirtualBoxVM перед запуском"], _
     ["system", "04", "Не отключать службы и драйверы при выходе из VirtualBox"], _
     ["hotkey-settings", "01", "Горячие клавиши-настройка"], _
     ["hotkey-settings", "02", "Тут вы можете изменить значения горячих клавиш. Примечание: вы можете использовать клавиши ALT, CTRL и SHIFT. (По умолчанию = CTRL+""1-6"")"], _
@@ -764,8 +764,8 @@ Global $spanish = [ _
     ["settings", "10", "Seleccionar directorio de inicio"], _
     ["settings", "11", "Seleccionar directorio de VM"], _
     ["system", "01", "Sistema"], _
-    ["system", "02", "Borrar los registros de VirtualBox al salir"], _
-    ["system", "03", "Eliminar los registros de VirtualBoxVM al salir"], _
+    ["system", "02", "Borrar los registros de VirtualBox antes del inicio"], _
+    ["system", "03", "Borrar los registros de VirtualBoxVM antes del inicio"], _
     ["system", "04", "No desactive los servicios ni los controladores al salir de VirtualBox."], _
     ["hotkey-settings", "01", "Ajustes de HotKeys"], _
     ["hotkey-settings", "02", "Si no está conforme con los ajustes predeterminados de las HotKeys (accesos directos por teclado), puede especificar aquí sus propias combinaciones de teclas. Nota: Las teclas de control se limitan a Alt, Ctrl y Mayús, la tecla restante puede elegirse libremente (por defecto, Ctrl+""1 a 6"")."], _
@@ -831,8 +831,8 @@ Global $turkish = [ _
     ["settings", "10", "Ana dizini seçin"], _
     ["settings", "11", "VM dizinini seçin"], _
     ["system", "01", "Sistem"], _
-    ["system", "02", "Çıkışta VirtualBox günlüklerini temizle"], _
-    ["system", "03", "Çıkışta VirtualBoxVM günlüklerini silme"], _
+    ["system", "02", "VirtualBox başlatmadan önce günlükleri temizleme"], _
+    ["system", "03", "VirtualBoxVM başlatılmadan önce günlükleri temizleniyor."], _
     ["system", "04", "VirtualBox'tan çıkarken servisleri ve sürücüleri devre dışı bırakmayın."], _
     ["hotkey-settings", "01", "Kısayol Tuşu Ayarları"], _
     ["hotkey-settings", "02", "Hazır ayardan başka Kısayol Tuşları seçmek için, burada kendi komutlarınızı belirtin. Not: Komut tuşları ALT, CTRL ve SHIFT ile sınırlıdır. Son anahtar kendiliğinden tanımlanmıştır. (Varsayılan = CTRL ""1 to 6"")"], _
@@ -898,8 +898,8 @@ Global $ukrainian = [ _
     ["settings", "10", "Виберіть домашню директорію"], _
     ["settings", "11", "Виберіть VM директорію"], _
     ["system", "01", "Система"], _
-    ["system", "02", "Видалення логів VirtualBox при виході"], _
-    ["system", "03", "Видалення логів VirtualBoxVM при виході"], _
+    ["system", "02", "Видалення логів VirtualBox перед запуском"], _
+    ["system", "03", "Видалення логів VirtualBoxVM перед запуском"], _
     ["system", "04", "Не вимикайте служби та драйвери під час виходу з VirtualBox."], _
     ["hotkey-settings", "01", "Гарячі клавіші-налаштування"], _
     ["hotkey-settings", "02", "Тут можна змінити значення гарячих клавіш. Примітка: Ви можете використовувати клавіші ALT, CTRL та SHIFT. (ЗА УМОВЧЕННЯМ. = CTRL+""1-6"")"], _

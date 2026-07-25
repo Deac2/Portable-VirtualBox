@@ -43,7 +43,7 @@ Global $DefaultUserHome = @ScriptDir&"\.VirtualBox"
 Global $DefaultMachineFolder = @ScriptDir&"\.VirtualBox\Machines"
 Global $32Bit_Last = "6.0.24"
 Global $version = "6.4.9.1"
-Global $Lang_changes = "20.07.2026"
+Global $Lang_changes = "25.07.2026"
 Global $MaxRetries = "3"		;Maximum number of retries when downloading files from https://download.virtualbox.org/virtualbox/
 Global $Radio1, $Radio2, $Radio3, $Radio4, $Radio5, $Radio6, $Radio7, $Radio8, $Radio9, $Radio10, $Radio11, $Radio12, $Radio13, $Radio14
 Global $Checkbox01, $Checkbox02, $Checkbox03, $Checkbox04, $Checkbox05, $Checkbox06, $Checkbox07, $Checkbox08, $Checkbox09
@@ -209,13 +209,47 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
   EndIf
 #ce
 
-  If FileExists($UserHome&"\VirtualBox.xml-prev") Then
-    FileDelete($UserHome&"\VirtualBox.xml-prev")
-  EndIf
+      #clear log
+      If IniRead($var1, "Core_Logs", "key", "0") = 1 Then
+      If FileExists($UserHome) Then
+      FileDelete($UserHome&"\*.log")
+      FileDelete($UserHome&"\*.log.*")
+	  FileDelete($UserHome&"\VirtualBox.xml-prev")
+      FileDelete($UserHome&"\VirtualBox.xml-tmp")
+      EndIf
+	  EndIf
 
-  If FileExists($UserHome&"\VirtualBox.xml-tmp") Then
-    FileDelete($UserHome&"\VirtualBox.xml-tmp")
-  EndIf
+		#clear log Machines
+		If IniRead($var1, "VM_Logs", "key", "0") = 1 Then
+	  If FileExists($UserHome&"\VirtualBox.xml") Then
+		Local $file = FileOpen($UserHome&"\VirtualBox.xml", 256)
+		If $file <> -1 Then
+		$line = FileRead($file)
+		FileClose($file)
+		$values0 = _StringBetween($line, '<MachineRegistry>', '</MachineRegistry>')
+		If $values0 = 0 Then
+        $values1 = 0
+		Else
+		$values1 = _StringBetween($values0[0], 'src="', '"')
+		EndIf
+		EndIf
+
+		For $i = 0 To UBound($values1) - 1
+		Local $Result = StringSplit(StringReplace($values1[$i], ".vbox", ""), "\")
+		Local $ResultName = $Result[$Result[0]]
+		$aArray = _RecFileListToArray($UserHome, "*"&$ResultName&".vbox", 1, 1, 0, 2)
+		If IsArray($aArray) Then
+		For $j = 1 To $aArray[0]
+		If FileExists($aArray[$j]) Then
+		Local $Patch = StringRegExpReplace($aArray[$j], "[^\\]+$", "")
+		FileDelete($Patch&"Logs\*.log")
+		FileDelete($Patch&"Logs\*.log.*")
+		EndIf
+		Next
+		EndIf
+		Next
+	  EndIf
+		EndIf
 
   If NOT FileExists($UserHome & "\VirtualBox.xml") Then
 	Local $XmlContent = '<?xml version="1.0"?>' & @LF & _
@@ -344,34 +378,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
         EndIf
       Next
 	  EndIf
-
-      #clear log
-      If IniRead($var1, "Core_Logs", "key", "0") = 1 Then
-      If FileExists($UserHome) Then
-      FileDelete($UserHome&"\*.log")
-      FileDelete($UserHome&"\*.log.*")
-      EndIf
-	  EndIf
-
-		#clear log Machines
-		If IniRead($var1, "VM_Logs", "key", "0") = 1 Then
-	  If FileExists($UserHome&"\VirtualBox.xml") Then
-		For $i = 0 To UBound($values1) - 1
-		Local $Result = StringSplit(StringReplace($values1[$i], ".vbox", ""), "\")
-		Local $ResultName = $Result[$Result[0]]
-		$aArray = _RecFileListToArray($UserHome, "*"&$ResultName&".vbox", 1, 1, 0, 2)
-		If IsArray($aArray) Then
-		For $j = 1 To $aArray[0]
-		If FileExists($aArray[$j]) Then
-		Local $Patch = StringRegExpReplace($aArray[$j], "[^\\]+$", "")
-		FileDelete($Patch&"Logs\*.log")
-		FileDelete($Patch&"Logs\*.log.*")
-		EndIf
-		Next
-		EndIf
-		Next
-	  EndIf
-		EndIf
     EndIf
   Else
     MsgBox(0+262144, _GetTranslation($Lang, "download", "15"), _GetTranslation($Lang, "download", "16"))
