@@ -1713,7 +1713,7 @@ Func _Start_VirtualBox()
 
 
     RunWait($App_Dir & "\VBoxSDS.exe /RegService", @ScriptDir, @SW_HIDE)
-    RunWait($App_Dir & "\VBoxSVC.exe /reregserver", @ScriptDir, @SW_HIDE)
+    RunWait($App_Dir & "\VBoxSVC.exe /regserver", @ScriptDir, @SW_HIDE)
     If NOT @AutoItX64 AND FileExists(@ScriptDir & "\" & $App_Dir & "\x86\VBoxClient-x86.dll") AND $App_Dir = "app64" Then
 	RunWait(@WindowsDir & "\SysWOW64\regsvr32.exe /S " & $App_Dir & "\x86\VBoxClient-x86.dll", @ScriptDir, @SW_HIDE)
 	Else
