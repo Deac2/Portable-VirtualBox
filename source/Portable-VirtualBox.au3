@@ -291,7 +291,6 @@ If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\ap
      Next
      EndIf
 
-	FileDelete(@ScriptDir&"\Portable-VirtualBox.error.txt")
 	$values4 = StringTrimRight($values4, 1)
 	$a = stringsplit($values4, @LF, 2)
 	local $b = 0
@@ -538,6 +537,7 @@ EndFunc
 
 Func _LogDuplicate($Linetext)
     Local $filePath = @ScriptDir&"\Portable-VirtualBox.error.txt"
+	FileDelete($filePath)
     Local $hFile = FileOpen($filePath, 1)
     If $hFile = -1 Then
         Return
@@ -653,6 +653,17 @@ Func _EmptyIniWrite($filename, $section, $key, $value, $encoding = 256)
         EndIf
         IniWrite($filename, $section, $key, $value)
     EndIf
+EndFunc
+
+Func _RegRead($keyname, $valuename)
+    Local $RegRoot = (@OSArch = "X64") ? "64" : ""
+    $keyname = StringReplace($keyname, "HKLM", "HKLM" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKCU", "HKCU" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKCR", "HKCR" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKEY_LOCAL_MACHINE", "HKLM" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKEY_CURRENT_USER", "HKCU" & $RegRoot)
+    $keyname = StringReplace($keyname, "HKEY_CLASSES_ROOT", "HKCU" & $RegRoot)
+    Return RegRead($keyname, $valuename)
 EndFunc
 
 Func _CheckExeFile($Directory)
@@ -1072,10 +1083,10 @@ Func _Settings()
 
     GUICtrlCreateTabItem(_GetTranslation($Lang, "about", "01"))
     GUICtrlCreateLabel(". : Portable-VirtualBox Launcher v"& $version &" : .", 100, 40, 448, 26)
-	GUICtrlSetOnEvent(-1, "_github")
+	GUICtrlSetOnEvent(-1, "_Github")
     GUICtrlSetFont(-1, 14, 800, 4, "Arial")
     GUICtrlCreateLabel("Download and Support: http://github.com/Deac2/Portable-VirtualBox", 40, 70, 500, 20)
-	GUICtrlSetOnEvent(-1, "_github")
+	GUICtrlSetOnEvent(-1, "_Github")
     GUICtrlSetFont(-1, 8, 800, 0, "Arial")
     GUICtrlCreateLabel("VirtualBox is a family of powerful x86 virtualization products for enterprise as well as home use. Not only is VirtualBox an extremely feature rich, high performance product for enterprise customers, it is also the only professional solution that is freely available as Open Source Software under the terms of the GNU General Public License(GPL).", 16, 94, 546, 55)
     GUICtrlSetFont(-1, 8, 400, 0, "Arial")
@@ -1630,24 +1641,24 @@ Func _ProcessNameClose($ProcessName)
 EndFunc
 
 Func _Start_VirtualBox()
-    If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxdrv") And RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxDRV", "DisplayName") <> "Portable VBoxDRV" Then
+    If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxdrv") And _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxDRV", "DisplayName") <> "Portable VBoxDRV" Then
         RunWait("cmd /c sc create VBoxDRV binpath= ""%CD%\" & $App_Dir & "\drivers\VBoxDrv\VBoxDrv.sys"" type= kernel start= auto error= normal displayname=""Portable VBoxDRV""", @ScriptDir, @SW_HIDE)
         RunWait("sc start VBoxDRV", @ScriptDir, @SW_HIDE)
     EndIf
 
-    If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxsup") And RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxSUP", "DisplayName") <> "Portable VBoxSUP" Then
+    If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxsup") And _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxSUP", "DisplayName") <> "Portable VBoxSUP" Then
         RunWait("cmd /c sc create VBoxSUP binpath= ""%CD%\" & $App_Dir & "\drivers\VBoxSup\VBoxSup.sys"" type= kernel start= auto error= normal displayname=""Portable VBoxSUP""", @ScriptDir, @SW_HIDE)
         RunWait("sc start VBoxSUP", @ScriptDir, @SW_HIDE)
     EndIf
 
-    If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "Portable VirtualBox USB Monitor Driver" Then
+    If _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "Portable VirtualBox USB Monitor Driver" Then
         RunWait("cmd /c sc create VBoxUSBMon binpath= ""%CD%\" & $App_Dir & "\drivers\USB\filter\VBoxUSBMon.sys"" type= kernel start= auto error= normal displayname=""Portable VirtualBox USB Monitor Driver""", @ScriptDir, @SW_HIDE)
         RunWait("sc start VBoxUSBMon", @ScriptDir, @SW_HIDE)
     EndIf
 
     If IniRead($var1, "usb", "key", "NotFound") = 1 Then
-		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName"), "VBoxUSB") = 0 Then
-        ;If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "VirtualBox USB" Then
+		If StringInStr(_RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName"), "VBoxUSB") = 0 Then
+        ;If _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "VirtualBox USB" Then
             ;RunWait(@ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe install " & $App_Dir & "\drivers\USB\device\VBoxUSB.inf ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
 			RunWait("""" & @ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe"" install """ & $App_Dir & "\drivers\USB\device\VBoxUSB.inf"" ""USB\VID_80EE&PID_CAFE""", @ScriptDir, @SW_HIDE)
             FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\USB\device\VBoxUSB.sys", @WindowsDir & "\System32\drivers", 9)
@@ -1657,8 +1668,8 @@ Func _Start_VirtualBox()
 
     If IniRead($var1, "net", "key", "NotFound") = 1 Then
         Local $ADPVER = (FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\network\netadp6") ? 6 : "")
-		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName"), "VBoxNetAdp") = 0 Then
-        ;If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "VirtualBox Host-Only Network Adapter" Then
+		If StringInStr(_RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName"), "VBoxNetAdp") = 0 Then
+        ;If _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "VirtualBox Host-Only Network Adapter" Then
             ;RunWait(@ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe install " & $App_Dir & "\drivers\network\netadp" & $ADPVER & "\VBoxNetAdp" & $ADPVER & ".inf ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
 			RunWait("""" & @ScriptDir & "\data\tools\devcon_" & $OsArch & ".exe"" install """ & $App_Dir & "\drivers\network\netadp" & $ADPVER & "\VBoxNetAdp" & $ADPVER & ".inf"" ""sun_VBoxNetAdp""", @ScriptDir, @SW_HIDE)
             FileCopy(@ScriptDir & "\" & $App_Dir & "\drivers\network\netadp" & $ADPVER & "\VBoxNetAdp" & $ADPVER & ".sys", @WindowsDir & "\System32\drivers", 9)
@@ -1667,8 +1678,8 @@ Func _Start_VirtualBox()
     EndIf
 
     If IniRead($var1, "net", "key", "NotFound") = 1 Then
-        ;If RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "VBoxNetFlt Service" Then
-		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName"), "VBoxNetFlt") = 0 Then
+        ;If _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "VBoxNetFlt Service" Then
+		If StringInStr(_RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName"), "VBoxNetFlt") = 0 Then
             ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
 			RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -u ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
             ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -l " & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.inf -m " & $App_Dir & "\drivers\network\netflt\VBoxNetFlt.inf -c s -i ""sun_VBoxNetFlt""", @ScriptDir, @SW_HIDE)
@@ -1678,7 +1689,7 @@ Func _Start_VirtualBox()
             RunWait(@SystemDir & "\regsvr32.exe /S " & @WindowsDir & "\System32\VBoxNetFltNobj.dll", @WindowsDir & "\System32", @SW_HIDE)
             RunWait("sc start VBoxNetFlt", @ScriptDir, @SW_HIDE)
         EndIf
-		If StringInStr(RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetLwf", "DisplayName"), "VBoxNetLwf") = 0 Then
+		If StringInStr(_RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxNetLwf", "DisplayName"), "VBoxNetLwf") = 0 Then
             ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
 			RunWait("""" & @ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe"" -v -u ""oracle_VBoxNetLwf""", @ScriptDir, @SW_SHOW)
             ;RunWait(@ScriptDir & "\data\tools\snetcfg_" & $OsArch & ".exe -v -l " & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.inf -m " & $App_Dir & "\drivers\network\netlwf\VBoxNetLwf.inf -c s -i ""oracle_VBoxNetLwf""", @ScriptDir, @SW_HIDE)
@@ -1719,12 +1730,12 @@ Func _Start_VirtualBox()
 EndFunc
 
 Func _Stop_VirtualBox()
-    Local $DRV = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxDrv", "DisplayName") <> "" ? 1 : 0)
-    Local $SUP = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxSup", "DisplayName") <> "" ? 1 : 0)
-    Local $USB = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "" ? 1 : 0)
-    Local $MON = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "" ? 1 : 0)
-    Local $ADP = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "" ? 1 : 0)
-	Local $NET = (RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "" Or RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetLwf", "DisplayName") <> "" ? 1 : 0)
+    Local $DRV = (_RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxDrv", "DisplayName") <> "" ? 1 : 0)
+    Local $SUP = (_RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxSup", "DisplayName") <> "" ? 1 : 0)
+    Local $USB = (_RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxUSB", "DisplayName") <> "" ? 1 : 0)
+    Local $MON = (_RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxUSBMon", "DisplayName") <> "" ? 1 : 0)
+    Local $ADP = (_RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetAdp", "DisplayName") <> "" ? 1 : 0)
+	Local $NET = (_RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetFlt", "DisplayName") <> "" Or _RegRead("HKLM\SYSTEM\CurrentControlSet\Services\VBoxNetLwf", "DisplayName") <> "" ? 1 : 0)
 
     Local $ADPVER = (FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\network\netadp6") ? 6 : "")
 
@@ -2067,7 +2078,7 @@ Func _UseSettings()
   $install = 0
 EndFunc
 
-Func _github()
+Func _Github()
 ShellExecute("https://github.com/Deac2/Portable-VirtualBox")
 EndFunc
 
@@ -2077,45 +2088,44 @@ EndFunc
 
 ; Check if virtualbox is installed and run from it
 Func _HybridMode()
-	if @OSArch="X64" Then
-		$append_arch="64"
-	Else
-		$append_arch=""
-	EndIf
-
-	; Version of VirtualBox 4.X
-	$version_new = RegRead("HKLM"&$append_arch&"\SOFTWARE\Oracle\VirtualBox","Version")
-
+    ; Version of VirtualBox
+    Local $sVersion = _RegRead("HKLM\SOFTWARE\Oracle\VirtualBox", "Version")
+    
 	; Since 4.0.8 ... Version is in VersionExt key in registry
-	if $version_new = "%VER%" Then
-		$version_new = RegRead("HKLM"&$append_arch&"\SOFTWARE\Oracle\VirtualBox","VersionExt")
-	EndIf
+    If $sVersion = "%VER%" Then
+        $sVersion = _RegRead("HKLM\SOFTWARE\Oracle\VirtualBox", "VersionExt")
+    EndIf
 
 	; Version of VirtualBox 3.X if any is installed => Cannot run Portable 4.X or it will corrupt it
-	$version_old = RegRead("HKLM"&$append_arch&"\SOFTWARE\Sun\VirtualBox","Version")
+    Local $sVersionOld = _RegRead("HKLM\SOFTWARE\Sun\VirtualBox", "Version")
+
+    ; ИСПРАВЛЕНИЕ ЛОГИКИ ВЕРСИЙ: Переводим версию в число для безопасного сравнения (работает с 5, 6, 7, 10+)
+    Local $iMajorVersion = Int(StringRegExpReplace($sVersion, "^(\d+).*", "\1"))
+    Local $iOldMajorVersion = Int(StringRegExpReplace($sVersionOld, "^(\d+).*", "\1"))
 
 	; if old version => Exit to avoid corruption of services
-	if ($version_new <> "" AND Int(StringLeft($version_new,1))<4 ) OR $version_old <> "" Then
-		MsgBox(16,"Sorry","Please update your version of VirtualBox to 4.X or uninstall it from your computer to be able to run this portable version"&@CRLF&@CRLF&"This is a security in order to avoid corrupting your current installed version."&@CRLF&@CRLF &"Thank you for your comprehension.")
-		Exit
-	EndIf
+    If ($sVersion <> "" And $iMajorVersion < 4) Or ($sVersionOld <> "" And $iOldMajorVersion < 4) Then
+        MsgBox(16, "Sorry", "Please update your version of VirtualBox to 4.X/7.X or uninstall it from your computer to be able to run this portable version." & @CRLF & @CRLF & _
+               "This is a security check in order to avoid corrupting your current installed version." & @CRLF & @CRLF & "Thank you for your comprehension.")
+        Exit
+    EndIf
 
 	; Setting VBOX_USER_HOME to portable virtualbox directory(VM settings stays in this one)
-	EnvSet("VBOX_USER_HOME", $UserHome)
+    EnvSet("VBOX_USER_HOME", $UserHome)
 
 	; Testing if major version of regular vbox is 4 then running from it
-	If $version_new <> "" AND StringLeft($version_new,1)>=4 Then
-
+    If $sVersion <> "" And $iMajorVersion >= 4 Then
 		; Getting the installation directory of regular VirtualBox from registry
-		$nonportable_install_dir=RegRead("HKLM"&$append_arch&"\SOFTWARE\Oracle\VirtualBox","InstallDir")
+        Local $nonportable_install_dir = _RegRead("HKLM\SOFTWARE\Oracle\VirtualBox", "InstallDir")
+        If StringRight($nonportable_install_dir, 1) <> "\" Then $nonportable_install_dir &= "\"
 
-		if $CmdLine[0] = 1 Then
-			Run('cmd /c ""'&$nonportable_install_dir&'VBoxManage.exe" startvm "'&$CmdLine[1]&'""', @ScriptDir, @SW_HIDE)
-		Else
-			Run($nonportable_install_dir&"VirtualBox.exe")
-		EndIf
+        If $CmdLine[0] = 1 Then
+            Run(""""&$nonportable_install_dir&"VBoxManage.exe"" startvm """ & $CmdLine[1] & """", @ScriptDir, @SW_HIDE)
+        Else
+            Run(""""&$nonportable_install_dir&"protectua3.exe""")
+        EndIf
 
-		; Does not need to wait since it's a regular version of VirtualBox
-		Exit
-	EndIf
+        ; Does not need to wait since it's a regular version of VirtualBox
+        Exit
+    EndIf
 EndFunc
