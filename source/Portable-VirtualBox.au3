@@ -1637,7 +1637,6 @@ Func _ExitScript()
   _ProcessNameClose("VirtualBoxVM.exe")
   _ProcessNameClose("VBoxSVC.exe")
   _ProcessNameClose("VBoxSDS.exe")
-  EnvSet("VBOX_USER_HOME", "")
 EndFunc
 
 Func _ProcessNameClose($ProcessName)
