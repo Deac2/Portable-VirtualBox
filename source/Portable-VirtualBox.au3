@@ -2108,7 +2108,6 @@ Func _HybridMode()
 	; Version of VirtualBox 3.X if any is installed => Cannot run Portable 4.X or it will corrupt it
     Local $sVersionOld = _RegRead("HKLM\SOFTWARE\Sun\VirtualBox", "Version")
 
-    ; ИСПРАВЛЕНИЕ ЛОГИКИ ВЕРСИЙ: Переводим версию в число для безопасного сравнения (работает с 5, 6, 7, 10+)
     Local $iMajorVersion = Int(StringRegExpReplace($sVersion, "^(\d+).*", "\1"))
     Local $iOldMajorVersion = Int(StringRegExpReplace($sVersionOld, "^(\d+).*", "\1"))
 
