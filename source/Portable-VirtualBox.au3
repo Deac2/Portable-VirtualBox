@@ -190,7 +190,6 @@ EndIf
 
 If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) AND ($startvbox = 1 OR IniRead($var1, "startvbox", "key", "NotFound") = 1) Then
   IniDelete($var1, "startvbox")
-  EnvSet("VBOX_USER_HOME", $UserHome) ;Active UserHome
 #cs
   If FileExists(@ScriptDir&"\app32\") AND FileExists(@ScriptDir&"\app64\") Then
     If @OSArch = "x86" Then
@@ -1651,6 +1650,7 @@ Func _ProcessNameClose($ProcessName)
 EndFunc
 
 Func _Start_VirtualBox()
+	EnvSet("VBOX_USER_HOME", $UserHome) ;Active UserHome
     If FileExists(@ScriptDir & "\" & $App_Dir & "\drivers\vboxdrv") And _RegRead("HKEY_LOCAL_MACHINE\SYSTEM\CurrentControlSet\Services\VBoxDRV", "DisplayName") <> "Portable VBoxDRV" Then
         RunWait("cmd /c sc create VBoxDRV binpath= ""%CD%\" & $App_Dir & "\drivers\VBoxDrv\VBoxDrv.sys"" type= kernel start= auto error= normal displayname=""Portable VBoxDRV""", @ScriptDir, @SW_HIDE)
         RunWait("sc start VBoxDRV", @ScriptDir, @SW_HIDE)
