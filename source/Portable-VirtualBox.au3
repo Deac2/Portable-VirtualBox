@@ -123,9 +123,12 @@ _TrayMenu()
 IniWrite($var1, "userhome", "key", _ValidatePath($UserHome, $DefaultUserHome))
 IniWrite($var1, "MachineFolder", "key", _ValidatePath($MachineFolder, $DefaultMachineFolder))
 ; Thibaut : use Hybrid Mode if available
-If $CmdLine[0] = 1 AND $CmdLine[1]="noportable" Then
-_HybridMode()
-Endif
+For $i = 1 To $CmdLine[0]
+    If $CmdLine[$i] = "noportable" Then
+	_HybridMode()
+	ExitLoop
+	Endif
+Next
 
 If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) Then
   Global $Checkbox100, $Checkbox110, $Checkbox120, $Checkbox130, $Checkbox140
