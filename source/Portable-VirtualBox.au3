@@ -1339,15 +1339,15 @@ Func _OKHotKeysSet()
     IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0")
     IniWrite($var1, "hotkeys", "HideWindows_KEY", "4")
 
-    IniWrite($var1, "hotkeys", "Settings_CTRL", "1")
-    IniWrite($var1, "hotkeys", "Settings_ALT", "0")
-    IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "Settings_KEY", "5")
-
     IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1")
     IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0")
     IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "OpenCmd_KEY", "6")
+    IniWrite($var1, "hotkeys", "OpenCmd_KEY", "5")
+
+    IniWrite($var1, "hotkeys", "Settings_CTRL", "1")
+    IniWrite($var1, "hotkeys", "Settings_ALT", "0")
+    IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "Settings_KEY", "6")
 
     IniWrite($var1, "hotkeys", "ExitScript_CTRL", "1")
     IniWrite($var1, "hotkeys", "ExitScript_ALT", "0")
@@ -1855,7 +1855,8 @@ Func _OpenCmd()
     
     Opt("WinTitleMatchMode", $oldMatchMode)
 
-    $ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
+    ;$ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
+	$ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
     WinWait($sTitle, "", 1)
 EndFunc
 
