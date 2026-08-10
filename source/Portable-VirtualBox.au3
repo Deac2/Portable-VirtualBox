@@ -43,7 +43,7 @@ Global $DefaultUserHome = @ScriptDir&"\.VirtualBox"
 Global $DefaultMachineFolder = @ScriptDir&"\.VirtualBox\Machines"
 Global $32Bit_Last = "6.0.24"
 Global $version = "6.4.9.1"
-Global $Lang_changes = "25.07.2026"
+Global $Lang_changes = "10.08.2026"
 Global $MaxRetries = "3"		;Maximum number of retries when downloading files from https://download.virtualbox.org/virtualbox/
 Global $Radio1, $Radio2, $Radio3, $Radio4, $Radio5, $Radio6, $Radio7, $Radio8, $Radio9, $Radio10, $Radio11, $Radio12, $Radio13, $Radio14
 Global $Checkbox01, $Checkbox02, $Checkbox03, $Checkbox04, $Checkbox05, $Checkbox06, $Checkbox07, $Checkbox08, $Checkbox09
@@ -54,7 +54,7 @@ Global $BTNUserHome, $BTNMachineFolder
 Global $HomeRoot, $MachineRoot, $VMStart, $StartLng
 Global $new1 = 0, $new2 = 0, $Settings = 0, $iSort
 Global Const $WS_SYSMENU = 0x80000, $WS_MINIMIZEBOX = 0x20000, $CBS_DROPDOWNLIST = 0x3		; Window Extended Styles
-Global $idTab
+Global $idTab, $ConsolePID
 Global $OsArch = (@OSArch <> "x86" ? "x64" : "x86")
 
 If (FileExists(@ScriptDir&"\app32\virtualbox.exe") OR FileExists(@ScriptDir&"\app64\virtualbox.exe")) Then
@@ -981,8 +981,8 @@ Func _Settings()
     GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "02") &":", 172, 133, 120, 17)
     GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "03") &":", 172, 153, 120, 17)
     GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "04") &":", 172, 173, 120, 17)
-    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "05") &":", 172, 193, 120, 17)
-    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "06") &":", 172, 213, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "06") &":", 172, 193, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "07") &":", 172, 213, 120, 17)
 
     GUICtrlCreateLabel("CTRL +", 318, 113, 44, 17)
     GUICtrlCreateLabel("CTRL +", 318, 133, 44, 17)
@@ -1119,30 +1119,34 @@ EndFunc
 Func _UpdateSettings()
 _EmptyIniWrite($var1, "hotkeys", "key", "1", $ini_encoding)
 _EmptyIniWrite($var1, "hotkeys", "userkey", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "01", "^", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "02", "^", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "03", "^", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "04", "^", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "05", "^", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "06", "^", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "07", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "08", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "09", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "10", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "11", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "12", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "13", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "14", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "15", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "16", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "17", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "18", "", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "19", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "20", "2", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "21", "3", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "22", "4", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "23", "5", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "24", "6", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_KEY", "2", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ShowWindows_KEY", "3", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "HideWindows_KEY", "4", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "OpenCmd_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "OpenCmd_KEY", "5", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "Settings_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "Settings_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "Settings_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "Settings_KEY", "6", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ExitScript_CTRL", "1", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ExitScript_ALT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0", $ini_encoding)
+_EmptyIniWrite($var1, "hotkeys", "ExitScript_KEY", "7", $ini_encoding)
 _EmptyIniWrite($var1, "usb", "key", "0", $ini_encoding)
 _EmptyIniWrite($var1, "net", "key", "0", $ini_encoding)
 _EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $ini_encoding)
@@ -1291,33 +1295,40 @@ EndFunc
 Func _OKHotKeysSet()
   If GUICtrlRead($Radio7) = $GUI_CHECKED Then
     IniWrite($var1, "hotkeys", "userkey", "0")
-    IniWrite($var1, "hotkeys", "01", "^")
-    IniWrite($var1, "hotkeys", "02", "^")
-    IniWrite($var1, "hotkeys", "03", "^")
-    IniWrite($var1, "hotkeys", "04", "^")
-    IniWrite($var1, "hotkeys", "05", "^")
-    IniWrite($var1, "hotkeys", "06", "^")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", "1")
 
-    IniWrite($var1, "hotkeys", "07", "")
-    IniWrite($var1, "hotkeys", "08", "")
-    IniWrite($var1, "hotkeys", "09", "")
-    IniWrite($var1, "hotkeys", "10", "")
-    IniWrite($var1, "hotkeys", "11", "")
-    IniWrite($var1, "hotkeys", "12", "")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_KEY", "2")
 
-    IniWrite($var1, "hotkeys", "13", "")
-    IniWrite($var1, "hotkeys", "14", "")
-    IniWrite($var1, "hotkeys", "15", "")
-    IniWrite($var1, "hotkeys", "16", "")
-    IniWrite($var1, "hotkeys", "17", "")
-    IniWrite($var1, "hotkeys", "18", "")
+    IniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1")
+    IniWrite($var1, "hotkeys", "ShowWindows_ALT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_KEY", "3")
 
-    IniWrite($var1, "hotkeys", "19", "1")
-    IniWrite($var1, "hotkeys", "20", "2")
-    IniWrite($var1, "hotkeys", "21", "3")
-    IniWrite($var1, "hotkeys", "22", "4")
-    IniWrite($var1, "hotkeys", "23", "5")
-    IniWrite($var1, "hotkeys", "24", "6")
+    IniWrite($var1, "hotkeys", "HideWindows_CTRL", "1")
+    IniWrite($var1, "hotkeys", "HideWindows_ALT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_KEY", "4")
+
+    IniWrite($var1, "hotkeys", "Settings_CTRL", "1")
+    IniWrite($var1, "hotkeys", "Settings_ALT", "0")
+    IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "Settings_KEY", "5")
+
+    IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1")
+    IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0")
+    IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "OpenCmd_KEY", "6")
+
+    IniWrite($var1, "hotkeys", "ExitScript_CTRL", "1")
+    IniWrite($var1, "hotkeys", "ExitScript_ALT", "0")
+    IniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "ExitScript_KEY", "7")
     MsgBox(0+262144, _GetTranslation($Lang, "messages", "04"), _GetTranslation($Lang, "messages", "05"))
   Else
     If GUICtrlRead($Input1) = false OR GUICtrlRead($Input2) = false OR GUICtrlRead($Input3) = false OR GUICtrlRead($Input4) = false OR GUICtrlRead($Input5) = false OR GUICtrlRead($Input6) = false Then
@@ -1325,104 +1336,104 @@ Func _OKHotKeysSet()
     Else
       IniWrite($var1, "hotkeys", "userkey", "1")
       If GUICtrlRead($CheckBox01) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "01", "^")
+        IniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1")
       Else
-        IniWrite($var1, "hotkeys", "01", "")
+        IniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "0")
       EndIf
       If GUICtrlRead($CheckBox02) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "02", "^")
+        IniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1")
       Else
-        IniWrite($var1, "hotkeys", "02", "")
+        IniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "0")
       EndIf
       If GUICtrlRead($CheckBox03) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "03", "^")
+        IniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1")
       Else
-        IniWrite($var1, "hotkeys", "03", "")
+        IniWrite($var1, "hotkeys", "ShowWindows_CTRL", "0")
       EndIf
       If GUICtrlRead($CheckBox04) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "04", "^")
+        IniWrite($var1, "hotkeys", "HideWindows_CTRL", "1")
       Else
-        IniWrite($var1, "hotkeys", "04", "")
+        IniWrite($var1, "hotkeys", "HideWindows_CTRL", "0")
       EndIf
       If GUICtrlRead($CheckBox05) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "05", "^")
+        IniWrite($var1, "hotkeys", "Settings_CTRL", "1")
       Else
-        IniWrite($var1, "hotkeys", "05", "")
+        IniWrite($var1, "hotkeys", "Settings_CTRL", "0")
       EndIf
       If GUICtrlRead($CheckBox06) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "06", "^")
+        IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1")
       Else
-        IniWrite($var1, "hotkeys", "06", "")
+        IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "0")
       EndIf
 
       If GUICtrlRead($CheckBox07) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "07", "!")
+        IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "1")
       Else
-        IniWrite($var1, "hotkeys", "07", "")
+        IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0")
       EndIf
       If GUICtrlRead($CheckBox08) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "08", "!")
+        IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "1")
       Else
-        IniWrite($var1, "hotkeys", "08", "")
+        IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0")
       EndIf
       If GUICtrlRead($CheckBox09) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "09", "!")
+        IniWrite($var1, "hotkeys", "ShowWindows_ALT", "1")
       Else
-        IniWrite($var1, "hotkeys", "09", "")
+        IniWrite($var1, "hotkeys", "ShowWindows_ALT", "0")
       EndIf
       If GUICtrlRead($CheckBox10) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "10", "!")
+        IniWrite($var1, "hotkeys", "HideWindows_ALT", "1")
       Else
-        IniWrite($var1, "hotkeys", "10", "")
+        IniWrite($var1, "hotkeys", "HideWindows_ALT", "0")
       EndIf
       If GUICtrlRead($CheckBox11) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "11", "!")
+        IniWrite($var1, "hotkeys", "Settings_ALT", "1")
       Else
-        IniWrite($var1, "hotkeys", "11", "")
+        IniWrite($var1, "hotkeys", "Settings_ALT", "0")
       EndIf
       If GUICtrlRead($CheckBox12) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "12", "!")
+        IniWrite($var1, "hotkeys", "OpenCmd_ALT", "1")
       Else
-        IniWrite($var1, "hotkeys", "12", "")
+        IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0")
       EndIf
 
       If GUICtrlRead($CheckBox13) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "13", "+")
+        IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "1")
       Else
-        IniWrite($var1, "hotkeys", "13", "")
+        IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0")
       EndIf
       If GUICtrlRead($CheckBox14) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "14", "+")
+        IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "1")
       Else
-        IniWrite($var1, "hotkeys", "14", "")
+        IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0")
       EndIf
       If GUICtrlRead($CheckBox15) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "15", "+")
+        IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "1")
       Else
-        IniWrite($var1, "hotkeys", "15", "")
+        IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0")
       EndIf
       If GUICtrlRead($CheckBox16) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "16", "+")
+        IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "1")
       Else
-        IniWrite($var1, "hotkeys", "16", "")
+        IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0")
       EndIf
       If GUICtrlRead($CheckBox17) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "17", "+")
+        IniWrite($var1, "hotkeys", "Settings_SHIFT", "1")
       Else
-        IniWrite($var1, "hotkeys", "17", "")
+        IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
       EndIf
       If GUICtrlRead($CheckBox18) = $GUI_CHECKED Then
-        IniWrite($var1, "hotkeys", "18", "+")
+        IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "1")
       Else
-        IniWrite($var1, "hotkeys", "18", "")
+        IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0")
       EndIf
 
-      IniWrite($var1, "hotkeys", "19", GUICtrlRead($Input1))
-      IniWrite($var1, "hotkeys", "20", GUICtrlRead($Input2))
-      IniWrite($var1, "hotkeys", "21", GUICtrlRead($Input3))
-      IniWrite($var1, "hotkeys", "22", GUICtrlRead($Input4))
-      IniWrite($var1, "hotkeys", "23", GUICtrlRead($Input5))
-      IniWrite($var1, "hotkeys", "24", GUICtrlRead($Input6))
+      IniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", GUICtrlRead($Input1))
+      IniWrite($var1, "hotkeys", "HideWindows_VM_KEY", GUICtrlRead($Input2))
+      IniWrite($var1, "hotkeys", "ShowWindows_KEY", GUICtrlRead($Input3))
+      IniWrite($var1, "hotkeys", "HideWindows_KEY", GUICtrlRead($Input4))
+      IniWrite($var1, "hotkeys", "Settings_KEY", GUICtrlRead($Input5))
+      IniWrite($var1, "hotkeys", "OpenCmd_KEY", GUICtrlRead($Input6))
       MsgBox(0+262144, _GetTranslation($Lang, "messages", "04"), _GetTranslation($Lang, "messages", "05"))
     EndIf
   EndIf
@@ -1439,160 +1450,94 @@ Endif
 $cl = 0
 EndFunc
 
+Func _ReadHotkey($ActionName)
+    Local $Result = ""
+
+    Local $Ctrl  = IniRead($var1, "hotkeys", $ActionName & "_CTRL", "0")
+    Local $Alt   = IniRead($var1, "hotkeys", $ActionName & "_ALT", "0")
+    Local $Shift = IniRead($var1, "hotkeys", $ActionName & "_SHIFT", "0")
+    Local $Key   = IniRead($var1, "hotkeys", $ActionName & "_Key", "")
+    
+    ; If the main key is not specified, the hotkey is empty
+    If $Key == "" Then Return ""
+    
+    ; Gluing modifiers into one line
+    If $Ctrl == "1"  Then $Result &= "^"
+    If $Alt == "1"   Then $Result &= "!"
+    If $Shift == "1" Then $Result &= "+"
+    
+    Return $Result & $Key
+EndFunc
+
+Func _GetHotkeyText($Hotkey)
+    If $Hotkey == "" Then Return ""
+    Local $KeyText = ""
+
+    If StringInStr($Hotkey, "^") Then $KeyText &= "CTRL+"
+    If StringInStr($Hotkey, "!") Then $KeyText &= "ALT+"
+    If StringInStr($Hotkey, "+") Then $KeyText &= "SHIFT+"
+
+    Local $Key = StringRegExpReplace($Hotkey, "[\^!\+#]", "")
+    
+    $KeyText &= StringUpper($Key)
+    Return " (" & $KeyText & ")"
+EndFunc
+
 Func _TrayMenu()
 If NOT (FileExists(@ScriptDir&"\app32\VirtualBox.exe") OR FileExists(@ScriptDir&"\app64\VirtualBox.exe")) Then
       If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then
-        HotKeySet(IniRead($var1, "hotkeys", "05", "NotFound") & IniRead($var1, "hotkeys", "11", "NotFound") & IniRead($var1, "hotkeys", "17", "NotFound") & IniRead($var1, "hotkeys", "23", "NotFound"), "_Settings")
-        HotKeySet(IniRead($var1, "hotkeys", "06", "NotFound") & IniRead($var1, "hotkeys", "12", "NotFound") & IniRead($var1, "hotkeys", "18", "NotFound") & IniRead($var1, "hotkeys", "24", "NotFound"), "_ExitGUI")
+		Local $Settings_Hotkey = _ReadHotkey("Settings")
+		If $Settings_Hotkey <> "" Then HotKeySet($Settings_Hotkey, "_Settings")
+		Local $Exit_Hotkey = _ReadHotkey("ExitScript")
+		If $Exit_Hotkey <> "" Then HotKeySet($Exit_Hotkey, "_ExitGUI")
       EndIf
 
-        Local $ctrl5, $ctrl6
-        Local $alt5, $alt6
-        Local $shift5, $shift6
-        Local $plus05, $plus06, $plus11, $plus12, $plus17, $plus18
-
-        If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
-          $ctrl5  = "CTRL"
-          $plus05 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
-          $ctrl6  = "CTRL"
-          $plus06 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
-          $alt5   = "ALT"
-          $plus11 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
-          $alt6   = "ALT"
-          $plus12 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
-          $shift5 = "SHIFT"
-          $plus17 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
-          $shift6 = "SHIFT"
-          $plus18 = "+"
-        EndIf
-
-  TrayCreateItem(_GetTranslation($Lang, "tray", "05") &" (" & $ctrl5 & $plus05 & $alt5 & $plus11 & $shift5 & $plus17 & IniRead($var1, "hotkeys", "23", "NotFound") & ")")
+  TrayCreateItem(_GetTranslation($Lang, "tray", "06") & _GetHotkeyText($Settings_Hotkey))
   TrayItemSetOnEvent(-1, "_Settings")
   TrayCreateItem("")
-  TrayCreateItem(_GetTranslation($Lang, "tray", "06") &" (" & $ctrl6 & $plus06 & $alt6 & $plus12 & $shift6 & $plus18 & IniRead($var1, "hotkeys", "24", "NotFound") & ")")
+  TrayCreateItem(_GetTranslation($Lang, "tray", "07") & _GetHotkeyText($Exit_Hotkey))
   TrayItemSetOnEvent(-1, "_ExitGUI")
   TraySetState()
-  TraySetToolTip(_GetTranslation($Lang, "tray", "07"))
-  TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
+  TraySetToolTip(_GetTranslation($Lang, "tray", "08"))
+  TrayTip("", _GetTranslation($Lang, "tray", "08"), 5)
 Else
       If IniRead($var1, "hotkeys", "key", "NotFound") = 1 Then
-        HotKeySet(IniRead($var1, "hotkeys", "01", "NotFound") & IniRead($var1, "hotkeys", "07", "NotFound") & IniRead($var1, "hotkeys", "13", "NotFound") & IniRead($var1, "hotkeys", "19", "NotFound"), "_ShowWindows_VM")
-        HotKeySet(IniRead($var1, "hotkeys", "02", "NotFound") & IniRead($var1, "hotkeys", "08", "NotFound") & IniRead($var1, "hotkeys", "14", "NotFound") & IniRead($var1, "hotkeys", "20", "NotFound"), "_HideWindows_VM")
-        HotKeySet(IniRead($var1, "hotkeys", "03", "NotFound") & IniRead($var1, "hotkeys", "09", "NotFound") & IniRead($var1, "hotkeys", "15", "NotFound") & IniRead($var1, "hotkeys", "21", "NotFound"), "_ShowWindows")
-        HotKeySet(IniRead($var1, "hotkeys", "04", "NotFound") & IniRead($var1, "hotkeys", "10", "NotFound") & IniRead($var1, "hotkeys", "16", "NotFound") & IniRead($var1, "hotkeys", "22", "NotFound"), "_HideWindows")
-        HotKeySet(IniRead($var1, "hotkeys", "05", "NotFound") & IniRead($var1, "hotkeys", "11", "NotFound") & IniRead($var1, "hotkeys", "17", "NotFound") & IniRead($var1, "hotkeys", "23", "NotFound"), "_Settings")
-        HotKeySet(IniRead($var1, "hotkeys", "06", "NotFound") & IniRead($var1, "hotkeys", "12", "NotFound") & IniRead($var1, "hotkeys", "18", "NotFound") & IniRead($var1, "hotkeys", "24", "NotFound"), "_ExitScript")
+		Local $ShowVM_Hotkey = _ReadHotkey("ShowWindows_VM")
+		If $ShowVM_Hotkey <> "" Then HotKeySet($ShowVM_Hotkey, "_ShowWindows_VM")
+		Local $HideVM_Hotkey = _ReadHotkey("HideWindows_VM")
+		If $HideVM_Hotkey <> "" Then HotKeySet($HideVM_Hotkey, "_HideWindows_VM")
+		Local $ShowVB_Hotkey = _ReadHotkey("ShowWindows")
+		If $ShowVB_Hotkey <> "" Then HotKeySet($ShowVB_Hotkey, "_ShowWindows")
+		Local $HideVB_Hotkey = _ReadHotkey("HideWindows")
+		If $HideVB_Hotkey <> "" Then HotKeySet($HideVB_Hotkey, "_HideWindows")
 
-        Local $ctrl1, $ctrl2, $ctrl3, $ctrl4, $ctrl5, $ctrl6
-        Local $alt1, $alt2, $alt3, $alt4, $alt5, $alt6
-        Local $shift1, $shift2, $shift3, $shift4, $shift5, $shift6
-        Local $plus01, $plus02, $plus03, $plus04, $plus05, $plus06, $plus07, $plus08, $plus09, $plus10, $plus11, $plus12, $plus13, $plus14, $plus15, $plus16, $plus17, $plus18
+		Local $Settings_Hotkey = _ReadHotkey("Settings")
+		If $Settings_Hotkey <> "" Then HotKeySet($Settings_Hotkey, "_Settings")
+		Local $OpenCmd_Hotkey = _ReadHotkey("OpenCmd")
+		If $OpenCmd_Hotkey <> "" Then HotKeySet($OpenCmd_Hotkey, "_OpenCmd")
+		Local $Exit_Hotkey = _ReadHotkey("ExitScript")
+		If $Exit_Hotkey <> "" Then HotKeySet($Exit_Hotkey, "_ExitScript")
 
-	If IniRead($var1, "hotkeys", "01", "NotFound") = "^" Then
-          $ctrl1  = "CTRL"
-          $plus01 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "02", "NotFound") = "^" Then
-          $ctrl2  = "CTRL"
-          $plus02 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "03", "NotFound") = "^" Then
-          $ctrl3  = "CTRL"
-          $plus03 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "04", "NotFound") = "^" Then
-          $ctrl4  = "CTRL"
-          $plus04 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
-          $ctrl5  = "CTRL"
-          $plus05 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
-          $ctrl6  = "CTRL"
-          $plus06 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "07", "NotFound") = "!" Then
-          $alt1   = "ALT"
-          $plus07 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "08", "NotFound") = "!" Then
-          $alt2   = "ALT"
-          $plus08 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "09", "NotFound") = "!" Then
-          $alt3   = "ALT"
-          $plus09 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "10", "NotFound") = "!" Then
-          $alt4   = "ALT"
-          $plus10 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
-          $alt5   = "ALT"
-          $plus11 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
-          $alt6   = "ALT"
-          $plus12 = "+"
-        EndIf
-
-        If IniRead($var1, "hotkeys", "13", "NotFound") = "+" Then
-          $shift1 = "SHIFT"
-          $plus13 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "14", "NotFound") = "+" Then
-          $shift2 = "SHIFT"
-          $plus14 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "15", "NotFound") = "+" Then
-          $shift3 = "SHIFT"
-          $plus15 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "16", "NotFound") = "+" Then
-          $shift4 = "SHIFT"
-          $plus16 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
-          $shift5 = "SHIFT"
-          $plus17 = "+"
-        EndIf
-        If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
-          $shift6 = "SHIFT"
-          $plus18 = "+"
-        EndIf
-		
-        TrayCreateItem(_GetTranslation($Lang, "tray", "01") &" (" & $ctrl1 & $plus01 & $alt1 & $plus07 & $shift1 & $plus13 & IniRead($var1, "hotkeys", "19", "NotFound") & ")")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "01") & _GetHotkeyText($ShowVM_Hotkey))
         TrayItemSetOnEvent(-1, "_ShowWindows_VM")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "02") &" (" & $ctrl2 & $plus02 & $alt2 & $plus08 & $shift2 & $plus14 & IniRead($var1, "hotkeys", "20", "NotFound") & ")")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "02") & _GetHotkeyText($HideVM_Hotkey))
         TrayItemSetOnEvent(-1, "_HideWindows_VM")
         TrayCreateItem("")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "03") &" (" & $ctrl3 & $plus03 & $alt3 & $plus09 & $shift3 & $plus15 & IniRead($var1, "hotkeys", "21", "NotFound") & ")")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "03") & _GetHotkeyText($ShowVB_Hotkey))
         TrayItemSetOnEvent(-1, "_ShowWindows")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "04") &" (" & $ctrl4 & $plus04 & $alt4 & $plus10 & $shift4 & $plus16 & IniRead($var1, "hotkeys", "22", "NotFound") & ")")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "04") & _GetHotkeyText($HideVB_Hotkey))
         TrayItemSetOnEvent(-1, "_HideWindows")
         TrayCreateItem("")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "05") &" (" & $ctrl5 & $plus05 & $alt5 & $plus11 & $shift5 & $plus17 & IniRead($var1, "hotkeys", "23", "NotFound") & ")")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "05") & _GetHotkeyText($OpenCmd_Hotkey))
+        TrayItemSetOnEvent(-1, "_OpenCmd")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "06") & _GetHotkeyText($Settings_Hotkey))
         TrayItemSetOnEvent(-1, "_Settings")
         TrayCreateItem("")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "06") &" (" & $ctrl6 & $plus06 & $alt6 & $plus12 & $shift6 & $plus18 & IniRead($var1, "hotkeys", "24", "NotFound") & ")")
+        TrayCreateItem(_GetTranslation($Lang, "tray", "07") & _GetHotkeyText($Exit_Hotkey))
         TrayItemSetOnEvent(-1, "_ExitScript")
         TraySetState()
-        TraySetToolTip(_GetTranslation($Lang, "tray", "07"))
-        TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
+        TraySetToolTip(_GetTranslation($Lang, "tray", "08"))
+        TrayTip("", _GetTranslation($Lang, "tray", "08"), 5)
       Else
         TrayCreateItem(_GetTranslation($Lang, "tray", "01"))
         TrayItemSetOnEvent(-1, "_ShowWindows_VM")
@@ -1604,14 +1549,14 @@ Else
         TrayCreateItem(_GetTranslation($Lang, "tray", "04"))
         TrayItemSetOnEvent(-1, "_HideWindows")
         TrayCreateItem("")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "05"))
+        TrayCreateItem(_GetTranslation($Lang, "tray", "06"))
         TrayItemSetOnEvent(-1, "_Settings")
         TrayCreateItem("")
-        TrayCreateItem(_GetTranslation($Lang, "tray", "06"))
+        TrayCreateItem(_GetTranslation($Lang, "tray", "07"))
         TrayItemSetOnEvent(-1, "_ExitScript")
         TraySetState()
-        TraySetToolTip(_GetTranslation($Lang, "tray", "07"))
-        TrayTip("", _GetTranslation($Lang, "tray", "07"), 5)
+        TraySetToolTip(_GetTranslation($Lang, "tray", "08"))
+        TrayTip("", _GetTranslation($Lang, "tray", "08"), 5)
       EndIf
 Endif
 EndFunc
@@ -1640,6 +1585,10 @@ Func _ExitScript()
   _ProcessNameClose("VirtualBoxVM.exe")
   _ProcessNameClose("VBoxSVC.exe")
   _ProcessNameClose("VBoxSDS.exe")
+
+  If $ConsolePID And ProcessExists($ConsolePID) Then
+	ProcessClose($ConsolePID)
+  EndIf
 EndFunc
 
 Func _ProcessNameClose($ProcessName)
@@ -1851,6 +1800,30 @@ Func _Stop_VirtualBox()
     EndIf
 
     RunWait("sc delete VBoxSDS", @ScriptDir, @SW_HIDE)
+EndFunc
+
+Func _OpenCmd()
+    Local $sTitle = @ComSpec ;"C:\Windows\System32\cmd.exe"
+
+    ; ВКЛЮЧАЕМ РЕЖИМ ПОИСКА ОКНА ПО ЛЮБОЙ ЧАСТИ ЗАГОЛОВКА
+    Local $oldMatchMode = Opt("WinTitleMatchMode", 2)
+
+    ; Проверяем, существует ли окно, содержащее наш уникальный текст
+    If WinExists($sTitle) Then
+        WinActivate($sTitle) ; Если нашли, выводим на передний план
+        Opt("WinTitleMatchMode", $oldMatchMode) ; Возвращаем старый режим поиска
+        Return ; Выходим из функции, новое окно не запустится!
+    EndIf
+    
+    ; Возвращаем стандартный режим поиска для остального скрипта
+    Opt("WinTitleMatchMode", $oldMatchMode)
+
+    ; Запускаем консоль (используем &&, чтобы заголовок менялся мгновенно при старте)
+    $ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
+	;Local $iPID = Run(@ComSpec, @ScriptDir & "\" & $App_Dir, @SW_SHOW)
+    
+    ; Небольшая пауза, чтобы окно успело переименоваться до следующего клика пользователя
+    WinWait($sTitle, "", 1)
 EndFunc
 
 Func _DownloadFile()

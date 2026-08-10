@@ -4,9 +4,10 @@ Global $catalan = [ _
     ["tray", "02", "Oculta la VM"], _
     ["tray", "03", "Mostra el VirtualBox"], _
     ["tray", "04", "Oculta el VirtualBox"], _
-    ["tray", "05", "Opcions"], _
-    ["tray", "06", "Sortant de VirtualBox"], _
-    ["tray", "07", "Feu clic amb el botó dret per a veure el menú"], _
+    ["tray", "05", "Consola de comandaments"], _
+    ["tray", "06", "Opcions"], _
+    ["tray", "07", "Sortant de VirtualBox"], _
+    ["tray", "08", "Feu clic amb el botó dret per a veure el menú"], _
     ["messages", "01", "Error"], _
     ["messages", "02", "Desa"], _
     ["messages", "03", "Tancar"], _
@@ -71,9 +72,10 @@ Global $chinese = [ _
     ["tray", "02", "隐藏 VM"], _
     ["tray", "03", "显示 VirtualBox"], _
     ["tray", "04", "隐藏 VirtualBox"], _
-    ["tray", "05", "设置"], _
-    ["tray", "06", "退出 VirtualBox"], _
-    ["tray", "07", "右键单击将打开菜单"], _
+    ["tray", "05", "命令控制台"], _
+    ["tray", "06", "设置"], _
+    ["tray", "07", "退出 VirtualBox"], _
+    ["tray", "08", "右键单击将打开菜单"], _
     ["messages", "01", "错误"], _
     ["messages", "02", "保存"], _
     ["messages", "03", "关闭"], _
@@ -138,9 +140,10 @@ Global $english = [ _
     ["tray", "02", "Hide VM"], _
     ["tray", "03", "Show VirtualBox"], _
     ["tray", "04", "Hide VirtualBox"], _
-    ["tray", "05", "Settings"], _
-    ["tray", "06", "Exit VirtualBox"], _
-    ["tray", "07", "Right-click to see menu"], _
+    ["tray", "05", "Cmd Console"], _
+    ["tray", "06", "Settings"], _
+    ["tray", "07", "Exit VirtualBox"], _
+    ["tray", "08", "Right-click to see menu"], _
     ["messages", "01", "Error"], _
     ["messages", "02", "Save"], _
     ["messages", "03", "Close"], _
@@ -205,9 +208,10 @@ Global $french = [ _
     ["tray", "02", "Masquer la Machine Virtuelle"], _
     ["tray", "03", "Afficher VirtualBox"], _
     ["tray", "04", "Masquer VirtualBox"], _
-    ["tray", "05", "Paramètres"], _
-    ["tray", "06", "Quitter VirtualBox"], _
-    ["tray", "07", "Faites un clic droit pour afficher le menu"], _
+    ["tray", "05", "Console de commande"], _
+    ["tray", "06", "Paramètres"], _
+    ["tray", "07", "Quitter VirtualBox"], _
+    ["tray", "08", "Faites un clic droit pour afficher le menu"], _
     ["messages", "01", "Erreur"], _
     ["messages", "02", "Enregistrer"], _
     ["messages", "03", "Fermer"], _
@@ -272,9 +276,10 @@ Global $german = [ _
     ["tray", "02", "Verstecke V"], _
     ["tray", "03", "Zeige VirtualBox"], _
     ["tray", "04", "Verstecke VirtualBox"], _
-    ["tray", "05", "Einstellungen"], _
-    ["tray", "06", "Beende VirtualBox"], _
-    ["tray", "07", "Rechts-Klick, um Menü zu sehen"], _
+    ["tray", "05", "Befehlszeile Konsole"], _
+    ["tray", "06", "Einstellungen"], _
+    ["tray", "07", "Beende VirtualBox"], _
+    ["tray", "08", "Rechts-Klick, um Menü zu sehen"], _
     ["messages", "01", "Fehler"], _
     ["messages", "02", "Speichern"], _
     ["messages", "03", "Beenden"], _
@@ -339,9 +344,10 @@ Global $italian = [ _
     ["tray", "02", "Nascondi VM"], _
     ["tray", "03", "Mostra VirtualBox"], _
     ["tray", "04", "Nascondi VirtualBox"], _
-    ["tray", "05", "Impostazioni"], _
-    ["tray", "06", "Esci da VirtualBox"], _
-    ["tray", "07", "Destro del mouse per vedere il menu"], _
+    ["tray", "05", "Console dei comandi"], _
+    ["tray", "06", "Impostazioni"], _
+    ["tray", "07", "Esci da VirtualBox"], _
+    ["tray", "08", "Destro del mouse per vedere il menu"], _
     ["messages", "01", "Errore"], _
     ["messages", "02", "Salva"], _
     ["messages", "03", "Vicina"], _
@@ -406,9 +412,10 @@ Global $japanese = [ _
     ["tray", "02", "VM を隠す"], _
     ["tray", "03", "VirtualBox を表示"], _
     ["tray", "04", "VirtualBox を隠す"], _
-    ["tray", "05", "設定"], _
-    ["tray", "06", "VirtualBoxを終了"], _
-    ["tray", "07", "右クリックでメニューを表示"], _
+    ["tray", "05", "コマンドコンソール"], _
+    ["tray", "06", "設定"], _
+    ["tray", "07", "VirtualBoxを終了"], _
+    ["tray", "08", "右クリックでメニューを表示"], _
     ["messages", "01", "エラー"], _
     ["messages", "02", "保存"], _
     ["messages", "03", "近い"], _
@@ -473,9 +480,10 @@ Global $korean = [ _
     ["tray", "02", "VM 숨기기"], _
     ["tray", "03", "VirtualBox 보이기"], _
     ["tray", "04", "VirtualBox 숨기기"], _
-    ["tray", "05", "설정"], _
-    ["tray", "06", "VirtualBox 종료"], _
-    ["tray", "07", "메뉴를 보려면 마우스 오른쪽 버튼을 클릭하세요"], _
+    ["tray", "05", "명령 콘솔"], _
+    ["tray", "06", "설정"], _
+    ["tray", "07", "VirtualBox 종료"], _
+    ["tray", "08", "메뉴를 보려면 마우스 오른쪽 버튼을 클릭하세요"], _
     ["messages", "01", "오류"], _
     ["messages", "02", "저장"], _
     ["messages", "03", "닫다"], _
@@ -540,9 +548,10 @@ Global $polish = [ _
     ["tray", "02", "Ukryj VM"], _
     ["tray", "03", "Pokaż VirtualBox"], _
     ["tray", "04", "Ukryj VirtualBox"], _
-    ["tray", "05", "Ustawienia"], _
-    ["tray", "06", "Wyjdź VirtualBox"], _
-    ["tray", "07", "Prawy klik by zobaczyć menu!"], _
+    ["tray", "05", "Cmd Konsola"], _
+    ["tray", "06", "Ustawienia"], _
+    ["tray", "07", "Wyjdź VirtualBox"], _
+    ["tray", "08", "Prawy klik by zobaczyć menu!"], _
     ["messages", "01", "Błąd"], _
     ["messages", "02", "Ratować"], _
     ["messages", "03", "Zamknąć"], _
@@ -607,9 +616,10 @@ Global $portuguese = [ _
     ["tray", "02", "Ocultar VM"], _
     ["tray", "03", "Mostrar VirtualBox"], _
     ["tray", "04", "Ocultar VirtualBox"], _
-    ["tray", "05", "Ajustes"], _
-    ["tray", "06", "Saindo do VirtualBox"], _
-    ["tray", "07", "Botão direito do mouse para ver o menu"], _
+    ["tray", "05", "Console de comandos"], _
+    ["tray", "06", "Ajustes"], _
+    ["tray", "07", "Saindo do VirtualBox"], _
+    ["tray", "08", "Botão direito do mouse para ver o menu"], _
     ["messages", "01", "Erro"], _
     ["messages", "02", "Salvar"], _
     ["messages", "03", "Fechar"], _
@@ -674,9 +684,10 @@ Global $russian = [ _
     ["tray", "02", "Скрыть VM"], _
     ["tray", "03", "Показать VirtualBox"], _
     ["tray", "04", "Скрыть VirtualBox"], _
-    ["tray", "05", "Настройки"], _
-    ["tray", "06", "Выход из VirtualBox"], _
-    ["tray", "07", "Щелкните правой кнопкой мыши, чтобы увидеть меню"], _
+    ["tray", "05", "Cmd Консоль"], _
+    ["tray", "06", "Настройки"], _
+    ["tray", "07", "Выход из VirtualBox"], _
+    ["tray", "08", "Щелкните правой кнопкой мыши, чтобы увидеть меню"], _
     ["messages", "01", "Ошибка"], _
     ["messages", "02", "Сохранить"], _
     ["messages", "03", "Закрыть"], _
@@ -741,9 +752,10 @@ Global $spanish = [ _
     ["tray", "02", "Ocultar VM"], _
     ["tray", "03", "Mostrar VirtualBox"], _
     ["tray", "04", "Ocultar VirtualBox"], _
-    ["tray", "05", "Ajustes"], _
-    ["tray", "06", "Salir de VirtualBox"], _
-    ["tray", "07", "Haga clic con el botón secundario para ver el menú"], _
+    ["tray", "05", "Consola de comandos"], _
+    ["tray", "06", "Ajustes"], _
+    ["tray", "07", "Salir de VirtualBox"], _
+    ["tray", "08", "Haga clic con el botón secundario para ver el menú"], _
     ["messages", "01", "Error"], _
     ["messages", "02", "Ahorrar"], _
     ["messages", "03", "Cerrar"], _
@@ -808,9 +820,10 @@ Global $turkish = [ _
     ["tray", "02", "Sanal Makineyi Gizle"], _
     ["tray", "03", "VirtualBox Göster"], _
     ["tray", "04", "VirtualBox'u Gizle"], _
-    ["tray", "05", "Ayarlar"], _
-    ["tray", "06", "VirtualBox dan Çık"], _
-    ["tray", "07", "Menüyü görmek için sağ tıklayın"], _
+    ["tray", "05", "Komut Konsolu"], _
+    ["tray", "06", "Ayarlar"], _
+    ["tray", "07", "VirtualBox dan Çık"], _
+    ["tray", "08", "Menüyü görmek için sağ tıklayın"], _
     ["messages", "01", "Hata"], _
     ["messages", "02", "Kaydet"], _
     ["messages", "03", "Çık"], _
@@ -875,9 +888,10 @@ Global $ukrainian = [ _
     ["tray", "02", "Сховати VM"], _
     ["tray", "03", "Показати VirtualBox"], _
     ["tray", "04", "Сховати VirtualBox"], _
-    ["tray", "05", "Налаштування"], _
-    ["tray", "06", "Вийти VirtualBox"], _
-    ["tray", "07", "Щоб побачити меню – клацніть правою клавішою миші"], _
+    ["tray", "05", "Cmd Консоль"], _
+    ["tray", "06", "Налаштування"], _
+    ["tray", "07", "Вийти VirtualBox"], _
+    ["tray", "08", "Щоб побачити меню – клацніть правою клавішою миші"], _
     ["messages", "01", "Помилка"], _
     ["messages", "02", "Зберегти"], _
     ["messages", "03", "Закрити"], _
