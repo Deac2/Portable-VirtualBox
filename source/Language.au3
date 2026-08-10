@@ -983,10 +983,12 @@ Func _GetTranslation($Lang, $sCategory, $sNumber)
         If Not FileExists($Dir_Lang) Then DirCreate($Dir_Lang)
         Local $LangIni = $Dir_Lang & $CurrentLang & ".ini"
 
-        If FileExists($LangIni) AND _Date_Diff(IniRead($var1, "language", "date", "01.01.2000"), $Lang_changes) Then
-        FileDelete($LangIni)
-        IniWrite($var1, "language", "date", $Lang_changes)
-        EndIf
+		Local $OldDate_Changes = StringRegExpReplace(IniRead($var1, "language", "date", "01.01.2000"), "\b(\d)\b", "0$1")
+		Local $NewDate_Changes = StringRegExpReplace($Lang_changes, "\b(\d)\b", "0$1")
+		If FileExists($LangIni) AND _Date_Diff($OldDate_Changes, $NewDate_Changes) Then
+		FileDelete($LangIni)
+		IniWrite($var1, "language", "date", $NewDate_Changes)
+		EndIf
 
         For $i = 0 To UBound($Translations) - 1
         Local $Section = $Translations[$i][0]
