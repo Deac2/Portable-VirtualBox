@@ -1855,7 +1855,6 @@ Func _OpenCmd()
     
     Opt("WinTitleMatchMode", $oldMatchMode)
 
-    ;$ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
 	$ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
     WinWait($sTitle, "", 1)
 EndFunc
