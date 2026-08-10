@@ -1009,41 +1009,6 @@ Func _Settings()
     GUICtrlCreateLabel("SHIFT +", 460, 213, 44, 17)
     GUICtrlCreateLabel("SHIFT +", 460, 233, 44, 17)
 
-    IniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1")
-    IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0")
-    IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", "1")
-
-    IniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1")
-    IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0")
-    IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "HideWindows_VM_KEY", "2")
-
-    IniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1")
-    IniWrite($var1, "hotkeys", "ShowWindows_ALT", "0")
-    IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "ShowWindows_KEY", "3")
-
-    IniWrite($var1, "hotkeys", "HideWindows_CTRL", "1")
-    IniWrite($var1, "hotkeys", "HideWindows_ALT", "0")
-    IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "HideWindows_KEY", "4")
-
-    IniWrite($var1, "hotkeys", "Settings_CTRL", "1")
-    IniWrite($var1, "hotkeys", "Settings_ALT", "0")
-    IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "Settings_KEY", "5")
-
-    IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1")
-    IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0")
-    IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "OpenCmd_KEY", "6")
-
-    IniWrite($var1, "hotkeys", "ExitScript_CTRL", "1")
-    IniWrite($var1, "hotkeys", "ExitScript_ALT", "0")
-    IniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0")
-    IniWrite($var1, "hotkeys", "ExitScript_KEY", "7")
-
     $Checkbox01 = GUICtrlCreateCheckbox("Checkbox01", 302, 112, 14, 14)
     If IniRead($var1, "hotkeys", "ShowWindows_VM_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
