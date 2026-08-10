@@ -1844,17 +1844,15 @@ EndFunc
 
 Func _OpenCmd()
     Local $sTitle = @ComSpec
-
-    Local $oldMatchMode = Opt("WinTitleMatchMode", 2)
+	Opt("WinTitleMatchMode", 2)
 
     If WinExists($sTitle) Then
         WinActivate($sTitle)
-        Opt("WinTitleMatchMode", $oldMatchMode)
+		Opt("WinTitleMatchMode", 1)
         Return
     EndIf
-    
-    Opt("WinTitleMatchMode", $oldMatchMode)
 
+	Opt("WinTitleMatchMode", 1)
 	$ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
     WinWait($sTitle, "", 1)
 EndFunc
