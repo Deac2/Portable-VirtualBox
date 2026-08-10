@@ -1803,26 +1803,19 @@ Func _Stop_VirtualBox()
 EndFunc
 
 Func _OpenCmd()
-    Local $sTitle = @ComSpec ;"C:\Windows\System32\cmd.exe"
+    Local $sTitle = @ComSpec
 
-    ; ВКЛЮЧАЕМ РЕЖИМ ПОИСКА ОКНА ПО ЛЮБОЙ ЧАСТИ ЗАГОЛОВКА
     Local $oldMatchMode = Opt("WinTitleMatchMode", 2)
 
-    ; Проверяем, существует ли окно, содержащее наш уникальный текст
     If WinExists($sTitle) Then
-        WinActivate($sTitle) ; Если нашли, выводим на передний план
-        Opt("WinTitleMatchMode", $oldMatchMode) ; Возвращаем старый режим поиска
-        Return ; Выходим из функции, новое окно не запустится!
+        WinActivate($sTitle)
+        Opt("WinTitleMatchMode", $oldMatchMode)
+        Return
     EndIf
     
-    ; Возвращаем стандартный режим поиска для остального скрипта
     Opt("WinTitleMatchMode", $oldMatchMode)
 
-    ; Запускаем консоль (используем &&, чтобы заголовок менялся мгновенно при старте)
     $ConsolePID = Run(@ComSpec & ' /K "title ' & $sTitle & '"', @ScriptDir & "\" & $App_Dir, @SW_SHOW)
-	;Local $iPID = Run(@ComSpec, @ScriptDir & "\" & $App_Dir, @SW_SHOW)
-    
-    ; Небольшая пауза, чтобы окно успело переименоваться до следующего клика пользователя
     WinWait($sTitle, "", 1)
 EndFunc
 
