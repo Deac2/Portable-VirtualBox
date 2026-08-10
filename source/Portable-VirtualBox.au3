@@ -981,8 +981,9 @@ Func _Settings()
     GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "02") &":", 172, 133, 120, 17)
     GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "03") &":", 172, 153, 120, 17)
     GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "04") &":", 172, 173, 120, 17)
-    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "06") &":", 172, 193, 120, 17)
-    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "07") &":", 172, 213, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "05") &":", 172, 193, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "06") &":", 172, 213, 120, 17)
+    GUICtrlCreateLabel(_GetTranslation($Lang, "tray", "07") &":", 172, 233, 120, 17)
 
     GUICtrlCreateLabel("CTRL +", 318, 113, 44, 17)
     GUICtrlCreateLabel("CTRL +", 318, 133, 44, 17)
@@ -990,6 +991,7 @@ Func _Settings()
     GUICtrlCreateLabel("CTRL +", 318, 173, 44, 17)
     GUICtrlCreateLabel("CTRL +", 318, 193, 44, 17)
     GUICtrlCreateLabel("CTRL +", 318, 213, 44, 17)
+    GUICtrlCreateLabel("CTRL +", 318, 233, 44, 17)
 
     GUICtrlCreateLabel("ALT +", 395, 113, 44, 17)
     GUICtrlCreateLabel("ALT +", 395, 133, 44, 17)
@@ -997,6 +999,7 @@ Func _Settings()
     GUICtrlCreateLabel("ALT +", 395, 173, 44, 17)
     GUICtrlCreateLabel("ALT +", 395, 193, 44, 17)
     GUICtrlCreateLabel("ALT +", 395, 213, 44, 17)
+    GUICtrlCreateLabel("ALT +", 395, 233, 44, 17)
 
     GUICtrlCreateLabel("SHIFT +", 460, 113, 44, 17)
     GUICtrlCreateLabel("SHIFT +", 460, 133, 44, 17)
@@ -1004,92 +1007,148 @@ Func _Settings()
     GUICtrlCreateLabel("SHIFT +", 460, 173, 44, 17)
     GUICtrlCreateLabel("SHIFT +", 460, 193, 44, 17)
     GUICtrlCreateLabel("SHIFT +", 460, 213, 44, 17)
+    GUICtrlCreateLabel("SHIFT +", 460, 233, 44, 17)
+
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", "1")
+
+    IniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_VM_KEY", "2")
+
+    IniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1")
+    IniWrite($var1, "hotkeys", "ShowWindows_ALT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "ShowWindows_KEY", "3")
+
+    IniWrite($var1, "hotkeys", "HideWindows_CTRL", "1")
+    IniWrite($var1, "hotkeys", "HideWindows_ALT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "HideWindows_KEY", "4")
+
+    IniWrite($var1, "hotkeys", "Settings_CTRL", "1")
+    IniWrite($var1, "hotkeys", "Settings_ALT", "0")
+    IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "Settings_KEY", "5")
+
+    IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1")
+    IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0")
+    IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "OpenCmd_KEY", "6")
+
+    IniWrite($var1, "hotkeys", "ExitScript_CTRL", "1")
+    IniWrite($var1, "hotkeys", "ExitScript_ALT", "0")
+    IniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0")
+    IniWrite($var1, "hotkeys", "ExitScript_KEY", "7")
 
     $Checkbox01 = GUICtrlCreateCheckbox("Checkbox01", 302, 112, 14, 14)
-    If IniRead($var1, "hotkeys", "01", "NotFound") = "^" Then
+    If IniRead($var1, "hotkeys", "ShowWindows_VM_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
     $Checkbox02 = GUICtrlCreateCheckbox("Checkbox02", 302, 132, 14, 14)
-    If IniRead($var1, "hotkeys", "02", "NotFound") = "^" Then
+    If IniRead($var1, "hotkeys", "HideWindows_VM_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
     $Checkbox03 = GUICtrlCreateCheckbox("Checkbox03", 302, 152, 14, 14)
-    If IniRead($var1, "hotkeys", "03", "NotFound") = "^" Then
+    If IniRead($var1, "hotkeys", "ShowWindows_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
     $Checkbox04 = GUICtrlCreateCheckbox("Checkbox04", 302, 172, 14, 14)
-    If IniRead($var1, "hotkeys", "04", "NotFound") = "^" Then
+    If IniRead($var1, "hotkeys", "HideWindows_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
     $Checkbox05 = GUICtrlCreateCheckbox("Checkbox05", 302, 192, 14, 14)
-    If IniRead($var1, "hotkeys", "05", "NotFound") = "^" Then
+    If IniRead($var1, "hotkeys", "Settings_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
     $Checkbox06 = GUICtrlCreateCheckbox("Checkbox06", 302, 212, 14, 14)
-    If IniRead($var1, "hotkeys", "06", "NotFound") = "^" Then
+    If IniRead($var1, "hotkeys", "OpenCmd_CTRL", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox07 = GUICtrlCreateCheckbox("Checkbox07", 302, 232, 14, 14)
+    If IniRead($var1, "hotkeys", "ExitScript_CTRL", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
 
-    $Checkbox07 = GUICtrlCreateCheckbox("Checkbox07", 378, 112, 14, 14)
-    If IniRead($var1, "hotkeys", "07", "NotFound") = "!" Then
+    $Checkbox08 = GUICtrlCreateCheckbox("Checkbox08", 378, 112, 14, 14)
+    If IniRead($var1, "hotkeys", "ShowWindows_VM_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
-    $Checkbox08 = GUICtrlCreateCheckbox("Checkbox08", 378, 132, 14, 14)
-    If IniRead($var1, "hotkeys", "08", "NotFound") = "!" Then
+    $Checkbox09 = GUICtrlCreateCheckbox("Checkbox09", 378, 132, 14, 14)
+    If IniRead($var1, "hotkeys", "HideWindows_VM_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
-    $Checkbox09 = GUICtrlCreateCheckbox("Checkbox09", 378, 152, 14, 14)
-    If IniRead($var1, "hotkeys", "09", "NotFound") = "!" Then
+    $Checkbox10 = GUICtrlCreateCheckbox("Checkbox10", 378, 152, 14, 14)
+    If IniRead($var1, "hotkeys", "ShowWindows_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
-    $Checkbox10 = GUICtrlCreateCheckbox("Checkbox10", 378, 172, 14, 14)
-    If IniRead($var1, "hotkeys", "10", "NotFound") = "!" Then
+    $Checkbox11 = GUICtrlCreateCheckbox("Checkbox11", 378, 172, 14, 14)
+    If IniRead($var1, "hotkeys", "HideWindows_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
-    $Checkbox11 = GUICtrlCreateCheckbox("Checkbox11", 378, 192, 14, 14)
-    If IniRead($var1, "hotkeys", "11", "NotFound") = "!" Then
+    $Checkbox12 = GUICtrlCreateCheckbox("Checkbox12", 378, 192, 14, 14)
+    If IniRead($var1, "hotkeys", "Settings_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
-    $Checkbox12 = GUICtrlCreateCheckbox("Checkbox12", 378, 212, 14, 14)
-    If IniRead($var1, "hotkeys", "12", "NotFound") = "!" Then
+    $Checkbox13 = GUICtrlCreateCheckbox("Checkbox13", 378, 212, 14, 14)
+    If IniRead($var1, "hotkeys", "OpenCmd_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
-
-    $Checkbox13 = GUICtrlCreateCheckbox("Checkbox13", 444, 112, 14, 14)
-    If IniRead($var1, "hotkeys", "13", "NotFound") = "+" Then
-      GUICtrlSetState(-1, $GUI_CHECKED)
-    EndIf
-    $Checkbox14 = GUICtrlCreateCheckbox("Checkbox14", 444, 132, 14, 14)
-    If IniRead($var1, "hotkeys", "14", "NotFound") = "+" Then
-      GUICtrlSetState(-1, $GUI_CHECKED)
-    EndIf
-    $Checkbox15 = GUICtrlCreateCheckbox("Checkbox15", 444, 152, 14, 14)
-    If IniRead($var1, "hotkeys", "15", "NotFound") = "+" Then
-      GUICtrlSetState(-1, $GUI_CHECKED)
-    EndIf
-    $Checkbox16 = GUICtrlCreateCheckbox("Checkbox16", 444, 172, 14, 14)
-    If IniRead($var1, "hotkeys", "16", "NotFound") = "+" Then
-      GUICtrlSetState(-1, $GUI_CHECKED)
-    EndIf
-    $Checkbox17 = GUICtrlCreateCheckbox("Checkbox17", 444, 192, 14, 14)
-    If IniRead($var1, "hotkeys", "17", "NotFound") = "+" Then
-      GUICtrlSetState(-1, $GUI_CHECKED)
-    EndIf
-    $Checkbox18 = GUICtrlCreateCheckbox("Checkbox18", 444, 212, 14, 14)
-    If IniRead($var1, "hotkeys", "18", "NotFound") = "+" Then
+    $Checkbox14 = GUICtrlCreateCheckbox("Checkbox14", 378, 232, 14, 14)
+    If IniRead($var1, "hotkeys", "ExitScript_ALT", "NotFound") = "1" Then
       GUICtrlSetState(-1, $GUI_CHECKED)
     EndIf
 
-    $Input1 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "19", "NotFound"), 524, 111, 24, 21)
-    $Input2 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "20", "NotFound"), 524, 131, 24, 21)
-    $Input3 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "21", "NotFound"), 524, 151, 24, 21)
-    $Input4 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "22", "NotFound"), 524, 171, 24, 21)
-    $Input5 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "23", "NotFound"), 524, 191, 24, 21)
-    $Input6 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "24", "NotFound"), 524, 211, 24, 21)
+    $Checkbox15 = GUICtrlCreateCheckbox("Checkbox15", 444, 112, 14, 14)
+    If IniRead($var1, "hotkeys", "ShowWindows_VM_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox16 = GUICtrlCreateCheckbox("Checkbox16", 444, 132, 14, 14)
+    If IniRead($var1, "hotkeys", "HideWindows_VM_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox17 = GUICtrlCreateCheckbox("Checkbox17", 444, 152, 14, 14)
+    If IniRead($var1, "hotkeys", "ShowWindows_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox18 = GUICtrlCreateCheckbox("Checkbox18", 444, 172, 14, 14)
+    If IniRead($var1, "hotkeys", "HideWindows_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox19 = GUICtrlCreateCheckbox("Checkbox19", 444, 192, 14, 14)
+    If IniRead($var1, "hotkeys", "Settings_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox20 = GUICtrlCreateCheckbox("Checkbox20", 444, 212, 14, 14)
+    If IniRead($var1, "hotkeys", "OpenCmd_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
+    $Checkbox21 = GUICtrlCreateCheckbox("Checkbox21", 444, 232, 14, 14)
+    If IniRead($var1, "hotkeys", "ExitScript_SHIFT", "NotFound") = "1" Then
+      GUICtrlSetState(-1, $GUI_CHECKED)
+    EndIf
 
-    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "02"), 112, 240, 129, 27)
+    $Input1 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "ShowWindows_VM_KEY", "NotFound"), 524, 111, 24, 21)
+	GUICtrlSetLimit($Input1, 1)
+    $Input2 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "HideWindows_VM_KEY", "NotFound"), 524, 131, 24, 21)
+	GUICtrlSetLimit($Input2, 1)
+    $Input3 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "ShowWindows_KEY", "NotFound"), 524, 151, 24, 21)
+	GUICtrlSetLimit($Input3, 1)
+    $Input4 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "HideWindows_KEY", "NotFound"), 524, 171, 24, 21)
+	GUICtrlSetLimit($Input4, 1)
+    $Input5 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "Settings_KEY", "NotFound"), 524, 191, 24, 21)
+	GUICtrlSetLimit($Input5, 1)
+    $Input6 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "OpenCmd_KEY", "NotFound"), 524, 211, 24, 21)
+	GUICtrlSetLimit($Input6, 1)
+    $Input7 = GUICtrlCreateInput(IniRead($var1, "hotkeys", "ExitScript_KEY", "NotFound"), 524, 231, 24, 21)
+	GUICtrlSetLimit($Input7, 1)
+
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "02"), 112, 302, 129, 27)
     GUICtrlSetOnEvent(-1, "_OKHotKeysSet")
-    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "03"), 336, 240, 129, 27)
+    GUICtrlCreateButton(_GetTranslation($Lang, "messages", "03"), 336, 302, 129, 27)
     GUICtrlSetOnEvent(-1, "_CloseGUI")
 
 
@@ -1365,67 +1424,82 @@ Func _OKHotKeysSet()
       Else
         IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "0")
       EndIf
-
       If GUICtrlRead($CheckBox07) = $GUI_CHECKED Then
+        IniWrite($var1, "hotkeys", "ExitScript_CTRL", "1")
+      Else
+        IniWrite($var1, "hotkeys", "ExitScript_CTRL", "0")
+      EndIf
+
+      If GUICtrlRead($CheckBox08) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "1")
       Else
         IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0")
       EndIf
-      If GUICtrlRead($CheckBox08) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox09) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "1")
       Else
         IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0")
       EndIf
-      If GUICtrlRead($CheckBox09) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox10) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "ShowWindows_ALT", "1")
       Else
         IniWrite($var1, "hotkeys", "ShowWindows_ALT", "0")
       EndIf
-      If GUICtrlRead($CheckBox10) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox11) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "HideWindows_ALT", "1")
       Else
         IniWrite($var1, "hotkeys", "HideWindows_ALT", "0")
       EndIf
-      If GUICtrlRead($CheckBox11) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox12) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "Settings_ALT", "1")
       Else
         IniWrite($var1, "hotkeys", "Settings_ALT", "0")
       EndIf
-      If GUICtrlRead($CheckBox12) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox13) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "OpenCmd_ALT", "1")
       Else
         IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0")
       EndIf
+      If GUICtrlRead($CheckBox14) = $GUI_CHECKED Then
+        IniWrite($var1, "hotkeys", "ExitScript_ALT", "1")
+      Else
+        IniWrite($var1, "hotkeys", "ExitScript_ALT", "0")
+      EndIf
 
-      If GUICtrlRead($CheckBox13) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox15) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "1")
       Else
         IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0")
       EndIf
-      If GUICtrlRead($CheckBox14) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox16) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "1")
       Else
         IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0")
       EndIf
-      If GUICtrlRead($CheckBox15) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox17) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "1")
       Else
         IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0")
       EndIf
-      If GUICtrlRead($CheckBox16) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox18) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "1")
       Else
         IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0")
       EndIf
-      If GUICtrlRead($CheckBox17) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox19) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "Settings_SHIFT", "1")
       Else
         IniWrite($var1, "hotkeys", "Settings_SHIFT", "0")
       EndIf
-      If GUICtrlRead($CheckBox18) = $GUI_CHECKED Then
+      If GUICtrlRead($CheckBox20) = $GUI_CHECKED Then
         IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "1")
       Else
         IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0")
+      EndIf
+      If GUICtrlRead($CheckBox21) = $GUI_CHECKED Then
+        IniWrite($var1, "hotkeys", "ExitScript_SHIFT", "1")
+      Else
+        IniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0")
       EndIf
 
       IniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", GUICtrlRead($Input1))
@@ -1434,6 +1508,7 @@ Func _OKHotKeysSet()
       IniWrite($var1, "hotkeys", "HideWindows_KEY", GUICtrlRead($Input4))
       IniWrite($var1, "hotkeys", "Settings_KEY", GUICtrlRead($Input5))
       IniWrite($var1, "hotkeys", "OpenCmd_KEY", GUICtrlRead($Input6))
+	  IniWrite($var1, "hotkeys", "ExitScript_KEY", GUICtrlRead($Input7))
       MsgBox(0+262144, _GetTranslation($Lang, "messages", "04"), _GetTranslation($Lang, "messages", "05"))
     EndIf
   EndIf

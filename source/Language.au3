@@ -33,7 +33,7 @@ Global $catalan = [ _
     ["system", "04", "No desactiveu els serveis i els controladors en sortir de VirtualBox"], _
     ["hotkey-settings", "01", "Opcions de HotKeys"], _
     ["hotkey-settings", "02", "Si no esteu d'acord amb les opcions predeterminades de les 'HotKeys' (decreres de teclat), aquí podeu especificar altres combinacions de tecles. Nota: Les tecles de control es limiten a Alt, Ctrl i Majús, la tecla restant es pot triar lliurement (per defecte, Ctrl+""1~6"")."], _
-    ["hotkey-settings", "03", "Valor per defecte (Ctrl+""1~6"")"], _
+    ["hotkey-settings", "03", "Valor per defecte (Ctrl+""1~7"")"], _
     ["hotkey-settings", "04", "Defineix una clau per al camp d'entrada"], _
     ["about", "01", "Sobre el programa..."], _
     ["okhotkeysset", "01", "Estableix la clau per al camp d'entrada."], _
@@ -101,7 +101,7 @@ Global $chinese = [ _
     ["system", "04", "退出 VirtualBox 时，请勿禁用服务和驱动程序。"], _
     ["hotkey-settings", "01", "热键设置"], _
     ["hotkey-settings", "02", "要设置不被系统占用了的热键。注意：命令键必须为 ALT，CTRL 和 SHIFT 键之一，后面为自定义（默认为 Ctrl + 1 ～ Ctrl + 6）"], _
-    ["hotkey-settings", "03", "默认 (Ctrl + 1 ～ Ctrl + 6)"], _
+    ["hotkey-settings", "03", "默认 (Ctrl + 1 ～ Ctrl + 7)"], _
     ["hotkey-settings", "04", "为输入字段定义一个键"], _
     ["about", "01", "关于该计划..."], _
     ["okhotkeysset", "01", "为输入字段定义一个键。"], _
@@ -169,7 +169,7 @@ Global $english = [ _
     ["system", "04", "Do not disable services and drivers when exiting VirtualBox"], _
     ["hotkey-settings", "01", "Hot hotkey-settings"], _
     ["hotkey-settings", "02", "Here you can change the hotkey values. Note: you can use the ALT, CTRL and SHIFT keys. (Default = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "Default (CTRL+""1 to 6"")"], _
+    ["hotkey-settings", "03", "Default (CTRL+""1 to 7"")"], _
     ["hotkey-settings", "04", "Define a key for the input field"], _
     ["about", "01", "About the program..."], _
     ["okhotkeysset", "01", "Define a key for the input-field."], _
@@ -237,7 +237,7 @@ Global $french = [ _
     ["system", "04", "Ne désactivez pas les services et les pilotes lorsque vous quittez VirtualBox."], _
     ["hotkey-settings", "01", "Paramètres des raccourcis clavier"], _
     ["hotkey-settings", "02", "Vous pouvez personnaliser les raccourcis claviers sur cette page. Note: Les touches de commande sont limitées à ALT, CTRL et SHIFT. (DÉFAUT = CTRL+""1 à 6"")"], _
-    ["hotkey-settings", "03", "Par défaut (CTRL+""1 à 6"")"], _
+    ["hotkey-settings", "03", "Par défaut (CTRL+""1 à 7"")"], _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "A propos de..."], _
     ["okhotkeysset", "01", "Enregistrez une clef pour le champ de saisie."], _
@@ -305,7 +305,7 @@ Global $german = [ _
     ["system", "04", "Deaktivieren Sie beim Beenden von VirtualBox keine Dienste und Treiber."], _
     ["hotkey-settings", "01", "HotKey-Einstellungen"], _
     ["hotkey-settings", "02", "Falls dir die Standardeinstellungen der HotKeys nicht zusagen, ist es hier möglich, eigene Tastenkombinationen zu definieren. Hinweis: Die Steuertasten beschränken sich auf ALT, CTRL und SHIFT, die letzte Taste ist frei definierbar. (DEFAULT = STRG+""1-6"")"], _
-    ["hotkey-settings", "03", "DEFAULT (STRG+""1 bis 6"")"], _
+    ["hotkey-settings", "03", "DEFAULT (STRG+""1 bis 7"")"], _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "Über das Programm..."], _
     ["okhotkeysset", "01", "Definieren Sie einen Schlüssel für das Eingabefeld."], _
@@ -373,7 +373,7 @@ Global $italian = [ _
     ["system", "04", "Non disattivare servizi e driver all'uscita da VirtualBox."], _
     ["hotkey-settings", "01", "Imposta HotKeys"], _
     ["hotkey-settings", "02", "Per specificare hotkeys diversi da quelli predefiniti, farlo quì. Nota: I tasti di comando sono limitati a Alt, Ctrl e Shift. L'ultimo tasto e autodefinito. (Predefinito: CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "DPredefinito (CTRL+""1..6"")"], _
+    ["hotkey-settings", "03", "DPredefinito (CTRL+""1..7"")"], _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "A proposito del programma..."], _
     ["okhotkeysset", "01", "Definire una chiave per il campo di input."], _
@@ -441,7 +441,7 @@ Global $japanese = [ _
     ["system", "04", "VirtualBoxを終了する際に、サービスとドライバーを無効にしないでください。"], _
     ["hotkey-settings", "01", "ホットキーの設定"], _
     ["hotkey-settings", "02", "プリセット以外のホットキーを選択するには、ここに独自のコマンドを指定します。注: コマンドキーは ALT 、CTRL 、SHIFT に制限されています。最後のキーは自己定義です。(デフォルト = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "デフォルト (CTRL+""1 to 6"")"], _
+    ["hotkey-settings", "03", "デフォルト (CTRL+""1 to 7"")"], _
     ["hotkey-settings", "04", "入力フィールドのキーを定義する"], _
     ["about", "01", "プログラムについて..."], _
     ["okhotkeysset", "01", "入力フィールドのキーを定義します。"], _
@@ -509,7 +509,7 @@ Global $korean = [ _
     ["system", "04", "VirtualBox를 종료할 때 서비스 및 드라이버를 비활성화하지 마십시오."], _
     ["hotkey-settings", "01", "단축키-설정"], _
     ["hotkey-settings", "02", "사전 설정보다 다른 단축키를 선택하려면, 여기에서 직접 명령을 지정하세요. 참고: 명령 키는 ALT, CTRL 및 SHIFT로 제한됩니다. 마지막 키는 자체 정의됩니다. (기본값 = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "기본값 (CTRL+""1부터 6까지"")"], _
+    ["hotkey-settings", "03", "기본값 (CTRL+""1부터 7까지"")"], _
     ["hotkey-settings", "04", "입력 필드에 대한 키를 정의합니다"], _
     ["about", "01", "프로그램에 대해..."], _
     ["okhotkeysset", "01", "입력-필드에 키를 정의하세요."], _
@@ -577,7 +577,7 @@ Global $polish = [ _
     ["system", "04", "Nie wyłączaj usług i sterowników podczas wychodzenia z VirtualBox"], _
     ["hotkey-settings", "01", "Ustawienia-HotKey"], _
     ["hotkey-settings", "02", "Żeby wybrać HotKey, ustaw komendy tutaj. Uwaga: Komendy przycisków limitowane do ALT, CTRL i SHIFT. Ostatni przycisk definiowany przez użytkownika. (DOMYŚLNIE = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "DOMYŚLNE (CTRL+""1 to 6"")"], _
+    ["hotkey-settings", "03", "DOMYŚLNE (CTRL+""1 to 7"")"], _
     ["hotkey-settings", "04", "Zdefiniuj klucz dla pola wejściowego"], _
     ["about", "01", "O programie..."], _
     ["okhotkeysset", "01", "Zdefiniuj przycisk dla polki wejscia."], _
@@ -645,7 +645,7 @@ Global $portuguese = [ _
     ["system", "04", "Não desative serviços e drivers ao sair do VirtualBox."], _
     ["hotkey-settings", "01", "HotKey-Ajustes"], _
     ["hotkey-settings", "02", "Aqui você pode alterar os valores das teclas de atalho. Nota: Você pode usar as teclas ALT, CTRL e SHIFT. (PADRÃO = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "POR PADRÃO (CTRL+""1 a 6"")"], _
+    ["hotkey-settings", "03", "POR PADRÃO (CTRL+""1 a 7"")"], _
     ["hotkey-settings", "04", "Defina uma chave para o campo de entrada"], _
     ["about", "01", "Sobre o programa..."], _
     ["okhotkeysset", "01", "Registe uma chave no entrada-campo."], _
@@ -713,7 +713,7 @@ Global $russian = [ _
     ["system", "04", "Не отключать службы и драйверы при выходе из VirtualBox"], _
     ["hotkey-settings", "01", "Горячие клавиши-настройка"], _
     ["hotkey-settings", "02", "Тут вы можете изменить значения горячих клавиш. Примечание: вы можете использовать клавиши ALT, CTRL и SHIFT. (По умолчанию = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "По умолчанию (CTRL+""1 до 6"")"], _
+    ["hotkey-settings", "03", "По умолчанию (CTRL+""1 до 7"")"], _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "О программе..."], _
     ["okhotkeysset", "01", "Определите ключ для поля ввода."], _
@@ -781,7 +781,7 @@ Global $spanish = [ _
     ["system", "04", "No desactive los servicios ni los controladores al salir de VirtualBox."], _
     ["hotkey-settings", "01", "Ajustes de HotKeys"], _
     ["hotkey-settings", "02", "Si no está conforme con los ajustes predeterminados de las HotKeys (accesos directos por teclado), puede especificar aquí sus propias combinaciones de teclas. Nota: Las teclas de control se limitan a Alt, Ctrl y Mayús, la tecla restante puede elegirse libremente (por defecto, Ctrl+""1 a 6"")."], _
-    ["hotkey-settings", "03", "POR DEFECTO (CTRL+""1 a 6"")"], _
+    ["hotkey-settings", "03", "POR DEFECTO (CTRL+""1 a 7"")"], _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "Sobre el programa..."], _
     ["okhotkeysset", "01", "Pulse una tecla en el campo de entrada."], _
@@ -849,7 +849,7 @@ Global $turkish = [ _
     ["system", "04", "VirtualBox'tan çıkarken servisleri ve sürücüleri devre dışı bırakmayın."], _
     ["hotkey-settings", "01", "Kısayol Tuşu Ayarları"], _
     ["hotkey-settings", "02", "Hazır ayardan başka Kısayol Tuşları seçmek için, burada kendi komutlarınızı belirtin. Not: Komut tuşları ALT, CTRL ve SHIFT ile sınırlıdır. Son anahtar kendiliğinden tanımlanmıştır. (Varsayılan = CTRL ""1 to 6"")"], _
-    ["hotkey-settings", "03", "Varsayılan (CTRL+""1 to 6"")"], _
+    ["hotkey-settings", "03", "Varsayılan (CTRL+""1 to 7"")"], _
     ["hotkey-settings", "04", "Определите клавишу для поля ввода"], _
     ["about", "01", "Program hakkında..."], _
     ["okhotkeysset", "01", "Giriş alanı için bir anahtar tanımlayın."], _
@@ -917,7 +917,7 @@ Global $ukrainian = [ _
     ["system", "04", "Не вимикайте служби та драйвери під час виходу з VirtualBox."], _
     ["hotkey-settings", "01", "Гарячі клавіші-налаштування"], _
     ["hotkey-settings", "02", "Тут можна змінити значення гарячих клавіш. Примітка: Ви можете використовувати клавіші ALT, CTRL та SHIFT. (ЗА УМОВЧЕННЯМ. = CTRL+""1-6"")"], _
-    ["hotkey-settings", "03", "За замовчуванням. (CTRL+""1-6"")"], _
+    ["hotkey-settings", "03", "За замовчуванням. (CTRL+""1-7"")"], _
     ["hotkey-settings", "04", "Визначте клавішу поля введення"], _
     ["about", "01", "Про програму..."], _
     ["okhotkeysset", "01", "Визначте клавішу для області введеня."], _
