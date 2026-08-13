@@ -627,14 +627,14 @@ Func _ValidatePath($Path, $DefaultPath)
     EndIf
 EndFunc
 
-Func _EmptyIniWrite($filename, $section, $key, $value, $encoding = 256)
+Func _IniWrite($filename, $section, $key, $value, $encoding = 256, $Write = False)
 	Switch $encoding
 	Case 16, 32, 64, 128, 256, 512
     Case Else
 	$encoding = 256
 	EndSwitch
 
-	If NOT IniRead($filename, $section, $key, "") Then
+	If $Write OR NOT IniRead($filename, $section, $key, "") Then
 		$sDir = StringRegExpReplace($filename, "[^\\]+$", "")
 		If NOT FileExists($sDir) Then DirCreate($sDir)
 
@@ -1141,54 +1141,54 @@ Func _Settings()
 EndFunc
 
 Func _UpdateSettings()
-_EmptyIniWrite($var1, "hotkeys", "key", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "userkey", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_VM_KEY", "2", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ShowWindows_KEY", "3", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "HideWindows_KEY", "4", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "OpenCmd_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "OpenCmd_KEY", "5", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "Settings_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "Settings_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "Settings_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "Settings_KEY", "6", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ExitScript_CTRL", "1", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ExitScript_ALT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0", $ini_encoding)
-_EmptyIniWrite($var1, "hotkeys", "ExitScript_KEY", "7", $ini_encoding)
-_EmptyIniWrite($var1, "usb", "key", "0", $ini_encoding)
-_EmptyIniWrite($var1, "net", "key", "0", $ini_encoding)
-_EmptyIniWrite($var1, "userhome", "key", $DefaultUserHome, $ini_encoding)
-_EmptyIniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $ini_encoding)
-_EmptyIniWrite($var1, "Core_Logs", "key", "1", $ini_encoding)
-_EmptyIniWrite($var1, "VM_Logs", "key", "1", $ini_encoding)
-_EmptyIniWrite($var1, "PortableMode", "key", "0", $ini_encoding)
-_EmptyIniWrite($var1, "userhome", "sort", "1", $ini_encoding)
-_EmptyIniWrite($var1, "startvm", "key", "", $ini_encoding)
+_IniWrite($var1, "hotkeys", "key", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "userkey", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_VM_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_VM_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_VM_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_VM_KEY", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_VM_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_VM_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_VM_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_VM_KEY", "2", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ShowWindows_KEY", "3", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "HideWindows_KEY", "4", $ini_encoding)
+_IniWrite($var1, "hotkeys", "OpenCmd_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "OpenCmd_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "OpenCmd_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "OpenCmd_KEY", "5", $ini_encoding)
+_IniWrite($var1, "hotkeys", "Settings_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "Settings_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "Settings_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "Settings_KEY", "6", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ExitScript_CTRL", "1", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ExitScript_ALT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ExitScript_SHIFT", "0", $ini_encoding)
+_IniWrite($var1, "hotkeys", "ExitScript_KEY", "7", $ini_encoding)
+_IniWrite($var1, "usb", "key", "0", $ini_encoding)
+_IniWrite($var1, "net", "key", "0", $ini_encoding)
+_IniWrite($var1, "userhome", "key", $DefaultUserHome, $ini_encoding)
+_IniWrite($var1, "machinefolder", "key", $DefaultMachineFolder, $ini_encoding)
+_IniWrite($var1, "Core_Logs", "key", "1", $ini_encoding)
+_IniWrite($var1, "VM_Logs", "key", "1", $ini_encoding)
+_IniWrite($var1, "PortableMode", "key", "0", $ini_encoding)
+_IniWrite($var1, "userhome", "sort", "1", $ini_encoding)
+_IniWrite($var1, "startvm", "key", "", $ini_encoding)
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND IniRead($var1, "lang", "key", "") = 2 Then
-_EmptyIniWrite($var1, "language", "date", $Lang_changes, $ini_encoding)
+_IniWrite($var1, "language", "date", $Lang_changes, $ini_encoding)
 Else
 IniDelete($var1, "language", "date")
 Endif
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT _IsLangValid(IniRead($var1, "language", "key", "False")) Then
-_EmptyIniWrite($var1, "language", "key", "English", $ini_encoding)
+_IniWrite($var1, "language", "key", "English", $ini_encoding)
 EndIf
 
 $Lang = IniRead($var1, "language", "key", "NotFound")
@@ -1481,11 +1481,11 @@ EndFunc
 
 Func _OKLanguage()
 _UpdateSettings()
-_EmptyIniWrite($var1, "language", "key", GUICtrlRead($StartLng), $ini_encoding)
+_IniWrite($var1, "language", "key", GUICtrlRead($StartLng), $ini_encoding)
 If GUICtrlRead($CheckboxLang) = $GUI_CHECKED Then
-_EmptyIniWrite($var1, "lang", "key", "2", $ini_encoding)
+_IniWrite($var1, "lang", "key", "2", $ini_encoding)
 Else
-_EmptyIniWrite($var1, "lang", "key", "1", $ini_encoding)
+_IniWrite($var1, "lang", "key", "1", $ini_encoding)
 Endif
 $cl = 0
 EndFunc

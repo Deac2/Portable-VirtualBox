@@ -687,7 +687,8 @@ Global $russian = [ _
     ["tray", "05", "Cmd Консоль"], _
     ["tray", "06", "Настройки"], _
     ["tray", "07", "Выход из VirtualBox"], _
-    ["tray", "08", "Щелкните правой кнопкой мыши, чтобы увидеть меню"], _
+    ["tray", "08", "тест"], _
+    ["tray", "09", "Щелкните правой кнопкой мыши, чтобы увидеть меню"], _
     ["messages", "01", "Ошибка"], _
     ["messages", "02", "Сохранить"], _
     ["messages", "03", "Закрыть"], _
@@ -1000,8 +1001,8 @@ Func _GetTranslation($Lang, $sCategory, $sNumber)
 		;Else
 		;$encoding = 32
         ;EndIf
-		
-		_EmptyIniWrite($LangIni, $Section, $Key, $Value, $ini_encoding)
+
+		_IniWrite($LangIni, $Section, $Key, $Value, $ini_encoding, true)
         Next
         Return IniRead(@ScriptDir & "\data\language\" & $CurrentLang & ".ini", $sCategory, $sNumber, $sCategory & "_" & $sNumber)
     Else
