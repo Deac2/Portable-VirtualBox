@@ -174,12 +174,12 @@ Global $english = [ _
     ["about", "01", "About the program..."], _
     ["okhotkeysset", "01", "Define a key for the input-field."], _
     ["download", "01", "VirtualBox Portable"], _
-    ["download", "02", "Here you can find the VirtualBox installation files, which can be downloaded automatically and make some changes, just download Virtualbox, make the settings and click ""Unpack""."], _
+    ["download", "02", "Here you can find VirtualBox installation files for automatic download. Simply select your version, adjust the settings, and click ""Unpack""."], _
     ["download", "03", "Download files"], _
-    ["download", "04", "Path to VirtualBox installation file..."], _
-    ["download", "05", "Overview"], _
-    ["download", "06", "Unzip files for 32-bit systems"], _
-    ["download", "07", "Unzip files for 64-bit systems"], _
+    ["download", "04", "Select VirtualBox installation file"], _
+    ["download", "05", "Browse"], _
+    ["download", "06", "Extract files for 32-bit systems"], _
+    ["download", "07", "Extract files for 64-bit systems"], _
     ["download", "08", "Delete temp folder after unpacking"], _
     ["download", "09", "Delete downloaded files after unpacking"], _
     ["download", "10", "Run VirtualBox Portable after unpack"], _
@@ -718,13 +718,13 @@ Global $russian = [ _
     ["about", "01", "О программе..."], _
     ["okhotkeysset", "01", "Определите ключ для поля ввода."], _
     ["download", "01", "VirtualBox Portable"], _
-    ["download", "02", "Здесь вы можете найти установочные файлы VirtualBox, которые можно автоматически загрузить и внести некоторые изменения просто загрузите Virtualbox выполните настройки и нажмите ""Распаковать""."], _
+    ["download", "02", "Здесь вы можете найти установочные файлы VirtualBox для автоматической загрузки. Просто выберите версию, задайте параметры и нажмите ""Распаковать""."], _
     ["download", "03", "Скачать файлы"], _
-    ["download", "04", "Путь к установочному файлу VirtualBox..."], _
+    ["download", "04", "Путь к файлу установки VirtualBox"], _
     ["download", "05", "Обзор"], _
     ["download", "06", "Распаковать файлы для 32-битных систем"], _
     ["download", "07", "Распаковать файлы для 64-битных систем"], _
-    ["download", "08", "Удалить папку temp после распаковки"], _
+    ["download", "08", "Удалить временную папку после распаковки"], _
     ["download", "09", "Удалить загруженные файлы после распаковки"], _
     ["download", "10", "Запустить VirtualBox Portable после распаковки"], _
     ["download", "11", "Статус:"], _
