@@ -2,7 +2,7 @@
 @title Run AutoIt Source Tray Debug [%CD%]
 @chcp 65001>Nul
 
-rem 1. Задаем относительный путь по умолчанию
+rem Set the default relative path
 set "AutoIt3=source\AutoIt3.exe"
 
 rem Setting up the different folders used for building. %~dp0 is the folder of the build script itself (may not be the same as the working directory).
