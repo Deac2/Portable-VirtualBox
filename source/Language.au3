@@ -143,14 +143,14 @@ Global $english = [ _
     ["tray", "05", "Cmd Console"], _
     ["tray", "06", "Settings"], _
     ["tray", "07", "Exit VirtualBox"], _
-    ["tray", "08", "Right-click to see menu"], _
+    ["tray", "08", "Right-click for menu"], _
     ["messages", "01", "Error"], _
     ["messages", "02", "Save"], _
     ["messages", "03", "Close"], _
     ["messages", "04", "Saved"], _
-    ["messages", "05", "Restart VirtualBox to change settings."], _
-    ["messages", "06", "Starting VirtualBox"], _
-    ["messages", "07", "Closing VirtualBox"], _
+    ["messages", "05", "Restart VirtualBox to apply changes."], _
+    ["messages", "06", "Launching VirtualBox"], _
+    ["messages", "07", "Exiting VirtualBox"], _
     ["start", "01", "Copy files from VirtualBox in the corresponding folder in the APP directory"], _
     ["settings", "01", "Settings"], _
     ["settings", "02", "Start VirtualBox with network support"], _
