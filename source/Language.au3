@@ -969,13 +969,22 @@ $Languages.Add("ukrainian", $ukrainian)
 
 Func _GetTranslation($Lang, $sCategory, $sNumber)
     Local $CurrentLang = StringLower($Lang)
+    Local $Translations = 0
 
-    If $Languages.Exists($CurrentLang) Then
-	Local $Translations = $Languages.Item($CurrentLang)
+	If $Languages.Exists($CurrentLang) Then
+	$Translations = $Languages.Item($CurrentLang)
     Else
-    Local $Translations = $english
-    $CurrentLang = "english"
-    EndIf
+	If $Languages.Exists("english") Then
+	$Translations = $Languages.Item("english")
+	$CurrentLang = "english"
+		Else
+		Local $aKeys = $Languages.Keys()
+		If IsArray($aKeys) And UBound($aKeys) > 0 Then
+		$Translations = $Languages.Item($CurrentLang)
+		$CurrentLang = $aKeys[0]
+		EndIf
+		EndIf
+	EndIf
 
     If IniRead($var1, "lang", "key", "") = "2" Then
         Local $Dir_Lang = @ScriptDir & "\data\language\"
@@ -1003,7 +1012,7 @@ Func _GetTranslation($Lang, $sCategory, $sNumber)
 
 		_IniWrite($LangIni, $Section, $Key, $Value, $ini_encoding, true)
         Next
-        Return IniRead(@ScriptDir & "\data\language\" & $CurrentLang & ".ini", $sCategory, $sNumber, $sCategory & "_" & $sNumber)
+        Return IniRead($LangIni, $sCategory, $sNumber, $sCategory & "_" & $sNumber)
     Else
         For $i = 0 To UBound($Translations) - 1
             If $Translations[$i][0] = $sCategory And $Translations[$i][1] = $sNumber Then
