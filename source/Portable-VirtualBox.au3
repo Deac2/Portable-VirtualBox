@@ -1188,7 +1188,20 @@ IniDelete($var1, "language", "date")
 Endif
 
 If NOT IniRead($var1, "lang", "key", "") = 0 AND NOT _IsLangValid(IniRead($var1, "language", "key", "False")) Then
-_IniWrite($var1, "language", "key", "English", $ini_encoding)
+If IsArray($english) Then
+_IniWrite($var1, "language", "key", "English", $ini_encoding, true)
+Else
+	If $Languages.Exists("english") Then
+	$CurrentLang = "english"
+	Else
+	Local $aKeys = $Languages.Keys()
+	If IsArray($aKeys) And UBound($aKeys) > 0 Then
+	$CurrentLang = $aKeys[0]
+	_IniWrite($var1, "language", "key", _FirstLetterUpper($CurrentLang), $ini_encoding, true)
+	EndIf
+	EndIf
+EndIf
+Else
 EndIf
 
 $Lang = IniRead($var1, "language", "key", "NotFound")
