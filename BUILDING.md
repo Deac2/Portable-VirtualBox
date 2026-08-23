@@ -1,4 +1,4 @@
-## Step 1:
+Step 1:
 ## Obtaining the source code<br/>
 
 Method 1: Download the ZIP archive directly<br/>
