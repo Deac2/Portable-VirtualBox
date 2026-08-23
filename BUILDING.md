@@ -1,4 +1,4 @@
-Step 1:<br/>
+## Step 1:
 ## Obtaining the source code<br/>
 
 Method 1: Download the ZIP archive directly<br/>
@@ -11,7 +11,7 @@ Check out the source code from GitHub. For example by using [GitHub on Windows](
 
 This will create a new folder named `Portable-VirtualBox`.<br/>
 
-Step 2:<br/>
+Step 2:
 ## Making a new version with the build script<br/>
 
 After you've downloaded and unzipped the files, you can run the automatic project compilation script.<br/>
