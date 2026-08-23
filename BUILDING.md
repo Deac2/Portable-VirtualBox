@@ -15,7 +15,8 @@ This will create a new folder named `Portable-VirtualBox`.<br/>
 After you've downloaded and unzipped the files, you can run the automatic project compilation script.<br/>
 The root directory contains special .bat files.<br/>
 Navigate to the Portable-VirtualBox project folder.<br/>
-Double-click the appropriate build script, depending on the bitness of your operating system: Build_x64.bat — for 64-bit systems.<br/>
+Double-click the appropriate build script, depending on the bitness of your operating system:
+Build_x64.bat — for 64-bit systems.<br/>
 Build_x86.bat — for 32-bit systems.<br/>
 Wait for the console script to complete.<br/>
 The completed executable file for the new version will appear in the automatically created build directory.<br/>
