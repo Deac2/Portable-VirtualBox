@@ -1,5 +1,4 @@
-Step 1:
-## Obtaining the source code<br/>
+## Step 1: Obtaining the source code<br/>
 
 Method 1: Download the ZIP archive directly<br/>
 [Download Portable-VirtualBox-main.zip](https://github.com/Deac2/Portable-VirtualBox/archive/refs/heads/main.zip)<br/>
@@ -11,8 +10,7 @@ Check out the source code from GitHub. For example by using [GitHub on Windows](
 
 This will create a new folder named `Portable-VirtualBox`.<br/>
 
-Step 2:
-## Making a new version with the build script<br/>
+## Step 2: Making a new version with the build script<br/>
 
 After you've downloaded and unzipped the files, you can run the automatic project compilation script.<br/>
 The root directory contains special .bat files.<br/>
