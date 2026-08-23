@@ -17,7 +17,7 @@ The root directory contains special .bat files.<br/>
 
 1. Navigate to the Portable-VirtualBox project folder.<br/>
 2. Double-click the appropriate build script depending on which version of the application you need:<br/>
-    1. Build_x64.bat - for 64-bit systems.<br/>
-    2. Build_x86.bat - for 32-bit systems.<br/>
+    [1]. Build_x64.bat - for 64-bit systems.<br/>
+    [2]. Build_x86.bat - for 32-bit systems.<br/>
 3. Wait for the console script to complete.<br/>
 4. The completed executable file for the new version will appear in the automatically created "build" directory.<br/>
