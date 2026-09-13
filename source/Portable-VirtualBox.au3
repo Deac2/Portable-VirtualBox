@@ -23,10 +23,13 @@ Endif
 #include <GUIConstantsEx.au3>
 #include <RecFileListToArray.au3>
 #include <Language.au3>
-#include <SingleTon.au3>
 
-_SingleTon(@ScriptName)
 #RequireAdmin
+
+;Single Instance
+If WinExists("Portable-VirtualBox_Unique") Then Exit
+AutoItWinSetTitle("Portable-VirtualBox_Unique")
+;End Single Instance
 
 Opt("GUIOnEventMode", 1)
 Opt("TrayAutoPause", 0)
