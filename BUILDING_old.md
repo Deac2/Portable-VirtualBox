@@ -7,6 +7,7 @@ Obtain and install the following free tools
 * AutoIt version 3.3.8.1 from https://www.autoitscript.com/autoit3/files/archive/autoit/autoit-v3.3.8.1-setup.exe
 * 7zip from http://www.7-zip.org/
 * Resource Hacker from http://www.angusj.com/resourcehacker/
+* [Resource Cracker](https://www.pelock.com/products/resource-cracker)
 
 ## Obtaining the source code
 
@@ -38,7 +39,7 @@ To make a release you also need to do the following:
 3. Right click on it and select `7zip` -> `Add to archive`
 4. In the 7zip dialog select `Self extracting archive (SFX)` and click `OK` 
 5. This will make a new `.exe` file named `Portable-VirtualBox.exe`
-6. Open the newly created `Portable-VirtualBox.exe` with Resource Hacker find the Icon Group->1->1033
+6. Open the newly created `Portable-VirtualBox.exe` with Resource Hacker or [Resource Cracker](https://www.pelock.com/products/resource-cracker) find the Icon Group->1->1033
 7. Use the Replace resource function to replace it with the icon at `Portable-VirtualBox\source\VirtualBox.ico`
 8. Save & exit
 
